@@ -12,6 +12,7 @@ namespace TravelAgency.Mappers
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 PassportNumber = dto.PassportNumber,
+                PassportExpirationDate = dto.PassportExpirationDate,
             };
         }
     }

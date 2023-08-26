@@ -4,6 +4,6 @@ namespace TravelAgency.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task RegisterUser(UserLoginDto dto);
+        Task RegisterUser(UserRegisterDto dto);
     }
 }

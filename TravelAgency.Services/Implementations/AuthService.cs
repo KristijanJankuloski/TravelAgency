@@ -1,5 +1,7 @@
 ﻿using TravelAgency.DataAccess.Repositories.Interfaces;
+using TravelAgency.Domain.Models;
 using TravelAgency.DTOs.UserDTOs;
+using TravelAgency.Mappers;
 using TravelAgency.Services.Interfaces;
 
 namespace TravelAgency.Services.Implementations
@@ -12,9 +14,9 @@ namespace TravelAgency.Services.Implementations
             _userRepository = userRepository;
         }
 
-        public Task RegisterUser(UserLoginDto dto)
+        public async Task RegisterUser(UserRegisterDto dto)
         {
-            throw new NotImplementedException();
+            User user = dto.ToUser();
         }
     }
 }

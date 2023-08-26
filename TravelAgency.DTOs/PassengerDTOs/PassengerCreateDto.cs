@@ -15,5 +15,9 @@ namespace TravelAgency.DTOs.PassengerDTOs
         [Required]
         [MaxLength(100)]
         public string PassportNumber { get; set; }
+
+        [Required]
+        [MaxLength(30)]
+        public DateTime PassportExpirationDate { get; set; }
     }
 }

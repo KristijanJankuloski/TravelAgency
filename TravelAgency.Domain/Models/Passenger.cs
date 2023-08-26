@@ -17,6 +17,8 @@ namespace TravelAgency.Domain.Models
         [MaxLength(100)]
         public string PassportNumber { get; set; } = string.Empty;
 
+        public DateTime PassportExpirationDate { get; set; }
+
         [Required]
         public int ContractId { get; set; }
 

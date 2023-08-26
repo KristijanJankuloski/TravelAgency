@@ -14,5 +14,9 @@ namespace TravelAgency.DTOs.UserDTOs
         [Required]
         [MaxLength(50)]
         public string Email { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string BankAccountNumber { get; set; }
     }
 }

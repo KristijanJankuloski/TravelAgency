@@ -13,6 +13,10 @@ namespace TravelAgency.Domain.Models
         [MaxLength(30)]
         public string PhoneNumber { get; set; } = string.Empty;
 
+        [Required]
+        [MaxLength(30)]
+        public string ContractNumber { get; set; } = string.Empty;
+
         public DateTime ContractDate { get; set; }
 
         public DateTime StartDate { get; set; }

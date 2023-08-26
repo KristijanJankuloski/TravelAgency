@@ -24,6 +24,7 @@ namespace TravelAgency.Services.Implementations
             Contract contract = dto.ToContract();
             contract.UserId = usedId;
             contract.ContractDate = DateTime.Now;
+            contract.ContractNumber = $"{contract.ContractDate.Year}";
             foreach(PassengerCreateDto p in  dto.Passengers)
             {
                 Passenger passenger = p.ToPassenger();
