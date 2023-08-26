@@ -26,6 +26,7 @@ namespace TravelAgency.Helpers
         public static void InjectServices(this IServiceCollection services)
         {
             services.AddScoped<IContractService, ContractService>();
+            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }

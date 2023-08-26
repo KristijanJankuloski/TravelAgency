@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TravelAgency.DTOs.UserDTOs;
+using TravelAgency.Helpers;
 
 namespace TravelAgency.Controllers
 {
@@ -14,12 +17,15 @@ namespace TravelAgency.Controllers
         }
 
         [HttpPost("update-image")]
+        [Authorize]
         public async Task<IActionResult> UpdateImage([FromForm] IFormFile file)
         {
             try
             {
                 if (file == null)
                     return BadRequest("No image provided");
+
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
 
                 string fileImagePath = _environment.WebRootPath + "\\Uploads\\";
                 if(!Directory.Exists(fileImagePath))

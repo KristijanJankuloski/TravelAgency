@@ -22,6 +22,20 @@
                 <div class="row">
                     <div class="col-md">
                         <mat-form-field class="w-100">
+                            <mat-label for="displayName">Име на организација</mat-label>
+                            <input id="displayName" type="text" matInput required formControlName="displayName" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label for="bankAccountNumber">Жиро сметка</mat-label>
+                            <input id="bankAccountNumber" type="text" matInput required formControlName="bankAccountNumber" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
                             <mat-label for="password">Лозинка</mat-label>
                             <input id="password" type="password" matInput required formControlName="password" />
                         </mat-form-field>

@@ -50,6 +50,19 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
+        public async Task<int> IterateContractNumber(int id)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if(user == null)
+            {
+                throw new Exception("Used does not exist");
+            }
+            int number = user.ContractIterator++;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return number;
+        }
+
         public async Task UpdateAsync(User entity)
         {
             _context.Users.Update(entity);

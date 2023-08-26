@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserLoginModel, UserLoginResponseModel } from '../models/user';
+import { UserLoginModel, UserLoginResponseModel, UserRegisterModel } from '../models/user';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -10,11 +10,11 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   constructor(private http: HttpClient) { }
 
-  getJwt() : string {
+  public getJwt() : string {
     return localStorage.getItem("Token") ?? '';
   }
 
-  setJwt(token : string) : void {
+  public setJwt(token : string) : void {
     localStorage.setItem("Token", token);
   }
 
@@ -25,7 +25,11 @@ export class AuthService {
     return false;
   }
 
-  loginUser(req: UserLoginModel) : Observable<UserLoginResponseModel> {
+  public loginUser(req: UserLoginModel) : Observable<UserLoginResponseModel> {
     return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/login`, req);
+  }
+
+  public registerUser(req: UserRegisterModel) {
+    return this.http.post(`${environment.apiBaseUrl}/auth/register`, req);
   }
 }

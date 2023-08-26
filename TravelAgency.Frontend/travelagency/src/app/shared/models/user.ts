@@ -9,4 +9,12 @@ interface UserLoginResponseModel {
     refreshToken: string;
 }
 
-export { UserLoginModel, UserLoginResponseModel };
+interface UserRegisterModel {
+    username: string;
+    password: string;
+    displayName: string;
+    bankAccountNumber: string;
+    email: string;
+}
+
+export { UserLoginModel, UserLoginResponseModel, UserRegisterModel };

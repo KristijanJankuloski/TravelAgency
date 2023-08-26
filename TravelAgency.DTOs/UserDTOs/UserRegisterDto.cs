@@ -9,6 +9,10 @@ namespace TravelAgency.DTOs.UserDTOs
         public string Username { get; set; }
 
         [Required]
+        [MaxLength(50)]
+        public string DisplayName { get; set; }
+
+        [Required]
         public string Passowrd { get; set; }
 
         [Required]

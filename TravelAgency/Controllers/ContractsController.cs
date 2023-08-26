@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAgency.DTOs.ContractDTOs;
+using TravelAgency.DTOs.UserDTOs;
+using TravelAgency.Helpers;
 using TravelAgency.Services.Interfaces;
 
 namespace TravelAgency.Controllers
@@ -16,11 +19,13 @@ namespace TravelAgency.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateContract(ContractCreateDto dto)
         {
             try
             {
-                await _contractService.CreateContract(dto, 1);
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                await _contractService.CreateContract(dto, user.Id);
                 return Ok();
             }
             catch (Exception ex)

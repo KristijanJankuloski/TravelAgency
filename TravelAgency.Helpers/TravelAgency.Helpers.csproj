@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TravelAgency.DataAccess\TravelAgency.DataAccess.csproj" />
+    <ProjectReference Include="..\TravelAgency.DTOs\TravelAgency.DTOs.csproj" />
     <ProjectReference Include="..\TravelAgency.Services\TravelAgency.Services.csproj" />
   </ItemGroup>
 

@@ -10,6 +10,10 @@ namespace TravelAgency.Domain.Models
         public string Username { get; set; } = string.Empty;
 
         [Required]
+        [MaxLength(50)]
+        public string DisplayName { get; set; } = string.Empty;
+
+        [Required]
         public byte[] PasswordHash { get; set; }
 
         [Required]
@@ -23,6 +27,10 @@ namespace TravelAgency.Domain.Models
         [MaxLength(50)]
         public string Email { get; set; } = string.Empty;
 
+        [Required]
+        [Range(1, int.MaxValue)]
+        public int ContractIterator { get; set; }
+
         public DateTime? RegisterDate { get; set; }
 
         [InverseProperty("User")]
@@ -32,5 +40,7 @@ namespace TravelAgency.Domain.Models
         public List<Agency> Agencies { get; set; } = new();
 
         public string? ImagePath { get; set; }
+
+        public string? LastToken { get; set; }
     }
 }

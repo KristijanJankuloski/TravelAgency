@@ -6,5 +6,6 @@ namespace TravelAgency.DataAccess.Repositories.Interfaces
     {
         Task<User> GetByUsernameAync(string username);
         Task<User> GetByEmailAync(string email);
+        Task<int> IterateContractNumber(int id);
     }
 }

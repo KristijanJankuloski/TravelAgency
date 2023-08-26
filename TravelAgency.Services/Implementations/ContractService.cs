@@ -10,9 +10,12 @@ namespace TravelAgency.Services.Implementations
     public class ContractService : IContractService
     {
         private readonly IContractRepository _contractRepository;
-        public ContractService(IContractRepository contractRepository)
+        private readonly IUserRepository _userRepository;
+        public ContractService(IContractRepository contractRepository, IUserRepository userRepository)
         {
             _contractRepository = contractRepository;
+            _userRepository = userRepository;
+
         }
 
         public async Task CreateContract(ContractCreateDto dto, int usedId)
@@ -24,7 +27,8 @@ namespace TravelAgency.Services.Implementations
             Contract contract = dto.ToContract();
             contract.UserId = usedId;
             contract.ContractDate = DateTime.Now;
-            contract.ContractNumber = $"{contract.ContractDate.Year}";
+            int iterator = await _userRepository.IterateContractNumber(usedId);
+            contract.ContractNumber = GenerateContractNumber(iterator);
             foreach(PassengerCreateDto p in  dto.Passengers)
             {
                 Passenger passenger = p.ToPassenger();
@@ -32,6 +36,13 @@ namespace TravelAgency.Services.Implementations
                 contract.Passengers.Add(passenger);
             }
             await _contractRepository.InsertAsync(contract);
+        }
+
+        private string GenerateContractNumber(int iterator)
+        {
+            string number = string.Format("{0:0000}/", iterator);
+            return $"{number}{DateTime.Now.Year}";
+
         }
     }
 }

@@ -20,6 +20,7 @@ export class TokenInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${this.auth.getJwt()}`
         }
       });
+      return next.handle(newRequest);
     }
     return next.handle(request);
   }

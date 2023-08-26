@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../shared/services/api.service';
+import { AuthService } from '../shared/services/auth.service';
+import { UserRegisterModel } from '../shared/models/user';
 
 @Component({
   selector: 'app-register',
@@ -10,17 +12,29 @@ import { ApiService } from '../shared/services/api.service';
 export class RegisterComponent {
 
   registerForm = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    displayName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+    bankAccountNumber: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8)] ),
-    email: new FormControl('', [Validators.required, Validators.email])
+    passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(50)])
   });
   matchingPassword: boolean = true;
 
-  constructor(private api: ApiService){}
+  constructor(private auth: AuthService){}
 
   onRegisterSubmit() {
-    console.log(this.registerForm);
+    if(this.registerForm.invalid){
+      return;
+    }
+    const request: UserRegisterModel = {
+      username: this.registerForm.value.username!,
+      email: this.registerForm.value.email!,
+      password: this.registerForm.value.password!,
+      displayName: this.registerForm.value.displayName!,
+      bankAccountNumber: this.registerForm.value.bankAccountNumber!
+    }
+    this.auth.registerUser(request);
   }
 
   onRePasswordChange() {
