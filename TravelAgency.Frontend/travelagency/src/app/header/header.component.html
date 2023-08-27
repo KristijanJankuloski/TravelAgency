@@ -2,7 +2,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004d40;">
         <div class="container-fluid">
-          <a class="navbar-brand"><h4>Одисеја<i class="bi bi-signpost-2-fill"></i>Менаџер</h4></a>
+          <a class="navbar-brand" routerLink="/home"><h4>Одисеја<i class="bi bi-signpost-2-fill"></i>Менаџер</h4></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -26,9 +26,12 @@
                 </ul>
               </li> -->
             </ul>
-            <a mat-mini-fab color="primary" routerLink="/login">
+            <a *ngIf="!isLoggedIn" mat-mini-fab color="primary" routerLink="/login">
                 <mat-icon>person</mat-icon>
             </a>
+            <button *ngIf="isLoggedIn" mat-raised-button color="primary" routerLink="/dashboard">
+              <img src="assets/images/cs.png" class="img-fluid" width="30px" alt=""> Display name
+            </button>
           </div>
         </div>
       </nav>

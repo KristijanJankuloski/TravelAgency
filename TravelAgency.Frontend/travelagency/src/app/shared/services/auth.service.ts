@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserLoginModel, UserLoginResponseModel, UserRegisterModel } from '../models/user';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
+  private loggedInSubject: Subject<boolean> = new Subject();
+
   constructor(private http: HttpClient) { }
 
   public getJwt() : string {
@@ -16,6 +18,11 @@ export class AuthService {
 
   public setJwt(token : string) : void {
     localStorage.setItem("Token", token);
+    this.loggedInSubject.next(true);
+  }
+
+  public getLoggedInObservable() {
+    return this.loggedInSubject.asObservable();
   }
 
   get isLoggedIn() {
