@@ -27,6 +27,19 @@ namespace TravelAgency.Mappers
             };
         }
 
+        public static UserLoginResponseDto ToLoginResponse(this UserTokenDto user, string token, string refreshToken)
+        {
+            return new UserLoginResponseDto
+            {
+                Username = user.Username,
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                BankAccountNumber = user.BankAccountNumber,
+                Token = token,
+                RefreshToken = refreshToken
+            };
+        }
+
         public static UserTokenDto ToTokenDto(this User user)
         {
             return new UserTokenDto

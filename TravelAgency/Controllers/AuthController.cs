@@ -36,16 +36,8 @@ namespace TravelAgency.Controllers
 
                 string token = JwtHelper.GenerateToken(user, _configuration);
                 string refreshToken = JwtHelper.GenerateRefreshToken(user, _configuration);
-                await _authService.LogLastToken(user.Id, token);
-                UserLoginResponseDto response = new UserLoginResponseDto
-                {
-                    Username = user.Username,
-                    Email = user.Email,
-                    DisplayName = user.DisplayName,
-                    BankAccountNumber = user.BankAccountNumber,
-                    Token = token,
-                    RefreshToken = refreshToken
-                };
+                await _authService.SaveToken(user.Id, token);
+                UserLoginResponseDto response = user.ToLoginResponse(token, refreshToken);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -74,16 +66,34 @@ namespace TravelAgency.Controllers
 
                 string token = JwtHelper.GenerateToken(user, _configuration);
                 string refreshToken = JwtHelper.GenerateRefreshToken(user, _configuration);
-                await _authService.LogLastToken(user.Id, token);
-                UserLoginResponseDto response = new UserLoginResponseDto
+                await _authService.SaveToken(user.Id, token);
+                UserLoginResponseDto response = user.ToLoginResponse(token, refreshToken);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost("refresh-token")]
+        [AllowAnonymous]
+        public async Task<ActionResult<UserLoginResponseDto>> RefreshToken(UserRefreshDto dto)
+        {
+            try
+            {
+                if(!ModelState.IsValid)
                 {
-                    Username = user.Username,
-                    Email = user.Email,
-                    DisplayName = user.DisplayName,
-                    BankAccountNumber = user.BankAccountNumber,
-                    Token = token,
-                    RefreshToken = refreshToken
-                };
+                    return BadRequest();
+                }
+                string newRefreshToken = "newToken";
+                UserTokenDto user = await _authService.CheckLastToken(dto.Username, dto.RefreshToken, newRefreshToken);
+                if(user == null)
+                {
+                    return Unauthorized();
+                }
+                string token = JwtHelper.GenerateToken(user, _configuration);
+                UserLoginResponseDto response = user.ToLoginResponse(token, newRefreshToken);
                 return Ok(response);
             }
             catch (Exception ex)
