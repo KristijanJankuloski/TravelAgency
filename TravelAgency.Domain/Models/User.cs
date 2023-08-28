@@ -14,6 +14,24 @@ namespace TravelAgency.Domain.Models
         public string DisplayName { get; set; } = string.Empty;
 
         [Required]
+        [MaxLength(30)]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(30)]
+        public string LastName { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(20)]
+        public string Role { get; set; } = string.Empty;
+
+        [MaxLength(30)]
+        public string? PhoneNumber { get; set; }
+
+        [MaxLength(50)]
+        public string? Address { get; set; }
+
+        [Required]
         public byte[] PasswordHash { get; set; }
 
         [Required]
@@ -42,5 +60,7 @@ namespace TravelAgency.Domain.Models
         public string? ImagePath { get; set; }
 
         public string? LastToken { get; set; }
+
+        public DateTime? TokenExpireDate { get; set; }
     }
 }

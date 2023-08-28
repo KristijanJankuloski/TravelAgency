@@ -20,6 +20,10 @@ namespace TravelAgency.Helpers
                 new Claim(ClaimTypes.GivenName, user.DisplayName),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim(ClaimTypes.Name, user.FirstName),
+                new Claim(ClaimTypes.Surname, user.LastName),
+                new Claim(ClaimTypes.StreetAddress, user.Address)
             };
 
             JwtSecurityToken token = new JwtSecurityToken(

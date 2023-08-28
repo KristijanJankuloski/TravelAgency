@@ -27,6 +27,7 @@ namespace TravelAgency.Helpers
         {
             services.AddScoped<IContractService, ContractService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using TravelAgency.DataAccess.Repositories.Interfaces;
 using TravelAgency.Domain.Models;
+using TravelAgency.Domain.Enums;
 using TravelAgency.DTOs.UserDTOs;
 using TravelAgency.Mappers;
 using TravelAgency.Services.Helpers;
@@ -22,6 +23,7 @@ namespace TravelAgency.Services.Implementations
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             user.RegisterDate = DateTime.Now;
+            user.Role = Role.User;
             await _userRepository.InsertAsync(user);
         }
 

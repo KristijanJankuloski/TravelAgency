@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAgency.DTOs.UserDTOs;
 using TravelAgency.Helpers;
+using TravelAgency.Services.Interfaces;
 
 namespace TravelAgency.Controllers
 {
@@ -11,9 +12,11 @@ namespace TravelAgency.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IWebHostEnvironment _environment;
-        public UsersController(IWebHostEnvironment environment)
+        private readonly IUserService _userService;
+        public UsersController(IWebHostEnvironment environment, IUserService userService)
         {
             _environment = environment;
+            _userService = userService;
         }
 
         [HttpPost("update-image")]
@@ -32,12 +35,13 @@ namespace TravelAgency.Controllers
                 {
                     Directory.CreateDirectory(fileImagePath);
                 }
-                string imagePath = fileImagePath + $"\\{file.FileName}";
+                string imagePath = fileImagePath + $"\\{user.Id}_{file.FileName}";
 
                 using (FileStream stream = new FileStream(imagePath, FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }
+                await _userService.UpdateImage(user.Id, $"Uploads/{user.Id}_{file.FileName}");
                 return Ok();
             }
             catch (Exception ex)

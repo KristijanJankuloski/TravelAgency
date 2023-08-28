@@ -17,10 +17,17 @@ namespace TravelAgency.Domain.Models
         [MaxLength(30)]
         public string ContractNumber { get; set; } = string.Empty;
 
+        [Required]
+        [MaxLength(30)]
+        public string ContractLocation { get; set; } = string.Empty;
+
+        [Required]
         public DateTime ContractDate { get; set; }
 
+        [Required]
         public DateTime StartDate { get; set; }
 
+        [Required]
         public DateTime EndDate { get; set; }
 
         [Required]
@@ -32,6 +39,8 @@ namespace TravelAgency.Domain.Models
         public double AmmountPaid { get; set; }
 
         public bool IsPaid { get; set; }
+
+        public bool IsArchived { get; set; }
 
         [Required]
         public int UserId { get; set; }

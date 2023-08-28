@@ -17,6 +17,11 @@ namespace TravelAgency.Domain.Models
         [MaxLength(30)]
         public string PhoneNumber { get; set; } = string.Empty;
 
+        [MaxLength(30)]
+        public string? Email { get; set; }
+
+        public string? AccountNumber { get; set; }
+
         [Required]
         public int UserId { get; set; }
 

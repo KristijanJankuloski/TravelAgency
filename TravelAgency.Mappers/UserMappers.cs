@@ -33,6 +33,10 @@ namespace TravelAgency.Mappers
             {
                 Id = user.Id,
                 Username = user.Username,
+                FirstName= user.FirstName,
+                LastName= user.LastName,
+                Address = user.Address,
+                Role = user.Role,
                 DisplayName = user.DisplayName,
                 Email = user.Email,
                 BankAccountNumber = user.BankAccountNumber,
