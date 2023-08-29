@@ -30,6 +30,15 @@ namespace TravelAgency.Domain.Models
         [Required]
         public DateTime EndDate { get; set; }
 
+        [MaxLength(20)]
+        public string? RoomType { get; set; }
+
+        [MaxLength(20)]
+        public string? ServiceType { get; set; }
+
+        [MaxLength(20)]
+        public string? TransportationType { get; set; }
+
         [Required]
         [Range(0, int.MaxValue)]
         public double TotalPrice { get; set; }

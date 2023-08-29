@@ -30,6 +30,15 @@ namespace TravelAgency.DTOs.ContractDTOs
         [Required]
         public int planId { get; set; }
 
+        [MaxLength(20)]
+        public string RoomType { get; set; }
+
+        [MaxLength(20)]
+        public string ServiceType { get; set; }
+
+        [MaxLength(20)]
+        public string TransportationType { get; set; }
+
         public PassengerCreateDto[] Passengers { get; set; }
     }
 }

@@ -23,15 +23,6 @@ namespace TravelAgency.Domain.Models
         [ForeignKey("AgencyId")]
         public Agency Agency { get; set; }
 
-        [MaxLength(20)]
-        public string? RoomType { get; set; }
-
-        [MaxLength(20)]
-        public string? ServiceType { get; set; }
-
-        [MaxLength(20)]
-        public string? TransportationType { get; set; }
-
         [InverseProperty("Plan")]
         public List<AvailableDate> AvailableDates { get; set; } = new();
     }

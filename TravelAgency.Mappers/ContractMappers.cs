@@ -16,6 +16,9 @@ namespace TravelAgency.Mappers
                 TotalPrice = dto.TotalPrice,
                 AmmountPaid = dto.AmmountPaid,
                 IsPaid = dto.TotalPrice == dto.AmmountPaid,
+                RoomType = dto.RoomType,
+                ServiceType = dto.ServiceType,
+                TransportationType = dto.TransportationType,
             };
         }
     }

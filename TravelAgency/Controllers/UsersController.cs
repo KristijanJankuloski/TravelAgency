@@ -19,6 +19,30 @@ namespace TravelAgency.Controllers
             _userService = userService;
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<UserDetailsDto>> Get()
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                if(user == null)
+                {
+                    return Unauthorized();
+                }
+                UserDetailsDto dto = await _userService.GetDetails(user.Id);
+                if(dto == null)
+                {
+                    return Unauthorized();
+                }
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost("update-image")]
         [Authorize]
         public async Task<IActionResult> UpdateImage([FromForm] IFormFile file)

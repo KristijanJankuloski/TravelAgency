@@ -32,6 +32,9 @@ namespace TravelAgency.Domain.Models
         [MaxLength(50)]
         public string? Address { get; set; }
 
+        [MaxLength(250)]
+        public string? Comment { get; set; }
+
         [Required]
         public int ContractId { get; set; }
 

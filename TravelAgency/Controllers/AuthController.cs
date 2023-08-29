@@ -35,8 +35,8 @@ namespace TravelAgency.Controllers
                 }
 
                 string token = JwtHelper.GenerateToken(user, _configuration);
-                string refreshToken = JwtHelper.GenerateRefreshToken(user, _configuration);
-                await _authService.SaveToken(user.Id, token);
+                string refreshToken = JwtHelper.GenerateRefreshToken();
+                await _authService.SaveToken(user.Id, refreshToken);
                 UserLoginResponseDto response = user.ToLoginResponse(token, refreshToken);
                 return Ok(response);
             }
@@ -65,8 +65,8 @@ namespace TravelAgency.Controllers
                 }
 
                 string token = JwtHelper.GenerateToken(user, _configuration);
-                string refreshToken = JwtHelper.GenerateRefreshToken(user, _configuration);
-                await _authService.SaveToken(user.Id, token);
+                string refreshToken = JwtHelper.GenerateRefreshToken();
+                await _authService.SaveToken(user.Id, refreshToken);
                 UserLoginResponseDto response = user.ToLoginResponse(token, refreshToken);
                 return Ok(response);
             }
@@ -86,7 +86,7 @@ namespace TravelAgency.Controllers
                 {
                     return BadRequest();
                 }
-                string newRefreshToken = "newToken";
+                string newRefreshToken = JwtHelper.GenerateRefreshToken();
                 UserTokenDto user = await _authService.CheckLastToken(dto.Username, dto.RefreshToken, newRefreshToken);
                 if(user == null)
                 {

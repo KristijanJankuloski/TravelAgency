@@ -55,5 +55,22 @@ namespace TravelAgency.Mappers
                 BankAccountNumber = user.BankAccountNumber,
             };
         }
+
+        public static UserDetailsDto ToUserDetailsDto(this User user)
+        {
+            return new UserDetailsDto
+            {
+                Id = user.Id,
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                BankAccountNumber = user.BankAccountNumber,
+                Address = user.Address ?? "/",
+                PhoneNumber = user.PhoneNumber ?? "/",
+                ImageLink = user.ImagePath ?? "/noImage",
+            };
+        }
     }
 }
