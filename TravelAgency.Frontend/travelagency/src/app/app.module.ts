@@ -19,6 +19,7 @@ import { RegisterComponent } from './register/register.component';
 import { AgenciesComponent } from './agencies/agencies.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TokenInterceptor } from './shared/services/token.interceptor';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { TokenInterceptor } from './shared/services/token.interceptor';
     LoginComponent,
     RegisterComponent,
     AgenciesComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
