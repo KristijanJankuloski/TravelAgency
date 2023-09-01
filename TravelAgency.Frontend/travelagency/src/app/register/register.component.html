@@ -8,6 +8,20 @@
                 <div class="row">
                     <div class="col-md">
                         <mat-form-field class="w-100">
+                            <mat-label for="firstName">Име</mat-label>
+                            <input id="firstName" type="text" matInput required formControlName="firstName" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label for="lastName">Презиме</mat-label>
+                            <input id="lastName" type="text" matInput required formControlName="lastName" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
                             <mat-label for="email">E-mail адреса</mat-label>
                             <input id="email" type="email" matInput required formControlName="email" />
                         </mat-form-field>

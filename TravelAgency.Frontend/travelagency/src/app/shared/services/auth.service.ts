@@ -37,6 +37,6 @@ export class AuthService {
   }
 
   public registerUser(req: UserRegisterModel) {
-    return this.http.post(`${environment.apiBaseUrl}/auth/register`, req);
+    return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/register`, req);
   }
 }

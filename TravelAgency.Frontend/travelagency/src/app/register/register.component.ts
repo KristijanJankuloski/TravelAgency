@@ -12,6 +12,8 @@ import { UserRegisterModel } from '../shared/models/user';
 export class RegisterComponent {
 
   registerForm = new FormGroup({
+    firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     displayName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
     bankAccountNumber: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
     username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -28,6 +30,8 @@ export class RegisterComponent {
       return;
     }
     const request: UserRegisterModel = {
+      firstName: this.registerForm.value.firstName!,
+      lastName: this.registerForm.value.lastName!,
       username: this.registerForm.value.username!,
       email: this.registerForm.value.email!,
       password: this.registerForm.value.password!,

@@ -13,6 +13,14 @@ namespace TravelAgency.DTOs.UserDTOs
         public string DisplayName { get; set; }
 
         [Required]
+        [MaxLength(30)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(30)]
+        public string LastName { get; set; }
+
+        [Required]
         public string Passowrd { get; set; }
 
         [Required]
