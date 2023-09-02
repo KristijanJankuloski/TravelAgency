@@ -9,12 +9,15 @@ export function usernameAvailabilityValidator(): AsyncValidatorFn {
         return new Promise<ValidationErrors | null>((resolve, reject) => {
             if(!value)
                 resolve(null);
-            api.usernameCheck(value).subscribe((response) => {
+            api.usernameCheck(value).subscribe({
+                next: (response) => {
                 if(response[0].IsTaken)
                     resolve({usernameTaken: true});
                 else
                     resolve(null);
-            });
+            }, error: (error) => {
+                reject(error);
+            }});
         });
     }
 }

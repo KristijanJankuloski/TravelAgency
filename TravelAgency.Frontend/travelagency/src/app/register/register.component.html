@@ -59,8 +59,10 @@
                             <mat-label for="passwordRe">Повторена лозинка</mat-label>
                             <input id="passwordRe" type="password" matInput required formControlName="passwordRepeated" />
                         </mat-form-field>
-                        <div *ngIf="!matchingPassword" class="text-danger">
-                            <p>Лозинката не е иста</p>
+                        <div *ngIf="!registerForm.controls.passwordRepeated.valid">
+                            <div *ngIf="registerForm.controls.passwordRepeated.hasError('passwordMismatch')" class="text-danger">
+                                <p>Лозинката не е иста</p>
+                            </div>
                         </div>
                     </div>
                 </div>

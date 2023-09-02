@@ -23,7 +23,6 @@ export class RegisterComponent {
     passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8), passwordRepeatValidator()]),
     email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(50)])
   });
-  matchingPassword: boolean = true;
 
   constructor(private auth: AuthService, private api: ApiService){}
 
