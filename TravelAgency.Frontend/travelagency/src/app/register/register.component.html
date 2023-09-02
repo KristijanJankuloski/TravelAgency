@@ -57,7 +57,7 @@
                     <div class="col-md">
                         <mat-form-field class="w-100">
                             <mat-label for="passwordRe">Повторена лозинка</mat-label>
-                            <input id="passwordRe" type="password" matInput required formControlName="passwordRepeated" (change)="onRePasswordChange()" />
+                            <input id="passwordRe" type="password" matInput required formControlName="passwordRepeated" />
                         </mat-form-field>
                         <div *ngIf="!matchingPassword" class="text-danger">
                             <p>Лозинката не е иста</p>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="row justify-content-end">
                     <div class="col-md-4">
-                        <button type="submit" class="w-100" mat-raised-button color="primary">Регистрирај се</button>
+                        <button type="submit" class="w-100" mat-raised-button color="primary" [disabled]="!registerForm.valid">Регистрирај се</button>
                     </div>
                 </div>
             </form>

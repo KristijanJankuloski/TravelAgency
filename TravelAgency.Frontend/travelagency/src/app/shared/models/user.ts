@@ -22,4 +22,9 @@ interface UserRegisterModel {
     email: string;
 }
 
-export { UserLoginModel, UserLoginResponseModel, UserRegisterModel };
+interface AvailabilityResponseModel {
+    search: string;
+    IsTaken: boolean;
+}
+
+export { UserLoginModel, UserLoginResponseModel, UserRegisterModel, AvailabilityResponseModel };

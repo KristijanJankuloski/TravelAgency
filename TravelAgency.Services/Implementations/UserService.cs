@@ -24,6 +24,22 @@ namespace TravelAgency.Services.Implementations
             return user.ToUserDetailsDto();
         }
 
+        public async Task<bool> IsEmailTaken(string email)
+        {
+            User user = await _userRepository.GetByEmailAync(email);
+            if (user == null)
+                return false;
+            return true;
+        }
+
+        public async Task<bool> IsUserTaken(string username)
+        {
+            User user = await _userRepository.GetByUsernameAync(username);
+            if(user == null)
+                return false;
+            return true;
+        }
+
         public async Task UpdateImage(int userId, string imagePath)
         {
             User user = await _userRepository.GetByIdAsync(userId);

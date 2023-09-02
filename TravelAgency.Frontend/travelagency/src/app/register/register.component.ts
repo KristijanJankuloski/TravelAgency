@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../shared/services/api.service';
 import { AuthService } from '../shared/services/auth.service';
 import { UserRegisterModel } from '../shared/models/user';
+import { usernameAvailabilityValidator } from '../shared/validators/username.validator';
+import { passwordRepeatValidator } from '../shared/validators/password-repeat.validator';
 
 @Component({
   selector: 'app-register',
@@ -16,14 +18,14 @@ export class RegisterComponent {
     lastName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     displayName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
     bankAccountNumber: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+    username: new FormControl('', {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)], asyncValidators: [usernameAvailabilityValidator()]}),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8), passwordRepeatValidator()]),
     email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(50)])
   });
   matchingPassword: boolean = true;
 
-  constructor(private auth: AuthService){}
+  constructor(private auth: AuthService, private api: ApiService){}
 
   onRegisterSubmit() {
     if(this.registerForm.invalid){
@@ -39,14 +41,5 @@ export class RegisterComponent {
       bankAccountNumber: this.registerForm.value.bankAccountNumber!
     }
     this.auth.registerUser(request);
-  }
-
-  onRePasswordChange() {
-    if(this.registerForm.value.password === this.registerForm.value.passwordRepeated && this.registerForm.controls.passwordRepeated.touched){
-      this.matchingPassword = true;
-    }
-    else {
-      this.matchingPassword = false;
-    }
   }
 }

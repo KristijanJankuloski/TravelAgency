@@ -6,5 +6,7 @@ namespace TravelAgency.Services.Interfaces
     {
         Task UpdateImage(int userId, string imagePath);
         Task<UserDetailsDto> GetDetails(int userId);
+        Task<bool> IsUserTaken(string username);
+        Task<bool> IsEmailTaken(string email);
     }
 }
