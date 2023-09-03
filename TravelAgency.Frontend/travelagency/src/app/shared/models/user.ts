@@ -12,6 +12,19 @@ interface UserLoginResponseModel {
     refreshToken: string;
 }
 
+interface UserDetailsModel {
+    id: number;
+    username: string;
+    displayName: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    bankAccountNumber: string;
+    phoneNumber: string;
+    address: string;
+    imageLink?: string | undefined;
+}
+
 interface UserRegisterModel {
     firstName: string;
     lastName: string;
@@ -27,4 +40,4 @@ interface AvailabilityResponseModel {
     IsTaken: boolean;
 }
 
-export { UserLoginModel, UserLoginResponseModel, UserRegisterModel, AvailabilityResponseModel };
+export { UserLoginModel, UserLoginResponseModel, UserRegisterModel, AvailabilityResponseModel, UserDetailsModel };

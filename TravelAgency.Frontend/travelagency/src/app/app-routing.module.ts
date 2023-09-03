@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { AgenciesComponent } from './agencies/agencies.component';
 import { authGuard } from './shared/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate:[authGuard] },
-  { path: 'agencies', component: AgenciesComponent, canActivate:[authGuard] }
+  { path: 'agencies', component: AgenciesComponent, canActivate:[authGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate:[authGuard] }
 ];
 
 @NgModule({

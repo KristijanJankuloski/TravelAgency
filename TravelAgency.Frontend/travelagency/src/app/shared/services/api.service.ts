@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { AvailabilityResponseModel } from '../models/user';
+import { AvailabilityResponseModel, UserDetailsModel } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +13,9 @@ export class ApiService {
 
   public usernameCheck(username: string) : Observable<AvailabilityResponseModel[]>{
     return this.http.get<AvailabilityResponseModel[]>(`${environment.apiBaseUrl}/users/check?username=${username}`);
+  }
+
+  public getUserDetails() : Observable<UserDetailsModel> {
+    return this.http.get<UserDetailsModel>(`${environment.apiBaseUrl}/users`);
   }
 }

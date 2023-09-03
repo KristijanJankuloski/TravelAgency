@@ -12,7 +12,7 @@
                 <a class="nav-link" routerLink="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" routerLink="/plans">Link</a>
+                <a class="nav-link" routerLink="/dashboard">Статистика</a>
               </li>
               <!-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -29,7 +29,7 @@
             <a *ngIf="!isLoggedIn" mat-mini-fab color="primary" routerLink="/login">
                 <mat-icon>person</mat-icon>
             </a>
-            <button *ngIf="isLoggedIn" mat-raised-button color="primary" routerLink="/dashboard">
+            <button *ngIf="isLoggedIn" mat-raised-button color="primary" routerLink="/profile">
               <img src="assets/images/cs.png" class="img-fluid" width="30px" alt=""> Display name
             </button>
           </div>

@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
   private loggedInSubject: Subject<boolean> = new Subject();
+  private userSubject: Subject<UserLoginModel | null> = new Subject();
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +20,18 @@ export class AuthService {
   public setJwt(token : string) : void {
     localStorage.setItem("Token", token);
     this.loggedInSubject.next(true);
+  }
+
+  public setLocalUser(username: string){
+    localStorage.setItem("Username", username);
+  }
+
+  public setUser(user: UserLoginModel){
+    this.userSubject.next(user);
+  }
+
+  public getUser() {
+    return this.userSubject.asObservable();
   }
 
   public getLoggedInObservable() {
@@ -33,7 +46,12 @@ export class AuthService {
   }
 
   public loginUser(req: UserLoginModel) : Observable<UserLoginResponseModel> {
-    return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/login`, req);
+    let request = this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/login`, req);
+    request.subscribe((data) => {
+      this.setLocalUser(data.displayName);
+      this.setJwt(data.token);
+    });
+    return request;
   }
 
   public registerUser(req: UserRegisterModel) {
