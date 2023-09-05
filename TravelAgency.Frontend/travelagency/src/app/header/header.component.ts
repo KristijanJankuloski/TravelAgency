@@ -19,6 +19,9 @@ export class HeaderComponent {
     this.auth.getLoggedInObservable().subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
     });
+    this.auth.getUser().subscribe(user => {
+      this.username = user?.username?? "";
+    });
   }
 
   logOut() {

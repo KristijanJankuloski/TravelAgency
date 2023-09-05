@@ -58,7 +58,7 @@ namespace TravelAgency.Controllers
                 }
                 await _authService.RegisterUser(dto);
 
-                UserTokenDto user = await _authService.Login(new UserLoginDto { Username = dto.Username, Password = dto.Passowrd });
+                UserTokenDto user = await _authService.Login(new UserLoginDto { Username = dto.Username, Password = dto.Password });
                 if (user == null)
                 {
                     return BadRequest("Bad credentials");

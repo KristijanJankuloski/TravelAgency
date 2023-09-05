@@ -18,9 +18,10 @@ export class RegisterComponent {
     lastName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     displayName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
     bankAccountNumber: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-    username: new FormControl('', {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)], asyncValidators: [usernameAvailabilityValidator()]}),
+    username: new FormControl('', {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)]}),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8), passwordRepeatValidator()]),
+    // passwordRepeatValidator(), asyncValidators: [usernameAvailabilityValidator()]
+    passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8)]),
     email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(50)])
   });
 
@@ -39,6 +40,6 @@ export class RegisterComponent {
       displayName: this.registerForm.value.displayName!,
       bankAccountNumber: this.registerForm.value.bankAccountNumber!
     }
-    this.auth.registerUser(request);
+    this.auth.registerUser(request).subscribe(data => console.log);
   }
 }

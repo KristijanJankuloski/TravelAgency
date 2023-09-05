@@ -22,7 +22,7 @@ namespace TravelAgency.Services.Implementations
         public async Task RegisterUser(UserRegisterDto dto)
         {
             User user = dto.ToUser();
-            PasswordHelper.CreatePasswordHash(dto.Passowrd, out byte[] passwordHash, out byte[] passwordSalt);
+            PasswordHelper.CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             user.RegisterDate = DateTime.Now;

@@ -1,6 +1,14 @@
-<div class="container pt-lg-5 pt-2">
-    <div>
-        <h3>{{ user?.displayName }}</h3>
+<div class="container bg-light">
+    <div *ngIf="user" class="pt-lg-5 pt-2 px-md-3">
+        <div class="pb-3">
+            <h3 class="display-3">{{ user.displayName }}</h3>
+        </div>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput type="text" name="username" id="username" [value]="user.username" disabled>
+        </mat-form-field>
+        <h3>{{user.firstName}}</h3>
+        <h3>{{user.lastName}}</h3>
         <button mat-raised-button color="primary" (click)="changePasswordDialog()">Change password</button>
     </div>
 </div>

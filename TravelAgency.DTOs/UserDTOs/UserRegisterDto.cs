@@ -21,7 +21,7 @@ namespace TravelAgency.DTOs.UserDTOs
         public string LastName { get; set; }
 
         [Required]
-        public string Passowrd { get; set; }
+        public string Password { get; set; }
 
         [Required]
         [MaxLength(50)]

@@ -13,7 +13,9 @@ namespace TravelAgency.Mappers
                 DisplayName = dto.DisplayName,
                 Email = dto.Email,
                 BankAccountNumber = dto.BankAccountNumber,
-                ContractIterator = 1
+                ContractIterator = 1,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
             };
         }
 
@@ -24,6 +26,7 @@ namespace TravelAgency.Mappers
                 Username = user.Username,
                 DisplayName = user.DisplayName,
                 Email = user.Email,
+                ImageUrl = user.ImagePath?? "/noImage"
             };
         }
 
@@ -35,6 +38,7 @@ namespace TravelAgency.Mappers
                 DisplayName = user.DisplayName,
                 Email = user.Email,
                 BankAccountNumber = user.BankAccountNumber,
+                ImageUrl = user.ImageUrl?? "/noImage",
                 Token = token,
                 RefreshToken = refreshToken
             };
@@ -53,6 +57,7 @@ namespace TravelAgency.Mappers
                 DisplayName = user.DisplayName,
                 Email = user.Email,
                 BankAccountNumber = user.BankAccountNumber,
+                ImageUrl = user.ImagePath
             };
         }
 

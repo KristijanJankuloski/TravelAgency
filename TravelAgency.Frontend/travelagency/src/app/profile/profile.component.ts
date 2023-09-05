@@ -16,6 +16,7 @@ export class ProfileComponent {
 
   ngOnInit(){
     this.api.getUserDetails().subscribe(data => {
+      console.log(data);
       this.user = data;
     });
   }
