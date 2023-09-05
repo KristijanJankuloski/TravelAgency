@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { HeaderComponent } from './header/header.component';
@@ -21,6 +23,7 @@ import { AgenciesComponent } from './agencies/agencies.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TokenInterceptor } from './shared/services/token.interceptor';
 import { ProfileComponent } from './profile/profile.component';
+import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,20 +34,23 @@ import { ProfileComponent } from './profile/profile.component';
     RegisterComponent,
     AgenciesComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
