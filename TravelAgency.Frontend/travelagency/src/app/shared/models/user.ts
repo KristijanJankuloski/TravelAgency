@@ -8,6 +8,7 @@ interface UserLoginResponseModel {
     displayName: string;
     email: string;
     bankAccountNumber: string;
+    imageUrl: string;
     token: string;
     refreshToken: string;
 }

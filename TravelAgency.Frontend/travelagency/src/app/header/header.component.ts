@@ -8,13 +8,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  isLoggedIn = false;
+  isLoggedIn: boolean = false;
+  username: string = '';
 
   constructor(private auth: AuthService, private router: Router){}
 
   ngOnInit(){
+    this.isLoggedIn = this.auth.isLoggedIn;
+    this.username = this.auth.getLocalUser()?? "";
     this.auth.getLoggedInObservable().subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
     });
+  }
+
+  logOut() {
+    this.auth.logout();
   }
 }

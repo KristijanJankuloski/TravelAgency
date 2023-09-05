@@ -3,15 +3,16 @@ import { UserLoginModel, UserLoginResponseModel, UserRegisterModel } from '../mo
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private loggedInSubject: Subject<boolean> = new Subject();
-  private userSubject: Subject<UserLoginModel | null> = new Subject();
+  private userSubject: Subject<UserLoginResponseModel | null> = new Subject();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   public getJwt() : string {
     return localStorage.getItem("Token") ?? '';
@@ -22,12 +23,23 @@ export class AuthService {
     this.loggedInSubject.next(true);
   }
 
-  public setLocalUser(username: string){
-    localStorage.setItem("Username", username);
+  public deleteJwt() : void{
+    localStorage.removeItem("Token");
+    this.loggedInSubject.next(false);
+  }
+  
+  public getLocalUser() {
+    return localStorage.getItem("Username");
+  }
+  
+  public setUser(user: UserLoginResponseModel){
+    localStorage.setItem("Username", user.username);
+    this.userSubject.next(user);
   }
 
-  public setUser(user: UserLoginModel){
-    this.userSubject.next(user);
+  public deleteUser(){
+    localStorage.removeItem("Username");
+    this.userSubject.next(null);
   }
 
   public getUser() {
@@ -48,10 +60,16 @@ export class AuthService {
   public loginUser(req: UserLoginModel) : Observable<UserLoginResponseModel> {
     let request = this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/login`, req);
     request.subscribe((data) => {
-      this.setLocalUser(data.displayName);
+      this.setUser(data);
       this.setJwt(data.token);
     });
     return request;
+  }
+
+  public logout() {
+    this.deleteJwt();
+    this.deleteUser();
+    this.router.navigate(['home']);
   }
 
   public registerUser(req: UserRegisterModel) {
