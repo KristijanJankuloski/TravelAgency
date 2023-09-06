@@ -3,12 +3,47 @@
         <div class="pb-3">
             <h3 class="display-3">{{ user.displayName }}</h3>
         </div>
-        <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput type="text" name="username" id="username" [value]="user.username" disabled>
-        </mat-form-field>
-        <h3>{{user.firstName}}</h3>
-        <h3>{{user.lastName}}</h3>
-        <button mat-raised-button color="primary" (click)="changePasswordDialog()">Change password</button>
+        <div class="row">
+            <div class="col-md-4 d-grid p-2">
+                <mat-form-field>
+                    <mat-label>Корисничко име</mat-label>
+                    <input matInput type="text" name="username" id="username" [value]="user.username" disabled>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 d-grid p-2">
+                <mat-form-field>
+                    <mat-label>Е-маил адреса</mat-label>
+                    <input matInput type="email" name="email" id="email" [value]="user.email" disabled>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 d-grid p-2">
+                <mat-form-field>
+                    <mat-label>Име на организација</mat-label>
+                    <input matInput type="text" name="displayName" id="displayName" [value]="user.displayName">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md d-grid p-2">
+                <mat-form-field>
+                    <mat-label>Име</mat-label>
+                    <input matInput type="text" name="firstName" id="firstName" [value]="user.firstName">
+                </mat-form-field>
+            </div>
+            <div class="col-md d-grid p-2">
+                <mat-form-field>
+                    <mat-label>Презиме</mat-label>
+                    <input matInput type="text" name="lastName" id="lastName" [value]="user.lastName">
+                </mat-form-field>
+            </div>
+            <div class="col-md d-grid p-2">
+                <mat-form-field>
+                    <mat-label>Телефонски број</mat-label>
+                    <input matInput type="text" name="phoneNumber" id="phoneNumber" [value]="user.phoneNumber">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="changePasswordDialog()">Промени лозинка</button>
     </div>
 </div>

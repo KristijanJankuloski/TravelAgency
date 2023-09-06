@@ -23,6 +23,14 @@ export class AuthService {
     this.loggedInSubject.next(true);
   }
 
+  public setRefreshToken(token: string): void{
+    localStorage.setItem("RefreshToken", token);
+  }
+
+  public getRefreshToken(): string {
+    return localStorage.getItem("RefreshToken")?? '';
+  }
+
   public deleteJwt() : void{
     localStorage.removeItem("Token");
     this.loggedInSubject.next(false);
@@ -62,6 +70,7 @@ export class AuthService {
     request.subscribe((data) => {
       this.setUser(data);
       this.setJwt(data.token);
+      this.setRefreshToken(data.refreshToken);
       this.router.navigate(['profile']);
     });
     return request;
@@ -69,11 +78,16 @@ export class AuthService {
 
   public logout() {
     this.deleteJwt();
+    localStorage.removeItem("RefreshToken");
     this.deleteUser();
     this.router.navigate(['home']);
   }
 
   public registerUser(req: UserRegisterModel) {
     return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/register`, req);
+  }
+
+  public refreshSession(){
+    return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/refresh-token`, {username: this.getLocalUser(), refreshToken: this.getRefreshToken()});
   }
 }
