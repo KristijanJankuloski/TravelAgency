@@ -35,7 +35,7 @@
             <button *ngIf="isLoggedIn" mat-raised-button color="primary" routerLink="/profile">
               <img src="assets/images/cs.png" class="img-fluid" width="30px" alt=""> {{username}}
             </button>
-            <button *ngIf="isLoggedIn" mat-mini-fab color="warn" class="ms-2" matTooltip="Одлогирај се" (click)="logOut()"><mat-icon>exit_to_app</mat-icon></button>
+            <button *ngIf="isLoggedIn" mat-mini-fab color="accent" class="ms-2" matTooltip="Одлогирај се" (click)="logOut()"><mat-icon>exit_to_app</mat-icon></button>
           </div>
         </div>
       </nav>

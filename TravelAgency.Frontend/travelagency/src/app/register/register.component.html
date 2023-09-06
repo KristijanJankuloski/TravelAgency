@@ -29,7 +29,7 @@
                     <div class="col-md">
                         <mat-form-field class="w-100">
                             <mat-label for="username">Корисничко име</mat-label>
-                            <input id="username" type="text" matInput required formControlName="username" />
+                            <input id="username" type="text" matInput required formControlName="username" (change)="usernameCheck()" />
                         </mat-form-field>
                     </div>
                 </div>
@@ -66,7 +66,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-end">
+                <div class="row justify-content-end align-items-center">
+                    <div class="col-md">
+                        <p *ngIf="passwordMismatch" class="card-text text-danger">Лозинката не се совпаѓа</p>
+                        <p *ngIf="usernameTaken" class="card-text text-danger">Корисничкото име е веќе во користење</p>
+                        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+                    </div>
                     <div class="col-md-4">
                         <button type="submit" class="w-100" mat-raised-button color="primary" [disabled]="!registerForm.valid">Регистрирај се</button>
                     </div>

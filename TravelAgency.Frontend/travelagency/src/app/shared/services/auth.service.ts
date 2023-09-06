@@ -62,6 +62,7 @@ export class AuthService {
     request.subscribe((data) => {
       this.setUser(data);
       this.setJwt(data.token);
+      this.router.navigate(['profile']);
     });
     return request;
   }

@@ -50,7 +50,8 @@ import { ChangePasswordDialogComponent } from './profile/change-password-dialog/
     MatInputModule,
     MatButtonModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

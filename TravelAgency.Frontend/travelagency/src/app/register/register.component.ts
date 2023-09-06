@@ -5,6 +5,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { UserRegisterModel } from '../shared/models/user';
 import { usernameAvailabilityValidator } from '../shared/validators/username.validator';
 import { passwordRepeatValidator } from '../shared/validators/password-repeat.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -20,14 +21,20 @@ export class RegisterComponent {
     bankAccountNumber: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
     username: new FormControl('', {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)]}),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    // passwordRepeatValidator(), asyncValidators: [usernameAvailabilityValidator()]
     passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8)]),
     email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(50)])
   });
+  passwordMismatch: boolean = false;
+  usernameTaken: boolean = false;
+  loading: boolean = false;
 
-  constructor(private auth: AuthService, private api: ApiService){}
+  constructor(private auth: AuthService, private api: ApiService, private router: Router){}
 
   onRegisterSubmit() {
+    if(this.registerForm.value.password !== this.registerForm.value.passwordRepeated){
+      this.passwordMismatch = true;
+      return;
+    }
     if(this.registerForm.invalid){
       return;
     }
@@ -40,6 +47,27 @@ export class RegisterComponent {
       displayName: this.registerForm.value.displayName!,
       bankAccountNumber: this.registerForm.value.bankAccountNumber!
     }
-    this.auth.registerUser(request).subscribe(data => console.log);
+    this.auth.registerUser(request).subscribe(data => {
+      this.auth.setJwt(data.token);
+      this.auth.setUser(data);
+      this.router.navigate(['profile']);
+    });
+  }
+
+  usernameCheck() {
+    this.loading = true;
+    if(this.registerForm.value.username){
+      this.api.usernameCheck(this.registerForm.value.username).subscribe(data => {
+      console.log(data);
+          if(data[0].IsTaken){
+            this.registerForm.controls.username.setErrors({taken: true});
+            this.usernameTaken = true;
+          }
+          else{
+            this.registerForm.controls.username.setErrors(null);
+          }
+          this.loading = false;
+      });
+    }
   }
 }
