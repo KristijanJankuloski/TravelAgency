@@ -18,4 +18,8 @@ export class ApiService {
   public getUserDetails() : Observable<UserDetailsModel> {
     return this.http.get<UserDetailsModel>(`${environment.apiBaseUrl}/users`);
   }
+
+  public updateUserImage(payload: FormData) {
+    return this.http.post(`${environment.apiBaseUrl}/users/update-image`, payload)
+  }
 }

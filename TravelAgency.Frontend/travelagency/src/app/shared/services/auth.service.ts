@@ -39,14 +39,20 @@ export class AuthService {
   public getLocalUser() {
     return localStorage.getItem("Username");
   }
+
+  public getLocalImage(){
+    return localStorage.getItem("Image");
+  }
   
   public setUser(user: UserLoginResponseModel){
     localStorage.setItem("Username", user.username);
+    localStorage.setItem("Image", user.imageUrl);
     this.userSubject.next(user);
   }
 
   public deleteUser(){
     localStorage.removeItem("Username");
+    localStorage.removeItem("Image");
     this.userSubject.next(null);
   }
 

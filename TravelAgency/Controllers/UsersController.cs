@@ -104,7 +104,7 @@ namespace TravelAgency.Controllers
                 {
                     file.CopyTo(stream);
                 }
-                await _userService.UpdateImage(user.Id, $"Uploads/{user.Id}_{file.FileName}");
+                await _userService.UpdateImage(user.Id, $"/Uploads/{user.Id}_{file.FileName}");
                 return Ok();
             }
             catch (Exception ex)

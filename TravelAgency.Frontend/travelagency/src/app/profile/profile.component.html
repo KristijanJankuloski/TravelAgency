@@ -2,7 +2,7 @@
     <div *ngIf="user" class="pt-lg-5 pt-2 px-md-3 pb-5">
         <div class="pb-3">
             <div class="d-flex">
-
+                <div><img class="img-thumbnail" width="300px" [src]="user.imageLink" [alt]="user.username + ' image'"></div>
                 <h3 class="display-3 ms-5">{{ user.displayName }}</h3>
             </div>
         </div>
@@ -60,7 +60,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-4 p-2">
-                <button class="h-75" mat-raised-button>Прикачи слика <mat-icon>cloud_upload</mat-icon></button>
+                <button class="h-75" mat-raised-button (click)="uploadImageDialog()">Прикачи слика <mat-icon>cloud_upload</mat-icon></button>
             </div>
         </div>
         <button mat-raised-button color="accent" (click)="changePasswordDialog()">Промени лозинка</button>

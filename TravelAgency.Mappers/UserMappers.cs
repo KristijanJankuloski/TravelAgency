@@ -26,7 +26,7 @@ namespace TravelAgency.Mappers
                 Username = user.Username,
                 DisplayName = user.DisplayName,
                 Email = user.Email,
-                ImageUrl = user.ImagePath?? "/noImage"
+                ImageUrl = user.ImagePath?? "/noImage.png"
             };
         }
 
@@ -38,7 +38,7 @@ namespace TravelAgency.Mappers
                 DisplayName = user.DisplayName,
                 Email = user.Email,
                 BankAccountNumber = user.BankAccountNumber,
-                ImageUrl = user.ImageUrl?? "/noImage",
+                ImageUrl = user.ImageUrl?? "/noImage.png",
                 Token = token,
                 RefreshToken = refreshToken
             };
@@ -74,7 +74,7 @@ namespace TravelAgency.Mappers
                 BankAccountNumber = user.BankAccountNumber,
                 Address = user.Address ?? "/",
                 PhoneNumber = user.PhoneNumber ?? "/",
-                ImageLink = user.ImagePath ?? "/noImage",
+                ImageLink = user.ImagePath ?? "/noImage.png",
             };
         }
     }

@@ -3,6 +3,7 @@ import { UserDetailsModel } from '../shared/models/user';
 import { ApiService } from '../shared/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import { UpdateImageDialogComponent } from './update-image-dialog/update-image-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -23,5 +24,9 @@ export class ProfileComponent {
 
   changePasswordDialog() {
     const dialogRef = this.dialog.open(ChangePasswordDialogComponent);
+  }
+
+  uploadImageDialog() {
+    const dialogRef = this.dialog.open(UpdateImageDialogComponent);
   }
 }

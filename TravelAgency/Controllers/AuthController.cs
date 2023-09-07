@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using TravelAgency.Domain.Models;
@@ -38,6 +39,8 @@ namespace TravelAgency.Controllers
                 string refreshToken = JwtHelper.GenerateRefreshToken();
                 await _authService.SaveToken(user.Id, refreshToken);
                 UserLoginResponseDto response = user.ToLoginResponse(token, refreshToken);
+                string requestUrl = Request.GetDisplayUrl();
+                response.ImageUrl = $"{requestUrl.Substring(0, requestUrl.Length - 15)}{response.ImageUrl}";
                 return Ok(response);
             }
             catch (Exception ex)

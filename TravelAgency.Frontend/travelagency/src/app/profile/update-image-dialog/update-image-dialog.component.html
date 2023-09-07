@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-text">Change password</h3>
+    </div>
+    <div class="card-body">
+        <img *ngIf="file" [src]="selectedFileUrl" class="img-thumbnail" width="200px">
+        <form (ngSubmit)="uploadFile()">
+            <div class="mb-2">
+                <label class="form-label" for="file">Одбери слика</label>
+                <input class="form-control" type="file" name="file" id="file" required (change)="onFileChange($event)">
+            </div>
+            <div class="d-flex justify-content-center">
+                <button mat-raised-button color="primary" type="submit">Прикачи слика</button>
+                <button mat-mini-fab color="warn" class="ms-3" (click)="onCloseButton()"><mat-icon>close</mat-icon></button>
+            </div>
+        </form>
+    </div>
+</div>

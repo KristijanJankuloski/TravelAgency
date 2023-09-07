@@ -24,6 +24,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TokenInterceptor } from './shared/services/token.interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
+import { UpdateImageDialogComponent } from './profile/update-image-dialog/update-image-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ChangePasswordDialogComponent } from './profile/change-password-dialog/
     AgenciesComponent,
     DashboardComponent,
     ProfileComponent,
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    UpdateImageDialogComponent
   ],
   imports: [
     BrowserModule,
