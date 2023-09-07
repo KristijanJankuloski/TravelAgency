@@ -1,17 +1,20 @@
 <div class="container bg-light">
-    <div *ngIf="user" class="pt-lg-5 pt-2 px-md-3">
+    <div *ngIf="user" class="pt-lg-5 pt-2 px-md-3 pb-5">
         <div class="pb-3">
-            <h3 class="display-3">{{ user.displayName }}</h3>
+            <div class="d-flex">
+
+                <h3 class="display-3 ms-5">{{ user.displayName }}</h3>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-4 d-grid p-2">
-                <mat-form-field>
+                <mat-form-field appearance="outline" color="warn">
                     <mat-label>Корисничко име</mat-label>
                     <input matInput type="text" name="username" id="username" [value]="user.username" disabled>
                 </mat-form-field>
             </div>
             <div class="col-md-4 d-grid p-2">
-                <mat-form-field>
+                <mat-form-field appearance="outline" color="warn">
                     <mat-label>Е-маил адреса</mat-label>
                     <input matInput type="email" name="email" id="email" [value]="user.email" disabled>
                 </mat-form-field>
@@ -43,7 +46,23 @@
                 </mat-form-field>
             </div>
         </div>
-
-        <button mat-raised-button color="primary" (click)="changePasswordDialog()">Промени лозинка</button>
+        <div class="row">
+            <div class="col-md-4 d-grid p-2">
+                <mat-form-field>
+                    <mat-label>Адреса</mat-label>
+                    <input matInput type="text" name="address" id="address" [value]="user.address">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 d-grid p-2">
+                <mat-form-field>
+                    <mat-label>Број на жиро сметка</mat-label>
+                    <input matInput type="text" name="address" id="address" [value]="user.address">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 p-2">
+                <button class="h-75" mat-raised-button>Прикачи слика <mat-icon>cloud_upload</mat-icon></button>
+            </div>
+        </div>
+        <button mat-raised-button color="accent" (click)="changePasswordDialog()">Промени лозинка</button>
     </div>
 </div>

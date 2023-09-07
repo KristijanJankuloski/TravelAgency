@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using TravelAgency.DTOs.OtherDTOs;
 using TravelAgency.DTOs.UserDTOs;
@@ -36,6 +37,8 @@ namespace TravelAgency.Controllers
                 {
                     return Unauthorized();
                 }
+                string requestUrl = Request.GetDisplayUrl();
+                dto.ImageLink = $"{requestUrl.Substring(0,requestUrl.Length - 10)}{dto.ImageLink}";
                 return Ok(dto);
             }
             catch (Exception ex)
