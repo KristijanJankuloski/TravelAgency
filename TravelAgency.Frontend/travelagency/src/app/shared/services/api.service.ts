@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { AvailabilityResponseModel, UserDetailsModel } from '../models/user';
+import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,9 @@ export class ApiService {
 
   public updateUserImage(payload: FormData) {
     return this.http.post(`${environment.apiBaseUrl}/users/update-image`, payload)
+  }
+
+  public updateUserInfo(request: UserUpdateModel){
+    return this.http.patch(`${environment.apiBaseUrl}/users`, request);
   }
 }

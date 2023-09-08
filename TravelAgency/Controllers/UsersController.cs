@@ -47,6 +47,22 @@ namespace TravelAgency.Controllers
             }
         }
 
+        [HttpPatch]
+        [Authorize]
+        public async Task<IActionResult> UpdateUser(UserUpdateDto dto)
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(User);
+                await _userService.UpdateUserInfo(user.Id, dto);
+                return Ok("User updated");
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet("check")]
         [AllowAnonymous]
         public async Task<ActionResult<List<AvailabilityCheckDto>>> CheckIfAvailable([FromQuery] string? username, [FromQuery] string? email)
@@ -91,6 +107,9 @@ namespace TravelAgency.Controllers
                 if (file == null)
                     return BadRequest("No image provided");
 
+                if (file.ContentType != "image/jpeg" || file.ContentType != "image/jpg" || file.ContentType != "image/png")
+                    return StatusCode(StatusCodes.Status415UnsupportedMediaType, "File must be image");
+
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
 
                 string fileImagePath = _environment.WebRootPath + "\\Uploads\\";
@@ -98,13 +117,14 @@ namespace TravelAgency.Controllers
                 {
                     Directory.CreateDirectory(fileImagePath);
                 }
-                string imagePath = fileImagePath + $"\\{user.Id}_{file.FileName}";
+                string fileExtension = file.FileName.Split('.').Last();
+                string imagePath = fileImagePath + $"\\{user.Id}_{user.Username}.{fileExtension}";
 
                 using (FileStream stream = new FileStream(imagePath, FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }
-                await _userService.UpdateImage(user.Id, $"/Uploads/{user.Id}_{file.FileName}");
+                await _userService.UpdateImage(user.Id, $"/Uploads/{user.Id}_{user.Username}.{fileExtension}");
                 return Ok();
             }
             catch (Exception ex)

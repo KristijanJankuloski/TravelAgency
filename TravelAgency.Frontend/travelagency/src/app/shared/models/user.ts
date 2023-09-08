@@ -1,9 +1,9 @@
-interface UserLoginModel {
+export interface UserLoginModel {
     username: string;
     password: string;
 }
 
-interface UserLoginResponseModel {
+export interface UserLoginResponseModel {
     username: string;
     displayName: string;
     email: string;
@@ -13,7 +13,16 @@ interface UserLoginResponseModel {
     refreshToken: string;
 }
 
-interface UserDetailsModel {
+export interface UserUpdateModel {
+    displayName: string;
+    firstName: string;
+    lastName: string;
+    bankAccountNumber: string;
+    phoneNumber: string;
+    address: string;
+}
+
+export interface UserDetailsModel {
     id: number;
     username: string;
     displayName: string;
@@ -26,7 +35,7 @@ interface UserDetailsModel {
     imageLink?: string | undefined;
 }
 
-interface UserRegisterModel {
+export interface UserRegisterModel {
     firstName: string;
     lastName: string;
     username: string;
@@ -36,9 +45,7 @@ interface UserRegisterModel {
     email: string;
 }
 
-interface AvailabilityResponseModel {
+export interface AvailabilityResponseModel {
     search: string;
     IsTaken: boolean;
 }
-
-export { UserLoginModel, UserLoginResponseModel, UserRegisterModel, AvailabilityResponseModel, UserDetailsModel };

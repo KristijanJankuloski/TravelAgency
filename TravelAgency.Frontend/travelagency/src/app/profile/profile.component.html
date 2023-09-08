@@ -22,7 +22,7 @@
             <div class="col-md-4 d-grid p-2">
                 <mat-form-field>
                     <mat-label>Име на организација</mat-label>
-                    <input matInput type="text" name="displayName" id="displayName" [value]="user.displayName">
+                    <input matInput type="text" name="displayName" id="displayName" [(ngModel)]="updateRequest.displayName">
                 </mat-form-field>
             </div>
         </div>
@@ -30,19 +30,19 @@
             <div class="col-md d-grid p-2">
                 <mat-form-field>
                     <mat-label>Име</mat-label>
-                    <input matInput type="text" name="firstName" id="firstName" [value]="user.firstName">
+                    <input matInput type="text" name="firstName" id="firstName" [(ngModel)]="updateRequest.firstName">
                 </mat-form-field>
             </div>
             <div class="col-md d-grid p-2">
                 <mat-form-field>
                     <mat-label>Презиме</mat-label>
-                    <input matInput type="text" name="lastName" id="lastName" [value]="user.lastName">
+                    <input matInput type="text" name="lastName" id="lastName" [(ngModel)]="updateRequest.lastName">
                 </mat-form-field>
             </div>
             <div class="col-md d-grid p-2">
                 <mat-form-field>
                     <mat-label>Телефонски број</mat-label>
-                    <input matInput type="text" name="phoneNumber" id="phoneNumber" [value]="user.phoneNumber">
+                    <input matInput type="text" name="phoneNumber" id="phoneNumber" [(ngModel)]="updateRequest.phoneNumber">
                 </mat-form-field>
             </div>
         </div>
@@ -50,13 +50,13 @@
             <div class="col-md-4 d-grid p-2">
                 <mat-form-field>
                     <mat-label>Адреса</mat-label>
-                    <input matInput type="text" name="address" id="address" [value]="user.address">
+                    <input matInput type="text" name="address" id="address" [(ngModel)]="updateRequest.address">
                 </mat-form-field>
             </div>
             <div class="col-md-4 d-grid p-2">
                 <mat-form-field>
                     <mat-label>Број на жиро сметка</mat-label>
-                    <input matInput type="text" name="address" id="address" [value]="user.address">
+                    <input matInput type="text" name="bankAccountNumber" id="bankAccountNumber" [(ngModel)]="updateRequest.bankAccountNumber">
                 </mat-form-field>
             </div>
             <div class="col-md-4 p-2">

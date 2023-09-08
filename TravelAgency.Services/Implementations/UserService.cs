@@ -50,5 +50,18 @@ namespace TravelAgency.Services.Implementations
             user.ImagePath = imagePath;
             await _userRepository.UpdateAsync(user);
         }
+
+        public async Task UpdateUserInfo(int userId, UserUpdateDto dto)
+        {
+            User user = await _userRepository.GetByIdAsync(userId) ?? throw new Exception("No user");
+            user.DisplayName = dto.DisplayName;
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+            user.PhoneNumber = dto.PhoneNumber;
+            user.Address = dto.Address;
+            user.BankAccountNumber = dto.BankAccountNumber;
+
+            await _userRepository.UpdateAsync(user);
+        }
     }
 }
