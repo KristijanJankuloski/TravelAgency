@@ -1,1 +1,26 @@
-<p>agencies works!</p>
+<div class="container">
+    <div class="pt-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Име</th>
+                    <th>Адреса</th>
+                    <th>Телефон</th>
+                    <th>Е-маил</th>
+                    <th>Број на сметка</th>
+                    <th>Опции</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let agency of agencies">
+                    <td>{{agency.name}}</td>
+                    <td>{{agency.address}}</td>
+                    <td>{{agency.phoneNumber}}</td>
+                    <td>{{agency.email}}</td>
+                    <td>{{agency.accountNumber}}</td>
+                    <td><button mat-mini-fab color="warn" class="bg-danger" (click)="deleteAgency(agency.id)"><mat-icon>delete_sweep</mat-icon></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

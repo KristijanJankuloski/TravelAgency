@@ -35,6 +35,10 @@ export class ProfileComponent {
     });
   }
 
+  saveChangesClick() {
+    
+  }
+
   changePasswordDialog() {
     const dialogRef = this.dialog.open(ChangePasswordDialogComponent);
   }

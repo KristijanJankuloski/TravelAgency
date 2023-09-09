@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
+import { AgencyListModel } from '../models/agency';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class ApiService {
 
   public getUserDetails() : Observable<UserDetailsModel> {
     return this.http.get<UserDetailsModel>(`${environment.apiBaseUrl}/users`);
+  }
+
+  public getAgenciesList() : Observable<AgencyListModel[]> {
+    return this.http.get<AgencyListModel[]>(`${environment.apiBaseUrl}/agencies`);
   }
 
   public updateUserImage(payload: FormData) {

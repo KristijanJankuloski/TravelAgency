@@ -3,13 +3,16 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, filter, of, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
+
+  private firstError = true;
 
   constructor(private auth: AuthService) {}
 
@@ -20,8 +23,25 @@ export class TokenInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${this.auth.getJwt()}`
         }
       });
-      return next.handle(newRequest);
+      return next.handle(newRequest).pipe(catchError(err => this.handleAuthError(err, newRequest, next)));
     }
     return next.handle(request);
+  }
+
+  handleAuthError(error: HttpErrorResponse, request: HttpRequest<unknown>, next: HttpHandler) : Observable<any> {
+    if(error && this.firstError && error.status === 401){
+      this.firstError = false;
+      this.auth.refreshSession().subscribe({next: (res) => {
+        return this.intercept(request, next);
+      }, error: err => {
+        this.auth.logout();
+        return of(err.message);
+      }});
+      return of("Refresh attempt");
+    }
+    else {
+      this.firstError = true;
+      return throwError(() => new Error("Non auth error"))
+    }
   }
 }

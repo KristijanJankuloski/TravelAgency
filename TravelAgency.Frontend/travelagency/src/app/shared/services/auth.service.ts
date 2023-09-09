@@ -11,28 +11,30 @@ import { Router } from '@angular/router';
 export class AuthService {
   private loggedInSubject: Subject<boolean> = new Subject();
   private userSubject: Subject<UserLoginResponseModel | null> = new Subject();
+  private TOKEN_KEY = "Token";
+  private REFRESH_TOKEN_KEY = "RefreshToken";
 
   constructor(private http: HttpClient, private router: Router) { }
 
   public getJwt() : string {
-    return localStorage.getItem("Token") ?? '';
+    return localStorage.getItem(this.TOKEN_KEY) ?? '';
   }
 
   public setJwt(token : string) : void {
-    localStorage.setItem("Token", token);
+    localStorage.setItem(this.TOKEN_KEY, token);
     this.loggedInSubject.next(true);
   }
 
   public setRefreshToken(token: string): void{
-    localStorage.setItem("RefreshToken", token);
+    localStorage.setItem(this.REFRESH_TOKEN_KEY, token);
   }
 
   public getRefreshToken(): string {
-    return localStorage.getItem("RefreshToken")?? '';
+    return localStorage.getItem(this.REFRESH_TOKEN_KEY)?? '';
   }
 
   public deleteJwt() : void{
-    localStorage.removeItem("Token");
+    localStorage.removeItem(this.TOKEN_KEY);
     this.loggedInSubject.next(false);
   }
   
@@ -84,7 +86,7 @@ export class AuthService {
 
   public logout() {
     this.deleteJwt();
-    localStorage.removeItem("RefreshToken");
+    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     this.deleteUser();
     this.router.navigate(['home']);
   }
@@ -94,6 +96,12 @@ export class AuthService {
   }
 
   public refreshSession(){
-    return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/refresh-token`, {username: this.getLocalUser(), refreshToken: this.getRefreshToken()});
+    let request = this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/refresh-token`, {username: this.getLocalUser(), refreshToken: this.getRefreshToken()});
+    request.subscribe(data => {
+      this.setUser(data);
+      this.setJwt(data.token);
+      this.setRefreshToken(data.refreshToken);
+    });
+    return request;
   }
 }
