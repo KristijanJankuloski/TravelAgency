@@ -41,7 +41,7 @@ export class TokenInterceptor implements HttpInterceptor {
     }
     else {
       this.firstError = true;
-      return throwError(() => new Error("Non auth error"))
+      return throwError(error)
     }
   }
 }

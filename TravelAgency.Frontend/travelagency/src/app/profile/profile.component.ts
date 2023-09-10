@@ -4,6 +4,7 @@ import { ApiService } from '../shared/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import { UpdateImageDialogComponent } from './update-image-dialog/update-image-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +22,7 @@ export class ProfileComponent {
     bankAccountNumber: "",
   };
 
-  constructor(private api: ApiService, public dialog: MatDialog){}
+  constructor(private api: ApiService, private _snackBar: MatSnackBar, public dialog: MatDialog){}
 
   ngOnInit(){
     this.api.getUserDetails().subscribe(data => {
@@ -36,7 +37,11 @@ export class ProfileComponent {
   }
 
   saveChangesClick() {
-    
+    this.api.updateUserInfo(this.updateRequest).subscribe({next: (data) => {
+      this._snackBar.open("Податоците се зачувани", "Зтвори", {duration: 5000});
+    }, error: (error) =>{
+      console.error(error);
+    }});
   }
 
   changePasswordDialog() {

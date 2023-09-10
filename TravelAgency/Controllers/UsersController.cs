@@ -107,7 +107,7 @@ namespace TravelAgency.Controllers
                 if (file == null)
                     return BadRequest("No image provided");
 
-                if (file.ContentType != "image/jpeg" || file.ContentType != "image/jpg" || file.ContentType != "image/png")
+                if (file.ContentType != "image/jpeg" && file.ContentType != "image/jpg" && file.ContentType != "image/png")
                     return StatusCode(StatusCodes.Status415UnsupportedMediaType, "File must be image");
 
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
