@@ -55,7 +55,7 @@ namespace TravelAgency.Controllers
             {
                 UserTokenDto user = JwtHelper.GetCurrentUser(User);
                 await _userService.UpdateUserInfo(user.Id, dto);
-                return Ok("User updated");
+                return Ok();
             }
             catch(Exception ex)
             {
@@ -130,6 +130,20 @@ namespace TravelAgency.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> DeleteRequest(UserLoginDto dto)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

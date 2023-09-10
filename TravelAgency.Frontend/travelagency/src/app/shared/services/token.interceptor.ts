@@ -29,10 +29,15 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   handleAuthError(error: HttpErrorResponse, request: HttpRequest<unknown>, next: HttpHandler) : Observable<any> {
-    if(error && this.firstError && error.status === 401){
+    if(error && this.firstError && error.status === 401 && this.auth.isLoggedIn){
       this.firstError = false;
       this.auth.refreshSession().subscribe({next: (res) => {
-        return this.intercept(request, next);
+        const newRequest = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${res.token}`
+          }
+        });
+        return next.handle(newRequest).pipe(catchError(err => this.handleRefreshError(err)));
       }, error: err => {
         this.auth.logout();
         return of(err.message);
@@ -41,7 +46,12 @@ export class TokenInterceptor implements HttpInterceptor {
     }
     else {
       this.firstError = true;
-      return throwError(error)
+      return throwError(() => error);
     }
+  }
+
+  handleRefreshError(error: HttpErrorResponse) : Observable<any> {
+    this.auth.logout();
+    return of(error.message);
   }
 }

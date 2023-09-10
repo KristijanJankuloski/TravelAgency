@@ -97,6 +97,8 @@ namespace TravelAgency.Controllers
                 }
                 string token = JwtHelper.GenerateToken(user, _configuration);
                 UserLoginResponseDto response = user.ToLoginResponse(token, newRefreshToken);
+                string requestUrl = Request.GetDisplayUrl();
+                response.ImageUrl = $"{requestUrl.Substring(0, requestUrl.Length - 23)}{response.ImageUrl}";
                 return Ok(response);
             }
             catch (Exception ex)
