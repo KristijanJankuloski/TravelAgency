@@ -26,6 +26,9 @@ import { TokenInterceptor } from './shared/services/token.interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
 import { UpdateImageDialogComponent } from './profile/update-image-dialog/update-image-dialog.component';
+import { AddAgencyDialogComponent } from './agencies/add-agency-dialog/add-agency-dialog.component';
+import { DeleteAgencyDialogComponent } from './agencies/delete-agency-dialog/delete-agency-dialog.component';
+import { EditAgencyDialogComponent } from './agencies/edit-agency-dialog/edit-agency-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { UpdateImageDialogComponent } from './profile/update-image-dialog/update
     DashboardComponent,
     ProfileComponent,
     ChangePasswordDialogComponent,
-    UpdateImageDialogComponent
+    UpdateImageDialogComponent,
+    AddAgencyDialogComponent,
+    DeleteAgencyDialogComponent,
+    EditAgencyDialogComponent
   ],
   imports: [
     BrowserModule,

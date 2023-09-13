@@ -1,26 +1,34 @@
 <div class="container">
     <div class="pt-5">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Име</th>
-                    <th>Адреса</th>
-                    <th>Телефон</th>
-                    <th>Е-маил</th>
-                    <th>Број на сметка</th>
-                    <th>Опции</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let agency of agencies">
-                    <td>{{agency.name}}</td>
-                    <td>{{agency.address}}</td>
-                    <td>{{agency.phoneNumber}}</td>
-                    <td>{{agency.email}}</td>
-                    <td>{{agency.accountNumber}}</td>
-                    <td><button mat-mini-fab color="warn" class="bg-danger" (click)="deleteAgency(agency.id)"><mat-icon>delete_sweep</mat-icon></button></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="pb-3">
+            <button mat-raised-button color="primary" (click)="addAgencyClick()"><mat-icon>add</mat-icon>Додади агенција</button>
+        </div>
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Име</th>
+                        <th>Адреса</th>
+                        <th>Телефон</th>
+                        <th>Е-маил</th>
+                        <th>Број на сметка</th>
+                        <th>Опции</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let agency of agencies">
+                        <td>{{agency.name}}</td>
+                        <td>{{agency.address}}</td>
+                        <td>{{agency.phoneNumber}}</td>
+                        <td>{{agency.email}}</td>
+                        <td>{{agency.accountNumber}}</td>
+                        <td>
+                            <button mat-mini-fab color="primary" matTooltip="Промени" class="me-2" (click)="deleteAgency(agency.id)"><mat-icon>edit</mat-icon></button>
+                            <button mat-mini-fab color="warn" matTooltip="Избриши" class="bg-danger" (click)="deleteAgency(agency.id)"><mat-icon>delete_sweep</mat-icon></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
