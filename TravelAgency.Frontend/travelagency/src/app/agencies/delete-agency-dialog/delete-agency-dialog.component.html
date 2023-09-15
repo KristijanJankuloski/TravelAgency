@@ -1,1 +1,47 @@
-<p>delete-agency-dialog works!</p>
+<div class="card border-danger">
+    <div class="card-header d-relative">
+        <button mat-mini-fab color="accent" class="close-button" (click)="closeClick()"><mat-icon>close</mat-icon></button>
+        <h2 class="display-4 mt-5">Избриши агенција</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label for="name">Име</mat-label>
+                    <input matInput id="name" type="text" name="name" [value]="data.name" disabled />
+                </mat-form-field>
+            </div>
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label for="address">Адреса</mat-label>
+                    <input id="address" type="text" name="address" matInput [value]="data.address" disabled />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label for="phoneNumber">Телефон</mat-label>
+                    <input id="phoneNumber" type="text" matInput disabled [value]="data.phoneNumber" />
+                </mat-form-field>
+            </div>
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label for="email">Е-маил</mat-label>
+                    <input id="email" type="email" matInput disabled [value]="data.email" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label for="accountNumber">Број на сметка</mat-label>
+                    <input matInput id="accountNumber" type="text" disabled [value]="data.accountNumber" />
+                </mat-form-field>
+            </div>
+            <div class="col-md">
+                <button type="button" (click)="submitForm()" mat-raised-button color="warn" class="w-100">Избриши</button>
+            </div>
+        </div>
+    </div>
+</div>

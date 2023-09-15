@@ -4,8 +4,46 @@
         <h2 class="display-4 mt-5">Додади нова агенција</h2>
     </div>
     <div class="card-body">
-        <form>
-
+        <form [formGroup]="addAgencyFrom" (ngSubmit)="submitForm()">
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label for="name">Име</mat-label>
+                        <input id="name" type="text" matInput required formControlName="name" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label for="address">Адреса</mat-label>
+                        <input id="address" type="text" matInput required formControlName="address" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label for="phoneNumber">Телефон</mat-label>
+                        <input id="phoneNumber" type="text" matInput required formControlName="phoneNumber" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label for="email">Е-маил</mat-label>
+                        <input id="email" type="email" matInput formControlName="email" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label for="accountNumber">Број на сметка</mat-label>
+                        <input id="accountNumber" type="text" matInput formControlName="accountNumber" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <button type="submit" mat-raised-button color="primary" class="w-100">Додади агенција</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
