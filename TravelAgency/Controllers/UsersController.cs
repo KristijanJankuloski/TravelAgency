@@ -107,7 +107,7 @@ namespace TravelAgency.Controllers
                 if (file == null)
                     return BadRequest("No image provided");
 
-                if (file.ContentType != "image/jpeg" && file.ContentType != "image/jpg" && file.ContentType != "image/png")
+                if (file.ContentType != "image/png")
                     return StatusCode(StatusCodes.Status415UnsupportedMediaType, "File must be image");
 
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
@@ -118,13 +118,13 @@ namespace TravelAgency.Controllers
                     Directory.CreateDirectory(fileImagePath);
                 }
                 string fileExtension = file.FileName.Split('.').Last();
-                string imagePath = fileImagePath + $"\\{user.Id}_{user.Username}.{fileExtension}";
+                string imagePath = fileImagePath + $"\\{user.Id}_{user.Username}.png";
 
                 using (FileStream stream = new FileStream(imagePath, FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }
-                await _userService.UpdateImage(user.Id, $"/Uploads/{user.Id}_{user.Username}.{fileExtension}");
+                await _userService.UpdateImage(user.Id, $"/Uploads/{user.Id}_{user.Username}.png");
                 return Ok();
             }
             catch (Exception ex)

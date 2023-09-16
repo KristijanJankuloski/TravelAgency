@@ -88,7 +88,7 @@ export class AuthService {
     this.deleteJwt();
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     this.deleteUser();
-    this.router.navigate(['home']);
+    this.router.navigate(['login']);
   }
 
   public registerUser(req: UserRegisterModel) {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
@@ -9,12 +10,14 @@ import { ApiService } from 'src/app/shared/services/api.service';
   styleUrls: ['./update-image-dialog.component.scss']
 })
 export class UpdateImageDialogComponent {
-  file: File | null = null;
+  file: any = null;
+  imageChangeEvent: any;
   selectedFileUrl: string | null = null;
 
-  constructor(public dialogRef: MatDialogRef<UpdateImageDialogComponent>, private api: ApiService, private _snackBar: MatSnackBar){}
+  constructor(public dialogRef: MatDialogRef<UpdateImageDialogComponent>, private api: ApiService, private _snackBar: MatSnackBar, private sanitizer: DomSanitizer){}
 
   onFileChange(event: any){
+    this.imageChangeEvent = event;
     this.file = event.target.files[0];
     if(this.file){
       const reader = new FileReader();
@@ -26,6 +29,12 @@ export class UpdateImageDialogComponent {
     else{
       this.selectedFileUrl = null;
     }
+  }
+
+  imageCropped(event:any){
+    this.file = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+    this.file = event.blob;
+    console.log(this.file);
   }
 
   onCloseButton() {
