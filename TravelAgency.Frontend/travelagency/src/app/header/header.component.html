@@ -17,17 +17,17 @@
               <li *ngIf="isLoggedIn" class="nav-item">
                 <a class="nav-link" routerLink="/agencies">Агенции</a>
               </li>
-              <!-- <li class="nav-item dropdown">
+              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
+                  Договори
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><a class="dropdown-item" routerLink="contract/list">Активни договори</a></li>
+                  <li><a class="dropdown-item" routerLink="contract/archive">Архивирани договори</a></li>
+                  <div class="dropdown-divider"></div>
+                  <li><a class="dropdown-item d-flex justify-content-around" routerLink="contract/create"><mat-icon>add</mat-icon> Нов договор</a></li>
                 </ul>
-              </li> -->
+              </li>
             </ul>
             <a *ngIf="!isLoggedIn" mat-mini-fab color="primary" matTooltip="Најави се" routerLink="/login">
                 <mat-icon>person</mat-icon>

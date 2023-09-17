@@ -23,7 +23,7 @@ export class RegisterComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(8)]),
     email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(50)])
-  });
+  }, [passwordRepeatValidator()]);
   passwordMismatch: boolean = false;
   usernameTaken: boolean = false;
   loading: boolean = false;

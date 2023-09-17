@@ -28,10 +28,6 @@ namespace TravelAgency.Controllers
             try
             {
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
-                if (user == null)
-                {
-                    return Unauthorized();
-                }
                 UserDetailsDto dto = await _userService.GetDetails(user.Id);
                 if (dto == null)
                 {

@@ -31,6 +31,10 @@ import { UpdateImageDialogComponent } from './profile/update-image-dialog/update
 import { AddAgencyDialogComponent } from './agencies/add-agency-dialog/add-agency-dialog.component';
 import { DeleteAgencyDialogComponent } from './agencies/delete-agency-dialog/delete-agency-dialog.component';
 import { EditAgencyDialogComponent } from './agencies/edit-agency-dialog/edit-agency-dialog.component';
+import { ContractLayoutComponent } from './contract-layout/contract-layout.component';
+import { ContractCreateComponent } from './contract-layout/contract-create/contract-create.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,11 @@ import { EditAgencyDialogComponent } from './agencies/edit-agency-dialog/edit-ag
     UpdateImageDialogComponent,
     AddAgencyDialogComponent,
     DeleteAgencyDialogComponent,
-    EditAgencyDialogComponent
+    EditAgencyDialogComponent,
+    ContractLayoutComponent,
+    ContractCreateComponent,
+    PageNotFoundComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

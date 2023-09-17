@@ -4,7 +4,7 @@ export function passwordRepeatValidator() : ValidatorFn {
     return (control: AbstractControl) : ValidationErrors | null => {
         const password = control.get("password");
         const passwordRepeated = control.get("passwordRepeated");
-        if(password && passwordRepeated && password !== passwordRepeated){
+        if(password && passwordRepeated && password.value !== passwordRepeated.value){
             return { passwordMismatch: true };
         }
         return null;
