@@ -3,7 +3,6 @@
         <h3 class="card-text">Промена на слика</h3>
     </div>
     <div class="card-body">
-        <!-- <img *ngIf="file" [src]="selectedFileUrl" class="img-thumbnail" width="200px"> -->
         <form (ngSubmit)="uploadFile()">
             <div class="mb-2">
                 <image-cropper
@@ -11,7 +10,9 @@
                 [maintainAspectRatio]="true"
                 [aspectRatio]="1/1"
                 format="png"
-                (imageCropped)="imageCropped($event)"></image-cropper>
+                (imageCropped)="imageCropped($event)"
+                [resizeToWidth]="800"
+                style="width: 600px;"></image-cropper>
                 <label class="form-label" for="file">Одбери слика</label>
                 <input class="form-control" type="file" name="file" id="file" required (change)="onFileChange($event)">
             </div>

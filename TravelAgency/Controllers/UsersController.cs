@@ -107,8 +107,11 @@ namespace TravelAgency.Controllers
                 if (file == null)
                     return BadRequest("No image provided");
 
+                if (file.Length > 3500000)
+                    return BadRequest("File is too large. Image must be less than 3.5MB");
+
                 if (file.ContentType != "image/png")
-                    return StatusCode(StatusCodes.Status415UnsupportedMediaType, "File must be image");
+                    return StatusCode(StatusCodes.Status415UnsupportedMediaType, "File must be image type of png");
 
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
 

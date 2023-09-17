@@ -34,7 +34,6 @@ export class UpdateImageDialogComponent {
   imageCropped(event:any){
     this.file = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
     this.file = event.blob;
-    console.log(this.file);
   }
 
   onCloseButton() {
