@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AgencyListModel } from 'src/app/shared/models/agency';
+import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-contract-create',
@@ -7,6 +9,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./contract-create.component.scss']
 })
 export class ContractCreateComponent {
+  agenciesList: AgencyListModel[];
   createForm = new FormGroup({
     email: new FormControl(''),
     phoneNumber: new FormControl(''),
@@ -36,6 +39,14 @@ export class ContractCreateComponent {
 
   get passengerControls(){
     return (this.createForm.get('passengers') as FormArray).controls;
+  }
+
+  constructor(private api: ApiService){}
+
+  ngOnInit(){
+    this.api.getAgenciesList().subscribe(data => {
+      this.agenciesList = [...data];
+    })
   }
 
   addPassenger(){

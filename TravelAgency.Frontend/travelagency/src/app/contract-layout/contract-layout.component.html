@@ -1,26 +1,18 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2 bg-light">
-            <div class="d-flex flex-column flex-shrink-0 p-3 sidebar-bg" style="width: 280px;">
-                <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                  <span class="fs-4">Договори</span>
-                </a>
-                <hr>
-                <ul class="nav nav-pills flex-column mb-auto">
-                  <li class="nav-item">
-                    <a routerLink="active" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Активни договори<mat-icon>list</mat-icon></a>
-                  </li>
-                  <li>
-                    <a routerLink="archive" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Архивирани договори<mat-icon>work</mat-icon></a>
-                  </li>
-                  <li>
-                    <a routerLink="create" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Креирај ново<mat-icon>add</mat-icon></a>
-                  </li>
-                </ul>
-              </div>
-        </div>
-        <div class="col-md">
-            <router-outlet></router-outlet>
-        </div>
+<div>
+  <div class="d-flex flex-shrink-0 p-1 sidebar-bg">
+      <ul class="nav nav-pills mb-auto">
+        <li class="nav-item">
+          <a routerLink="active" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Активни договори <mat-icon>list</mat-icon></a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="archive" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Архивирани договори <mat-icon>work</mat-icon></a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="create" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Креирај ново <mat-icon>add</mat-icon></a>
+        </li>
+      </ul>
+    </div>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
     </div>
 </div>
