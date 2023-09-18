@@ -15,5 +15,16 @@ namespace TravelAgency.Mappers
                 Country = plan.Country,
             };
         }
+
+        public static Plan ToPlan(this PlanCreateDto plan)
+        {
+            return new Plan
+            {
+                AgencyId = plan.AgencyId,
+                HotelName = plan.HotelName,
+                Location = plan.Location,
+                Country = plan.Country,
+            };
+        }
     }
 }

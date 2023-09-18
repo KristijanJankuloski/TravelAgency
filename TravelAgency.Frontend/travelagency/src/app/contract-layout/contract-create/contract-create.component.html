@@ -1,1 +1,27 @@
-<p>contract-create works!</p>
+<div class="pt-3">
+    <form [formGroup]="createForm" (ngSubmit)="contractFormSubmit()">
+        <mat-form-field>
+            <mat-label>Емаил</mat-label>
+            <input type="email" matInput required formControlName="email" />
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <mat-label>Телефонски Број</mat-label>
+            <input type="text" matInput required formControlName="phoneNumber" />
+        </mat-form-field>
+        <div formArrayName="passengers">
+            <hr />
+            <div *ngFor="let passengerGroup of passengerControls; let i = index" [formGroupName]="i">
+                <mat-form-field class="w-100">
+                    <mat-label>Име</mat-label>
+                    <input type="text" matInput required formControlName="firstName" />
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-label>Презиме</mat-label>
+                    <input type="text" matInput required formControlName="lastName" />
+                </mat-form-field>
+                <button type="button" mat-mini-fab color="warn" matTooltip="Избриши патник" (click)="removePassenger(i)"><mat-icon>close</mat-icon></button>
+            </div>
+            <button type="button" mat-raised-button color="primary" (click)="addPassenger()">Додади патник</button>
+        </div>
+    </form>
+</div>

@@ -38,6 +38,26 @@ namespace TravelAgency.Services.Implementations
             await _contractRepository.InsertAsync(contract);
         }
 
+        public async Task CreateContract(ContractCreateWithPlanDto dto, int usedId)
+        {
+            if (dto.Passengers.Length == 0)
+            {
+                throw new ArgumentException("Contract has no passengers");
+            }
+            Contract contract = dto.ToContract();
+            contract.UserId = usedId;
+            contract.ContractDate = DateTime.Now;
+            int iterator = await _userRepository.IterateContractNumber(usedId);
+            contract.ContractNumber = GenerateContractNumber(iterator);
+            foreach (PassengerCreateDto p in dto.Passengers)
+            {
+                Passenger passenger = p.ToPassenger();
+                passenger.Contract = contract;
+                contract.Passengers.Add(passenger);
+            }
+            await _contractRepository.InsertAsync(contract);
+        }
+
         private string GenerateContractNumber(int iterator)
         {
             string number = string.Format("{0:0000}/", iterator);

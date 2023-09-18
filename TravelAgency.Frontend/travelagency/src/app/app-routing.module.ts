@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'contract', component: ContractLayoutComponent, canActivate:[authGuard], children: [
     { path: 'create', component: ContractCreateComponent },
     { path: 'active', component: ActiveContractsComponent },
-    { path: 'archived', component: ArchivedContractsComponent }
+    { path: 'archive', component: ArchivedContractsComponent }
   ]},
 
   { path: '**', component: PageNotFoundComponent }
