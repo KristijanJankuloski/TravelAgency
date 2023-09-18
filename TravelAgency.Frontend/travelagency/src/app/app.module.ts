@@ -35,6 +35,8 @@ import { ContractLayoutComponent } from './contract-layout/contract-layout.compo
 import { ContractCreateComponent } from './contract-layout/contract-create/contract-create.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './footer/footer.component';
+import { ActiveContractsComponent } from './contract-layout/active-contracts/active-contracts.component';
+import { ArchivedContractsComponent } from './contract-layout/archived-contracts/archived-contracts.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { FooterComponent } from './footer/footer.component';
     ContractLayoutComponent,
     ContractCreateComponent,
     PageNotFoundComponent,
-    FooterComponent
+    FooterComponent,
+    ActiveContractsComponent,
+    ArchivedContractsComponent
   ],
   imports: [
     BrowserModule,

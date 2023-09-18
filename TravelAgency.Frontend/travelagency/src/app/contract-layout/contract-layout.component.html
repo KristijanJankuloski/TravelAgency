@@ -1,2 +1,36 @@
-<p>contract-layout works!</p>
-<router-outlet></router-outlet>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 bg-light">
+            <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                  <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                  <span class="fs-4">Sidebar</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                  <li class="nav-item">
+                    <a routerLink="active" class="nav-link link-dark">
+                      <mat-icon>list</mat-icon>
+                      Активни договори
+                    </a>
+                  </li>
+                  <li>
+                    <a routerLink="archive" class="nav-link link-dark">
+                      <mat-icon>work</mat-icon>
+                      Архивирани договори
+                    </a>
+                  </li>
+                  <li>
+                    <a routerLink="create" class="nav-link link-dark">
+                      <mat-icon>add</mat-icon>
+                      Креирај ново
+                    </a>
+                  </li>
+                </ul>
+              </div>
+        </div>
+        <div class="col-md">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,8 @@ import { anonymousGuard } from './shared/anonymous.guard';
 import { ContractLayoutComponent } from './contract-layout/contract-layout.component';
 import { ContractCreateComponent } from './contract-layout/contract-create/contract-create.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ActiveContractsComponent } from './contract-layout/active-contracts/active-contracts.component';
+import { ArchivedContractsComponent } from './contract-layout/archived-contracts/archived-contracts.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,8 +23,10 @@ const routes: Routes = [
   { path: 'agencies', component: AgenciesComponent, canActivate:[authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate:[authGuard] },
   { path: 'contract', component: ContractLayoutComponent, canActivate:[authGuard], children: [
-    { path: 'create', component: ContractCreateComponent }
-  ] },
+    { path: 'create', component: ContractCreateComponent },
+    { path: 'active', component: ActiveContractsComponent },
+    { path: 'archived', component: ArchivedContractsComponent }
+  ]},
 
   { path: '**', component: PageNotFoundComponent }
 ];
