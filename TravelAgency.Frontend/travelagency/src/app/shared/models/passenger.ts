@@ -2,8 +2,8 @@ export interface PassengerCreateModel {
     firstName: string;
     lastName: string;
     passportNumber: string;
-    passportExpirationDate: Date;
-    birthDate: Date;
+    passportExpirationDate: string;
+    birthDate: string;
     email?: string;
     phoneNumber?: string;
     address?: string;

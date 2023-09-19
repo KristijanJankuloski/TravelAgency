@@ -58,6 +58,22 @@ namespace TravelAgency.Services.Implementations
             await _contractRepository.InsertAsync(contract);
         }
 
+        public async Task<List<ContractListDto>> GetActiveContracts(int userId)
+        {
+            var contracts = await _contractRepository.GetActiveByUserIdAsync(userId);
+            return contracts.Select(c => c.ToListDto()).ToList();
+        }
+
+        public async Task<ContractDetailsDto> GetDetails(int contractId, int userId)
+        {
+            Contract contract = await _contractRepository.GetByIdAsync(contractId);
+            if(contract == null || contract.UserId != userId)
+            {
+                return null;
+            }
+            return contract.ToContractDetailsDto();
+        }
+
         private string GenerateContractNumber(int iterator)
         {
             string number = string.Format("{0:0000}/", iterator);

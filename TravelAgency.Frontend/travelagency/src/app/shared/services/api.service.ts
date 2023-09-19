@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
 import { AgencyCreateModel, AgencyListModel } from '../models/agency';
+import { ContractCreateModel, ContractListModel } from '../models/contract';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,14 @@ export class ApiService {
 
   public deleteAgency(agencyId: number){
     return this.http.delete(`${environment.apiBaseUrl}/agencies/${agencyId}`, {responseType: 'text'});
+  }
+
+  public createContract(contract: ContractCreateModel){
+    return this.http.post(`${environment.apiBaseUrl}/contracts`, contract);
+  }
+
+  public getActiveContracts() {
+    return this.http.get<ContractListModel[]>(`${environment.apiBaseUrl}/contracts/active`);
   }
 
   public updateUserImage(payload: FormData) {

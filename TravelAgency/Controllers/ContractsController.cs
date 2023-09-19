@@ -18,9 +18,45 @@ namespace TravelAgency.Controllers
             _contractService = contractService;
         }
 
+        [HttpGet("active")]
+        [Authorize]
+        public async Task<ActionResult<List<ContractListDto>>> GetActive()
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                var contracts = await _contractService.GetActiveContracts(user.Id);
+                return Ok(contracts);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("details/{id}")]
+        [Authorize]
+        public async Task<ActionResult<ContractDetailsDto>> GetDetails(int id)
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                ContractDetailsDto dto = await _contractService.GetDetails(id, user.Id);
+                if(dto == null)
+                {
+                    return NotFound();
+                }
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateContract(ContractCreateDto dto)
+        public async Task<IActionResult> CreateContract(ContractCreateWithPlanDto dto)
         {
             try
             {

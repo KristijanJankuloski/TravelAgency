@@ -18,6 +18,11 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
             throw new NotImplementedException();
         }
 
+        public async Task<List<Contract>> GetActiveByUserIdAsync(int userId)
+        {
+            return await _context.Contracts.Include(x => x.Plan).Where(x => x.UserId == userId && !x.IsArchived).ToListAsync();
+        }
+
         public Task<List<Contract>> GetAllAsync()
         {
             throw new NotImplementedException();
@@ -25,7 +30,12 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
 
         public async Task<Contract> GetByIdAsync(int id)
         {
-            return await _context.Contracts.Include(x => x.Passengers).Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Contracts
+                .Include(x => x.Passengers)
+                .Include(x => x.User)
+                .Include(x => x.Plan)
+                .ThenInclude(x => x.Agency)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task InsertAsync(Contract entity)

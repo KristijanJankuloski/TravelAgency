@@ -1,1 +1,24 @@
-<p>active-contracts works!</p>
+<div class="container py-5">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>E-mail</th>
+                <th>Име</th>
+                <th>Почеток</th>
+                <th>Крај</th>
+                <th>Акции</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let contract of contracts">
+                <td>{{ contract.contractNumber }}</td>
+                <td>{{ contract.email }}</td>
+                <td>{{ contract.hotelName }}</td>
+                <td>{{ contract.startDate.toString().split("T")[0] }}</td>
+                <td>{{ contract.endDate.toString().split("T")[0] }}</td>
+                <td><button mat-mini-fab color="primary"><mat-icon>print</mat-icon></button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

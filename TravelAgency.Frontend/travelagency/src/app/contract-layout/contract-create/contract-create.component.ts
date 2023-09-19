@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AgencyListModel } from 'src/app/shared/models/agency';
 import { ContractCreateModel } from 'src/app/shared/models/contract';
 import { PassengerCreateModel } from 'src/app/shared/models/passenger';
@@ -47,7 +48,7 @@ export class ContractCreateComponent {
     return (this.createForm.get('passengers') as FormArray).controls;
   }
 
-  constructor(private api: ApiService){}
+  constructor(private api: ApiService, private router: Router){}
 
   ngOnInit(){
     this.api.getAgenciesList().subscribe(data => {
@@ -82,12 +83,15 @@ export class ContractCreateComponent {
   }
 
   contractFormSubmit(){
+    if(this.createForm.invalid){
+      return;
+    }
     const values = this.createForm.value;
     const request: ContractCreateModel = {
       email: values.email!,
       phoneNumber: values.phoneNumber!,
-      startDate: values.startDate,
-      endDate: values.endDate,
+      startDate: values.startDate.toJSON(),
+      endDate: values.endDate.toJSON(),
       totalPrice: values.totalPrice!,
       ammountPaid: values.ammountPaid!,
       plan: {
@@ -104,8 +108,8 @@ export class ContractCreateComponent {
           firstName: passenger.firstName!, 
           lastName: passenger.lastName!,
           passportNumber: passenger.passportNumber!,
-          passportExpirationDate: passenger.passportExpirationDate,
-          birthDate: passenger.birthDate,
+          passportExpirationDate: passenger.passportExpirationDate.toJSON(),
+          birthDate: passenger.birthDate.toJSON(),
           email: passenger.email!,
           address: passenger.address!,
           phoneNumber: passenger.phoneNumber!,
@@ -115,5 +119,10 @@ export class ContractCreateComponent {
     })!
     }
     console.log(request);
+    this.api.createContract(request).subscribe({next: res => {
+      this.router.navigate(['contract', 'active']);
+    }, error: err => {
+      console.error(err);
+    }});
   }
 }

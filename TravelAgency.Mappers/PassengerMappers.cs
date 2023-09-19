@@ -12,12 +12,28 @@ namespace TravelAgency.Mappers
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 PassportNumber = dto.PassportNumber,
-                PassportExpirationDate = dto.PassportExpirationDate,
-                BirthDate = dto.BirthDate,
+                PassportExpirationDate = DateTime.Parse(dto.PassportExpirationDate),
+                BirthDate = DateTime.Parse(dto.BirthDate),
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
                 Address = dto.Address,
                 Comment = dto.Comment,
+            };
+        }
+
+        public static PassengerDetailsDto ToPassengerDetailsDto(this Passenger passenger)
+        {
+            return new PassengerDetailsDto
+            {
+                FirstName = passenger.FirstName,
+                LastName = passenger.LastName,
+                PassportNumber = passenger.PassportNumber,
+                PassportExpirationDate = passenger.PassportExpirationDate,
+                BirthDate = passenger.BirthDate,
+                Email = passenger.Email,
+                PhoneNumber = passenger.PhoneNumber,
+                Address = passenger.Address,
+                Comment = passenger.Comment,
             };
         }
     }
