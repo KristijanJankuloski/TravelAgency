@@ -1,18 +1,20 @@
-<div>
+<div class="bg-white">
   <div class="d-flex flex-shrink-0 p-1 sidebar-bg">
+    <div class="container">
       <ul class="nav nav-pills mb-auto">
         <li class="nav-item">
-          <a routerLink="active" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Активни договори <mat-icon>list</mat-icon></a>
+          <a routerLink="active" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Активни договори <mat-icon class="ms-1">list</mat-icon></a>
         </li>
         <li class="nav-item">
-          <a routerLink="archive" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Архивирани договори <mat-icon>work</mat-icon></a>
+          <a routerLink="archive" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Архивирани договори <mat-icon class="ms-1">work</mat-icon></a>
         </li>
         <li class="nav-item">
-          <a routerLink="create" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Креирај ново <mat-icon>add</mat-icon></a>
+          <a routerLink="create" class="nav-link link-dark d-flex align-items-center justify-content-between" routerLinkActive="link-active">Креирај ново <mat-icon class="ms-1">add</mat-icon></a>
         </li>
       </ul>
     </div>
-    <div class="container-fluid">
+    </div>
+    <div class="container">
       <router-outlet></router-outlet>
     </div>
 </div>

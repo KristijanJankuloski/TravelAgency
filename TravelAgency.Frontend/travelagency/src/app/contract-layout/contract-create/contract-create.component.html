@@ -1,14 +1,27 @@
-<div class="pt-3">
+<div class="py-5">
     <form [formGroup]="createForm" (ngSubmit)="contractFormSubmit()">
-        <div class="row">
-            <mat-form-field>
-                <mat-label>Favorite food</mat-label>
-                <mat-select>
-                  <mat-option *ngFor="let agency of agenciesList" [value]="agency.id">
-                    {{ agency.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+        <h3 class="display-5">Податоци за договор</h3>
+        <hr class="hr" />
+        <div class="row mb-3">
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label>Агенција</mat-label>
+                    <mat-select [formControl]="createForm.controls.agencyId" required (selectionChange)="agencySelected()">
+                      <mat-option *ngFor="let agency of agenciesList" [value]="agency.id">
+                        {{ agency.name }}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md">
+                <div class="card" *ngIf="selectedAgency">
+                    <div class="card-body">
+                        <p class="card-text">Име: <span>{{ selectedAgency.name }}</span></p>
+                        <p class="card-text">Адреса: <span>{{ selectedAgency.address }}</span></p>
+                        <p class="card-text">Телефон: <span>{{ selectedAgency.phoneNumber }}</span></p>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md">
@@ -23,10 +36,94 @@
                     <input type="text" matInput required formControlName="phoneNumber" />
                 </mat-form-field>
             </div>
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label>Дата на поаѓање и враќање</mat-label>
+                    <mat-date-range-input [rangePicker]="tripDates">
+                        <input matStartDate formControlName="startDate" placeholder="Start date">
+                        <input matEndDate formControlName="endDate" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-hint class="small">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="tripDates"></mat-datepicker-toggle>
+                    <mat-date-range-picker #tripDates></mat-date-range-picker>
+                    
+                    <mat-error *ngIf="createForm.controls.startDate.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                    <mat-error *ngIf="createForm.controls.endDate.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+            </div>
         </div>
-        <div formArrayName="passengers">
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="w-100">
+                    <mat-label>Вкупна цена</mat-label>
+                    <input type="number" matInput required formControlName="totalPrice" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="w-100">
+                    <mat-label>Платено</mat-label>
+                    <input type="number" matInput required formControlName="ammountPaid" />
+                </mat-form-field>
+            </div>
+        </div>
+        <h3 class="display-5 pt-5">Податоци за патување</h3>
+        <hr class="hr" />
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label>Име на аранжман</mat-label>
+                    <input type="text" matInput required formControlName="hotelName" />
+                </mat-form-field>
+            </div>
+            <div class="col-md">                
+                <mat-form-field class="w-100">
+                    <mat-label>Локација</mat-label>
+                    <input type="text" matInput required formControlName="location" />
+                </mat-form-field>
+            </div>
+            <div class="col-md">                
+                <mat-form-field class="w-100">
+                    <mat-label>Држава</mat-label>
+                    <input type="text" matInput required formControlName="country" />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label>Превоз</mat-label>
+                    <mat-select [formControl]="createForm.controls.transportationType" required >
+                      <mat-option *ngFor="let transport of transportationTypes" [value]="transport">
+                        {{ transport }}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label>Тип на соба</mat-label>
+                    <mat-select [formControl]="createForm.controls.roomType" required >
+                      <mat-option *ngFor="let room of roomTypes" [value]="room">
+                        {{ room }}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label>Тип на сервис</mat-label>
+                    <mat-select [formControl]="createForm.controls.serviceType" required >
+                      <mat-option *ngFor="let service of serviceTypes" [value]="service">
+                        {{ service }}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="pt-5" formArrayName="passengers">
+            <h3 class="display-5">Податоци за патнци</h3>
             <div *ngFor="let passengerGroup of passengerControls; let i = index" [formGroupName]="i">
-                <hr />
+                <hr class="nr" />
                 <div class="row">
                     <div class="col-md">
                         <mat-form-field class="w-100">
@@ -50,17 +147,27 @@
                     </div>
                     <div class="col-md">
                         <mat-form-field class="w-100">
-                            <mat-label>Дата на пасош</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="passportExpirationDate">
-                            <mat-hint>MM/DD/YYYY</mat-hint>
-                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-label>Дата на истекување на пасош</mat-label>
+                            <input matInput [matDatepicker]="expirePicker" formControlName="passportExpirationDate">
+                            <mat-hint class="small">MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="expirePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #expirePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Дата на раѓање</mat-label>
+                            <input matInput [matDatepicker]="birthDatePicker" formControlName="birthDate">
+                            <mat-hint class="small">MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #birthDatePicker></mat-datepicker>
                         </mat-form-field>
                     </div>
                 </div>
-                <button type="button" mat-mini-fab color="warn" matTooltip="Избриши патник" (click)="removePassenger(i)"><mat-icon>close</mat-icon></button>
+                <button type="button" mat-icon-button color="warn" matTooltip="Избриши патник" (click)="removePassenger(i)"><mat-icon>close</mat-icon></button>
             </div>
             <button type="button" mat-raised-button color="primary" (click)="addPassenger()">Додади патник</button>
         </div>
+        <button type="submit" mat-raised-button color="primary">Креирај договор</button>
     </form>
 </div>
