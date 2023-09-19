@@ -20,7 +20,7 @@ The application follows an N-Tier architecture pattern to separate our codes res
 - `DTOs` for data transfer objects to client
 - `mappers` for mapping domain models to DTOs
 
-#### User interface
+### User interface
 The user interface follows angular material standards and uses some bootstrap for simplicity.
 ![ui_image](img/travel_ui.jpg)
 `Example of the user interface`
@@ -29,9 +29,10 @@ The user interface follows angular material standards and uses some bootstrap fo
 - some images from [Unsplash](https://unsplash.com/)
 
 
-#### Database design
+### Database design
 All domain models (subject to change)
 ![data_image](img/travel_data.jpg)
+
 `Database diagram`
 
 ## Configuration 🖥️
