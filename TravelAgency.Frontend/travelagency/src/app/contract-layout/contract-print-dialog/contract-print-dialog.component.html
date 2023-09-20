@@ -1,0 +1,54 @@
+<div class="card">
+    <div class="card-body">
+        <button
+        *ngIf="contract"
+        mat-raised-button 
+        color="primary"
+        printTitle="Договор"
+        ngxPrint
+        printSectionId="print-contract"
+        styleSheetFile="/assets/printing/print-style.css"
+        class="me-3">Печати договор</button>
+        
+        <button mat-raised-button color="warn" (click)="close()">Затвори</button>
+    </div>
+</div>
+<div id="print-contract">
+    <div class="print-header">
+        <div>
+            <h5>Договор за патување</h5>
+            <h4>{{ contract.contractNumber }}</h4>
+        </div>
+        <div>
+            <img [src]="image" class="image-fluid" width="100px" alt="" />
+        </div>
+        <div>
+            <h3>{{ contract.user.displayName }}</h3>
+            <p>{{ contract.user.address }}</p>
+            <p>{{ contract.user.phoneNumber }}</p>
+            <p>{{ contract.user.email }}</p>
+        </div>
+    </div>
+    <hr />
+    <div class="print-passengers">
+        <small>Податоци за патници</small>
+        <table class="passenger-table">
+            <thead>
+                <tr>
+                    <th>Име и презиме</th>
+                    <th>Број на пасош</th>
+                    <th>Датум на раѓање</th>
+                    <th>Адреса</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let passenger of contract.passengers">
+                    <td>{{ passenger.firstName }} {{ passenger.lastName }}</td>
+                    <td>{{ passenger.passportNumber }}</td>
+                    <td>{{ passenger.birthDate.toString().split("T")[0] }}</td>
+                    <td>{{ passenger.address }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

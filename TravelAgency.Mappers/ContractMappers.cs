@@ -79,7 +79,7 @@ namespace TravelAgency.Mappers
                 IsPaid = contract.IsPaid,
                 User = contract.User.ToUserDetailsDto(),
                 Plan = contract.Plan.ToPlanListDto(),
-                Agency = contract.Plan.Agency.ToAgencyDetailsDto(),
+                Agency = contract.Plan.Agency.ToAgencyListDto(),
                 Passengers = contract.Passengers.Select(x => x.ToPassengerDetailsDto()).ToList(),
             };
         }

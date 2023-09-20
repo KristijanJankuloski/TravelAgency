@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
 import { AgencyCreateModel, AgencyListModel } from '../models/agency';
-import { ContractCreateModel, ContractListModel } from '../models/contract';
+import { ContractCreateModel, ContractDetailsModel, ContractListModel } from '../models/contract';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,10 @@ export class ApiService {
 
   public createContract(contract: ContractCreateModel){
     return this.http.post(`${environment.apiBaseUrl}/contracts`, contract);
+  }
+
+  public getContractDetails(id:number){
+    return this.http.get<ContractDetailsModel>(`${environment.apiBaseUrl}/contracts/details/${id}`);
   }
 
   public getActiveContracts() {

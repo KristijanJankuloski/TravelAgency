@@ -4,3 +4,10 @@ export interface PlanCreateModel {
     location: string;
     country: string;
 }
+
+export interface PlanListModel {
+    id: number;
+    hotelName: string;
+    location: string;
+    country: string;
+}

@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { NgxPrintModule } from 'ngx-print';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,6 +41,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { FooterComponent } from './footer/footer.component';
 import { ActiveContractsComponent } from './contract-layout/active-contracts/active-contracts.component';
 import { ArchivedContractsComponent } from './contract-layout/archived-contracts/archived-contracts.component';
+import { ContractPrintDialogComponent } from './contract-layout/contract-print-dialog/contract-print-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { ArchivedContractsComponent } from './contract-layout/archived-contracts
     PageNotFoundComponent,
     FooterComponent,
     ActiveContractsComponent,
-    ArchivedContractsComponent
+    ArchivedContractsComponent,
+    ContractPrintDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,7 @@ import { ArchivedContractsComponent } from './contract-layout/archived-contracts
     FormsModule,
     ReactiveFormsModule,
     ImageCropperModule,
+    NgxPrintModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,

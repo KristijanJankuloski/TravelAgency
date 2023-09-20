@@ -17,7 +17,7 @@
                 <td>{{ contract.hotelName }}</td>
                 <td>{{ contract.startDate.toString().split("T")[0] }}</td>
                 <td>{{ contract.endDate.toString().split("T")[0] }}</td>
-                <td><button mat-mini-fab color="primary"><mat-icon>print</mat-icon></button></td>
+                <td><button mat-mini-fab color="primary" (click)="showPrintDialog(contract.id)"><mat-icon>print</mat-icon></button></td>
             </tr>
         </tbody>
     </table>

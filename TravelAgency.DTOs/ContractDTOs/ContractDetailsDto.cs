@@ -23,7 +23,7 @@ namespace TravelAgency.DTOs.ContractDTOs
         public bool IsPaid { get; set; }
         public UserDetailsDto User { get; set; }
         public PlanListDto Plan { get; set; }
-        public AgencyDetailsDto Agency { get; set; }
+        public AgencyListDto Agency { get; set; }
         public List<PassengerDetailsDto> Passengers { get; set; }
     }
 }
