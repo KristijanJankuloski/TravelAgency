@@ -36,7 +36,14 @@ p {
 }
 
 .passenger-table tr td {
+    font-size: 14px;
     border-bottom: 1px solid rgb(87, 87, 87);
+}
+
+.passenger-table tr th {
+    font-size: 14px;
+    border-bottom: 1px solid rgb(87, 87, 87);
+    text-align: start;
 }
 
 .plan-details {
