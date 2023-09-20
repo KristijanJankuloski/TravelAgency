@@ -13,7 +13,7 @@ import { DeleteAgencyDialogComponent } from './delete-agency-dialog/delete-agenc
   styleUrls: ['./agencies.component.scss']
 })
 export class AgenciesComponent {
-  agencies: AgencyListModel[] = [{id:1,name:"testlon",address:"test",phoneNumber:"test",email:"email",accountNumber:"number"}];
+  agencies: AgencyListModel[] = [];
 
   constructor(private api: ApiService, private _matDialog: MatDialog, private _snackBar: MatSnackBar){}
 

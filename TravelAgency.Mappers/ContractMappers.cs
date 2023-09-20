@@ -11,6 +11,7 @@ namespace TravelAgency.Mappers
             {
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
+                ContractLocation = dto.ContractLocation,
                 StartDate = dto.StartDate,
                 EndDate = dto.EndDate,
                 TotalPrice = dto.TotalPrice,
@@ -29,6 +30,7 @@ namespace TravelAgency.Mappers
             {
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
+                ContractLocation = dto.ContractLocation,
                 StartDate = DateTime.Parse(dto.StartDate),
                 EndDate = DateTime.Parse(dto.EndDate),
                 TotalPrice = dto.TotalPrice,

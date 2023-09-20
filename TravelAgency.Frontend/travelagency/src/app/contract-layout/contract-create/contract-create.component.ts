@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AgencyListModel } from 'src/app/shared/models/agency';
 import { ContractCreateModel } from 'src/app/shared/models/contract';
@@ -18,23 +18,24 @@ export class ContractCreateComponent {
   serviceTypes = ["Полу-пансион", "Полн-пансион", "All-inclusive"];
   selectedAgency?: AgencyListModel;
   createForm = new FormGroup({
-    email: new FormControl(''),
-    phoneNumber: new FormControl(''),
+    email: new FormControl('', [Validators.required]),
+    phoneNumber: new FormControl('', [Validators.required]),
+    contractLocation: new FormControl('', [Validators.required]),
     startDate: new FormControl(),
     endDate: new FormControl(),
-    totalPrice: new FormControl(0),
-    ammountPaid: new FormControl(0),
-    agencyId: new FormControl(0),
-    hotelName: new FormControl(''),
-    location: new FormControl(''),
-    country: new FormControl(''),
-    roomType: new FormControl(''),
-    serviceType: new FormControl(''),
-    transportationType: new FormControl(''),
+    totalPrice: new FormControl(0, [Validators.required]),
+    ammountPaid: new FormControl(0, [Validators.required]),
+    agencyId: new FormControl(0, [Validators.required]),
+    hotelName: new FormControl('', [Validators.required]),
+    location: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required]),
+    roomType: new FormControl('', [Validators.required]),
+    serviceType: new FormControl('', [Validators.required]),
+    transportationType: new FormControl('', [Validators.required]),
     passengers: new FormArray([new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      passportNumber: new FormControl(''),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      passportNumber: new FormControl('', [Validators.required]),
       passportExpirationDate: new FormControl(),
       birthDate: new FormControl(),
       email: new FormControl(''),
@@ -62,9 +63,9 @@ export class ContractCreateComponent {
 
   addPassenger(){
     let newPassenger = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      passportNumber: new FormControl(''),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      passportNumber: new FormControl('', [Validators.required]),
       passportExpirationDate: new FormControl(Date.now),
       birthDate: new FormControl(Date.now),
       email: new FormControl(''),
@@ -90,6 +91,7 @@ export class ContractCreateComponent {
     const request: ContractCreateModel = {
       email: values.email!,
       phoneNumber: values.phoneNumber!,
+      contractLocation: values.contractLocation!,
       startDate: values.startDate.toJSON(),
       endDate: values.endDate.toJSON(),
       totalPrice: values.totalPrice!,
@@ -110,10 +112,10 @@ export class ContractCreateComponent {
           passportNumber: passenger.passportNumber!,
           passportExpirationDate: passenger.passportExpirationDate.toJSON(),
           birthDate: passenger.birthDate.toJSON(),
-          email: passenger.email!,
-          address: passenger.address!,
-          phoneNumber: passenger.phoneNumber!,
-          comment: passenger.comment!
+          email: passenger.email,
+          address: passenger.address,
+          phoneNumber: passenger.phoneNumber,
+          comment: passenger.comment
         }
         return mapped;
     })!

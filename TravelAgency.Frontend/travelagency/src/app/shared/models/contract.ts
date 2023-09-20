@@ -6,6 +6,7 @@ import { UserDetailsModel } from "./user";
 export interface ContractCreateModel {
     email: string;
     phoneNumber: string;
+    contractLocation: string;
     startDate: string;
     endDate: string;
     totalPrice: number;
@@ -38,9 +39,13 @@ export interface ContractDetailsModel {
     contractNumber: string;
     startDate: Date;
     endDate: Date;
-    contractCreatedDate: Date;
+    contractDate: Date;
+    contractLocation: string;
     amountPaid: number;
     totalPrice: number;
+    roomType: string;
+    serviceType: string;
+    transportationType: string;
     user: UserDetailsModel;
     plan: PlanListModel;
     agency: AgencyListModel;

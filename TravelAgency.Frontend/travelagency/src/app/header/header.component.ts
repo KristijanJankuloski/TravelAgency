@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,12 +7,11 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
   username: string = '';
   imageLink = "assets/images/cs.png";
-
-  constructor(private auth: AuthService, private router: Router){}
+  constructor(private auth: AuthService){}
 
   ngOnInit(){
     this.isLoggedIn = this.auth.isLoggedIn;

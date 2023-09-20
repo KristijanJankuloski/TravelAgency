@@ -1,14 +1,83 @@
 * {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+@page :footer {
+    display: none;
+}
+
+@page :header {
+    display: none;
+}
+
+p {
+    font-size: 14px;
+    margin: 4px;
+}
+
+.border-bottom {
+    border-bottom: 1px solid rgb(87, 87, 87);
+}
+
 .print-header {
-    display: flex;
-    line-height: 5px;
-    justify-content: space-around;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.contract-image {
+    text-align: center;
 }
 
 .passenger-table {
+    font-size: 14px;
     width: 100%;
-    text-align: center;
+    text-align: start;
+    border: 1px solid black;
+}
+
+.passenger-table tr td {
+    border-bottom: 1px solid rgb(87, 87, 87);
+}
+
+.plan-details {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.plan-details > div {
+    padding: 8px;
+    border: 1px solid rgb(87, 87, 87);
+}
+
+.payment-info {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.payment-info > div {
+    padding: 8px;
+    border: 1px solid rgb(87, 87, 87);
+}
+
+.terms {
+    padding: 4px;
+    border: 1px solid rgb(87, 87, 87);
+}
+
+.terms > small {
+    text-align: justify;
+    font-size: 12px;
+}
+
+.user-signature-field {
+    padding: 24px;
+    text-align: end;
+}
+
+.contract-footer {
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
 }

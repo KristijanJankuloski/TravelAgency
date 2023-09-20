@@ -4,10 +4,10 @@ export interface PassengerCreateModel {
     passportNumber: string;
     passportExpirationDate: string;
     birthDate: string;
-    email?: string;
-    phoneNumber?: string;
-    address?: string;
-    comment?: string;
+    email?: string | null;
+    phoneNumber?: string | null;
+    address?: string | null;
+    comment?: string | null;
 }
 
 export interface PassengerDetailsModel {
@@ -16,8 +16,8 @@ export interface PassengerDetailsModel {
     passportNumber: string;
     passportExpirationDate: Date;
     birthDate: Date;
-    email?: string;
-    phoneNumber?: string;
-    address?: string;
-    comment?: string;
+    email?: string | null;
+    phoneNumber?: string | null;
+    address?: string | null;
+    comment?: string | null;
 }

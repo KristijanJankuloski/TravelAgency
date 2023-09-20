@@ -15,6 +15,10 @@ namespace TravelAgency.DTOs.ContractDTOs
         public string PhoneNumber { get; set; }
 
         [Required]
+        [MaxLength(30)]
+        public string ContractLocation { get; set; }
+
+        [Required]
         public string StartDate { get; set; }
 
         [Required]

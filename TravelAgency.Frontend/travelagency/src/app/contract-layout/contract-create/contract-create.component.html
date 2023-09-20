@@ -40,8 +40,8 @@
                 <mat-form-field class="w-100">
                     <mat-label>Дата на поаѓање и враќање</mat-label>
                     <mat-date-range-input [rangePicker]="tripDates">
-                        <input matStartDate formControlName="startDate" placeholder="Start date">
-                        <input matEndDate formControlName="endDate" placeholder="End date">
+                        <input matStartDate formControlName="startDate" required placeholder="Start date">
+                        <input matEndDate formControlName="endDate" required placeholder="End date">
                     </mat-date-range-input>
                     <mat-hint class="small">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="tripDates"></mat-datepicker-toggle>
@@ -53,6 +53,12 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="w-100">
+                    <mat-label>Град</mat-label>
+                    <input type="text" matInput required formControlName="contractLocation" />
+                </mat-form-field>
+            </div>
             <div class="col-md-4">
                 <mat-form-field class="w-100">
                     <mat-label>Вкупна цена</mat-label>
@@ -149,7 +155,7 @@
                     <div class="col-md">
                         <mat-form-field class="w-100">
                             <mat-label>Дата на истекување на пасош</mat-label>
-                            <input matInput [matDatepicker]="expirePicker" formControlName="passportExpirationDate">
+                            <input matInput [matDatepicker]="expirePicker" required formControlName="passportExpirationDate">
                             <mat-hint class="small">MM/DD/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="expirePicker"></mat-datepicker-toggle>
                             <mat-datepicker #expirePicker></mat-datepicker>
@@ -158,10 +164,38 @@
                     <div class="col-md">
                         <mat-form-field class="w-100">
                             <mat-label>Дата на раѓање</mat-label>
-                            <input matInput [matDatepicker]="birthDatePicker" formControlName="birthDate">
+                            <input matInput [matDatepicker]="birthDatePicker" readonly formControlName="birthDate">
                             <mat-hint class="small">MM/DD/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #birthDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Адреса</mat-label>
+                            <input type="text" matInput formControlName="address" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Телефон</mat-label>
+                            <input type="text" matInput formControlName="phoneNumber" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>E-mail</mat-label>
+                            <input type="email" matInput formControlName="email" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Забелешка</mat-label>
+                            <input type="text" matInput formControlName="comment" />
                         </mat-form-field>
                     </div>
                 </div>
