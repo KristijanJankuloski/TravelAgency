@@ -23,6 +23,7 @@ The application follows an N-Tier architecture pattern to separate our codes res
 ### User interface
 The user interface follows angular material standards and uses some bootstrap for simplicity.
 ![ui_image](img/travel_ui.jpg)
+![ui_image](img/travel_form.jpg)
 `Example of the user interface`
 - ui elements form both Angular material and bootstrap
 - SVG ilustrations from [unDraw](https://undraw.co/illustrations)
