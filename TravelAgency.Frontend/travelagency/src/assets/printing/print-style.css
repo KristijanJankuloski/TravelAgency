@@ -21,10 +21,18 @@ p {
 
 .print-header {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .contract-image {
+    grid-column: 1;
+}
+
+.header-info {
+    grid-column: 2;
+}
+
+.contract-number {
     text-align: center;
 }
 

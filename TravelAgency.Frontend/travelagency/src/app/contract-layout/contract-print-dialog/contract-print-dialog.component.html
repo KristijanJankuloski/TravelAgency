@@ -15,10 +15,6 @@
 </div>
 <div id="print-contract">
     <div class="print-header">
-        <div>
-            <h5>Договор за патување</h5>
-            <h4 class="border-bottom">{{ contract.contractNumber }}</h4>
-        </div>
         <div class="contract-image">
             <img [src]="image" class="image-fluid" width="100px" alt="" />
         </div>
@@ -28,6 +24,9 @@
             <p>{{ contract.user.phoneNumber }}</p>
             <p>{{ contract.user.email }}</p>
         </div>
+    </div>
+    <div class="contract-number">
+        <h5>Договор за патување br. {{ contract.contractNumber }}</h5>
     </div>
     <hr />
     <div class="print-passengers">
@@ -73,10 +72,10 @@
     <small>Податоци за уплата</small>
     <div class="payment-info">
         <div>
-            <p>Вкупно: {{ contract.totalPrice }}ден.</p>
-            <p>Уплатено: {{ contract.amountPaid }}ден.</p>
+            <p>Вкупно: {{ convertCurrency(contract.totalPrice) }}ден.</p>
+            <p>Уплатено: {{ convertCurrency(contract.amountPaid) }}ден.</p>
             <hr>
-            <p><b>За доплата: {{ (contract.totalPrice - contract.amountPaid) }}ден.</b></p>
+            <p><b>За доплата: {{ convertCurrency(contract.totalPrice - contract.amountPaid) }}ден.</b></p>
         </div>
         <div>
             <small>Забелешки</small>
@@ -84,7 +83,7 @@
         </div>
     </div>
     <div style="margin-top: 3px;">
-        <small>Плаќањето е исклучиво во денарска противвредност по куповниот курс на деловна банка а откуп на девизи од девизен пазар (продажен курс према организаторот)</small>
+        <small style="font-size: 12px;">Плаќањето е исклучиво во денарска противвредност по куповниот курс на деловна банка а откуп на девизи од девизен пазар (продажен курс према организаторот)</small>
         <div class="terms">
             <small style="text-align: justify;">Општите услови на патување се составен дел од Договорот. Изјавувам дека сум запознат со програмата и со општите услови на патување и дека во целост ги прифаќам. Изјавувам дека се согласувам нашите лични податоци агенцијата да ги корсити за потребите на аранжманот. Изјавувам дека сум запознат со условите од полисата за осигуривање од ризик на откажување на договорено туристичко патување и дека истата не сакам да ја уплатам.</small>
             <div class="user-signature-field">
