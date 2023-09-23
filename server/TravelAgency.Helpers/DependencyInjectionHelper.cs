@@ -21,6 +21,7 @@ namespace TravelAgency.Helpers
             services.AddScoped<IAgencyRepository, AgencyRepository>();
             services.AddScoped<IPassengerRepository, PassengerRepository>();
             services.AddScoped<IContractRepository, ContractRepository>();
+            services.AddScoped<IPlanRepository,  PlanRepository>();
         }
 
         public static void InjectServices(this IServiceCollection services)
@@ -29,6 +30,7 @@ namespace TravelAgency.Helpers
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAgencyService, AgencyService>();
+            services.AddScoped<IPlanService, PlanService>();
         }
     }
 }

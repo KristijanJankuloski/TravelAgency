@@ -11,10 +11,12 @@ namespace TravelAgency.Services.Implementations
     {
         private readonly IContractRepository _contractRepository;
         private readonly IUserRepository _userRepository;
-        public ContractService(IContractRepository contractRepository, IUserRepository userRepository)
+        private readonly IPlanRepository _planRepository;
+        public ContractService(IContractRepository contractRepository, IUserRepository userRepository, IPlanRepository planRepository)
         {
             _contractRepository = contractRepository;
             _userRepository = userRepository;
+            _planRepository = planRepository;
 
         }
 
@@ -45,6 +47,12 @@ namespace TravelAgency.Services.Implementations
                 throw new ArgumentException("Contract has no passengers");
             }
             Contract contract = dto.ToContract();
+            Plan existingPlan = await _planRepository.GetByHotelNameAndLocation(dto.Plan.HotelName, dto.Plan.Location, dto.Plan.AgencyId, usedId);
+            if(existingPlan != null)
+            {
+                contract.Plan = existingPlan;
+                contract.PlanId = existingPlan.Id;
+            }
             contract.UserId = usedId;
             contract.ContractDate = DateTime.Now;
             int iterator = await _userRepository.IterateContractNumber(usedId);

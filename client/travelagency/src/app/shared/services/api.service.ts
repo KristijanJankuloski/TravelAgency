@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
 import { AgencyCreateModel, AgencyListModel } from '../models/agency';
 import { ContractCreateModel, ContractDetailsModel, ContractListModel } from '../models/contract';
+import { PlanListModel } from '../models/plan';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,10 @@ export class ApiService {
 
   public deleteAgency(agencyId: number){
     return this.http.delete(`${environment.apiBaseUrl}/agencies/${agencyId}`, {responseType: 'text'});
+  }
+
+  public getPlanByAgency(agencyId: number){
+    return this.http.get<PlanListModel[]>(`${environment.apiBaseUrl}/plans?agencyId=${agencyId}`);
   }
 
   public createContract(contract: ContractCreateModel){

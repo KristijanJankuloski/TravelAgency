@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable, Subscription, map, startWith } from 'rxjs';
 import { AgencyListModel } from 'src/app/shared/models/agency';
 import { ContractCreateModel } from 'src/app/shared/models/contract';
 import { PassengerCreateModel } from 'src/app/shared/models/passenger';
+import { PlanListModel } from 'src/app/shared/models/plan';
 import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
@@ -11,11 +13,15 @@ import { ApiService } from 'src/app/shared/services/api.service';
   templateUrl: './contract-create.component.html',
   styleUrls: ['./contract-create.component.scss']
 })
-export class ContractCreateComponent {
+export class ContractCreateComponent implements OnInit, OnDestroy {
   agenciesList: AgencyListModel[];
   roomTypes = ["Студио"];
-  transportationTypes = ["Авионски", "Автобуски", "Сопствен"];
-  serviceTypes = ["Полу-пансион", "Полн-пансион", "All-inclusive"];
+  transportationTypes = ["Авионски", "Автобуски", "Сопствен", "Друго"];
+  filteredTravelOptions: Observable<string[]>;
+  serviceTypes = ["BB ноќевање со појадок", "HB полупансион / појадок и вечера", "FB полн пансион", "ALL", "UALL", "ULTIMATEALL"];
+  filteredServiceOptions: Observable<string[]>;
+  planOptions: PlanListModel[] = [];
+  planFilteredOptions: Observable<PlanListModel[]>;
   selectedAgency?: AgencyListModel;
   createForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -42,23 +48,63 @@ export class ContractCreateComponent {
       phoneNumber: new FormControl(''),
       address: new FormControl(''),
       comment: new FormControl('')
-    })])
+    })], [Validators.minLength(1)])
   });
+  agencySubscription: Subscription;
+  planSubscription: Subscription;
 
   get passengerControls(){
     return (this.createForm.get('passengers') as FormArray).controls;
   }
 
   constructor(private api: ApiService, private router: Router){}
-
+  
   ngOnInit(){
-    this.api.getAgenciesList().subscribe(data => {
+    this.agencySubscription = this.api.getAgenciesList().subscribe(data => {
       this.agenciesList = [...data];
+    });
+    this.filteredTravelOptions = this.createForm.controls.transportationType.valueChanges.pipe(
+      startWith(''), 
+      map(value => this._trasportFilter(value || '')));
+    this.filteredServiceOptions = this.createForm.controls.serviceType.valueChanges.pipe(
+      startWith(''),
+      map(value => this._serviceFilter(value || '')));
+    this.planFilteredOptions = this.createForm.controls.hotelName.valueChanges.pipe(
+      startWith(''),
+      map(value => this._planFilter(value || '')));
+    this.createForm.controls.hotelName.valueChanges.subscribe(value => {
+      if(!value) return;
+      let plan = this.planOptions.find(plan => plan.hotelName == value);
+      if(!plan) return;
+      this.createForm.controls.location.setValue(plan?.location);
+      this.createForm.controls.country.setValue(plan?.country)
     })
+    }
+
+    ngOnDestroy(): void {
+      this.agencySubscription.unsubscribe();
+    }
+    
+  _trasportFilter(value: string){
+    const filterValue = value.toLowerCase();
+    return this.transportationTypes.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  _serviceFilter(value: string){
+    const filterValue = value.toLowerCase();
+    return this.serviceTypes.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  _planFilter(value: string){
+    const filterValue = value.toLowerCase();
+    return this.planOptions.filter(option => option.hotelName.toLowerCase().includes(filterValue));
   }
 
   agencySelected() {
     this.selectedAgency = this.agenciesList.find(x => x.id === this.createForm.value.agencyId);
+    this.planSubscription = this.api.getPlanByAgency(this.selectedAgency?.id?? 0).subscribe({next: data => {
+      this.planOptions = [...data];
+    }});
   }
 
   addPassenger(){
