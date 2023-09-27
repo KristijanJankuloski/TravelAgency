@@ -16,7 +16,7 @@
 <div id="print-contract">
     <div class="print-header">
         <div class="contract-image">
-            <img [src]="image" class="image-fluid" width="100px" alt="" />
+            <img [src]="image" class="image-fluid" width="150px" alt="" />
         </div>
         <div class="header-info">
             <h3>{{ contract.user.displayName }}</h3>
@@ -28,9 +28,81 @@
     <div class="contract-number">
         <h5>Договор за патување br. {{ contract.contractNumber }}</h5>
     </div>
+    <div class="details-container">
+        <div style="background-color: #abf1ff;"><small>Податоци за патување</small></div>
+        <div class="plan-details">
+            <div class="plan-double">
+                <p>Земја</p>
+                <p>{{ contract.plan.country }}</p>
+            </div>
+            <div class="plan-double">
+                <p>Место</p>
+                <p>{{ contract.plan.location }}</p>
+            </div>
+            <div class="plan-double">
+                <p>Сместивење/Хотел</p>
+                <p>{{ contract.plan.hotelName }}</p>
+            </div>
+            <div class="plan-double">
+                <p>Тип на соба</p>
+                <p>{{ contract.roomType }}</p>
+            </div>
+            <div class="plan-double">
+                <p>Услуга</p>
+                <p>{{ contract.serviceType }}</p>
+            </div>
+            <div class="plan-single">
+                <p>Од</p>
+                <p>{{ contract.startDate.toLocaleDateString("en-gb") }}</p>
+            </div>
+            <div class="plan-single">
+                <p>До</p>
+                <p>{{ contract.endDate.toLocaleDateString("en-gb") }}</p>
+            </div>
+            <div class="plan-single">
+                <p>Денови</p>
+                <p>{{ getDaysDifference(contract.startDate, contract.endDate) }}</p>
+            </div>
+            <div class="plan-single">
+                <p>Ноќи</p>
+                <p>{{  getDaysDifference(contract.startDate, contract.endDate) - 1 }}</p>
+            </div>
+            <div class="plan-single">
+                <p>Превоз</p>
+                <p>{{ contract.transportationType }}</p>
+            </div>
+            <div class="plan-single">
+                <p>Влез</p>
+                <p> {{ contract.startDate.toLocaleDateString("en-gb") }} </p>
+            </div>
+            <div class="plan-double">
+                <p>Точен датум на поаѓање</p>
+                <p> {{ contract.startDate.toLocaleDateString("en-gb") }} </p>
+            </div>
+            <div class="plan-double">
+                <p>Осигурување</p>
+                <p> </p>
+            </div>
+            <div class="plan-quad">
+                <p>Напомена</p>
+                <p> </p>
+            </div>
+            <!-- <div>
+                <p>Име на престој: <b style="display: inline;">{{ contract.plan.hotelName }}</b></p>
+                <p>Локација: {{ contract.plan.location }}</p>
+                <p>Земја: {{ contract.plan.country }}</p>
+            </div>
+            <div>
+                <p>Тип на соба: {{ contract.roomType }}</p>
+                <p>Тип на услуга: {{ contract.serviceType }}</p>
+                <p>Тип на превоз: {{ contract.transportationType }}</p>
+                <p>Датум на влез: {{ contract.startDate.toLocaleDateString("en-gb") }}<br/>Датум на излез: {{ contract.endDate.toLocaleDateString("en-gb") }} </p>
+            </div> -->
+        </div>
+    </div>
     <hr />
     <div class="print-passengers">
-        <small>Податоци за патници</small>
+        <div style="background-color: #abf1ff;"><small>Податоци за патници</small></div>
         <table class="passenger-table">
             <thead>
                 <tr>
@@ -53,23 +125,7 @@
         </table>
     </div>
     <hr />
-    <div class="details-container">
-        <small>Податоци за патување</small>
-        <div class="plan-details">
-            <div>
-                <p>Име на престој: <b style="display: inline;">{{ contract.plan.hotelName }}</b></p>
-                <p>Локација: {{ contract.plan.location }}</p>
-                <p>Држава: {{ contract.plan.country }}</p>
-            </div>
-            <div>
-                <p>Тип на соба: {{ contract.roomType }}</p>
-                <p>Тип на услуга: {{ contract.serviceType }}</p>
-                <p>Тип на превоз: {{ contract.transportationType }}</p>
-                <p>Датум на влез: {{ contract.startDate.toLocaleDateString("en-gb") }}<br/>Датум на излез: {{ contract.endDate.toLocaleDateString("en-gb") }} </p>
-            </div>
-        </div>
-    </div>
-    <small>Податоци за уплата</small>
+    <div style="background-color: #abf1ff;"><small>Податоци за уплата</small></div>
     <div class="payment-info">
         <div>
             <p>Вкупно: {{ convertCurrency(contract.totalPrice) }}ден.</p>
@@ -83,8 +139,9 @@
         </div>
     </div>
     <div style="margin-top: 3px;">
-        <small style="font-size: 12px;">Плаќањето е исклучиво во денарска противвредност по куповниот курс на деловна банка а откуп на девизи од девизен пазар (продажен курс према организаторот)</small>
         <div class="terms">
+            <small style="font-size: 12px;">Плаќањето е исклучиво во денарска противвредност по куповниот курс на деловна банка а откуп на девизи од девизен пазар (продажен курс према организаторот)</small>
+            <hr>
             <small style="text-align: justify;">Општите услови на патување се составен дел од Договорот. Изјавувам дека сум запознат со програмата и со општите услови на патување и дека во целост ги прифаќам. Изјавувам дека се согласувам нашите лични податоци агенцијата да ги корсити за потребите на аранжманот. Изјавувам дека сум запознат со условите од полисата за осигуривање од ризик на откажување на договорено туристичко патување и дека истата не сакам да ја уплатам.</small>
             <div class="user-signature-field">
                 <p>Потпис на патникот _______________________</p>

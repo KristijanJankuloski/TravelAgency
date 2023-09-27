@@ -30,10 +30,12 @@ p {
 
 .header-info {
     grid-column: 2;
+    text-align: center;
 }
 
 .contract-number {
     text-align: center;
+    background-color: #abf1ff;
 }
 
 .passenger-table {
@@ -51,18 +53,30 @@ p {
 .passenger-table tr th {
     font-size: 14px;
     border-bottom: 1px solid rgb(87, 87, 87);
-    text-align: start;
+    text-align: center;
 }
 
 .plan-details {
     display: grid;
-    gap: 5px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(3, 1fr);
 }
 
 .plan-details > div {
-    padding: 8px;
+    padding: 4px;
     border: 1px solid rgb(87, 87, 87);
+}
+
+.plan-single {
+    grid-column: span 1;
+}
+
+.plan-double {
+    grid-column: span 2;
+}
+
+.plan-quad {
+    grid-column: span 4;
 }
 
 .payment-info {

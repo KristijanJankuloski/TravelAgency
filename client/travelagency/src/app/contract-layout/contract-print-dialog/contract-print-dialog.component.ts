@@ -41,4 +41,9 @@ export class ContractPrintDialogComponent {
     }
     return str.join('.');
   }
+
+  getDaysDifference(start: Date, end: Date){
+    let timeDiference = end.getTime() - start.getTime();
+    return timeDiference / (1000 * 3600 * 24);
+  }
 } 
