@@ -152,7 +152,7 @@
             <h3 class="display-5">Податоци за патнци</h3>
             <div *ngFor="let passengerGroup of passengerControls; let i = index" [formGroupName]="i">
                 <hr class="nr" />
-                <button type="button" class="mb-2" mat-icon-button color="warn" matTooltip="Избриши патник" (click)="removePassenger(i)"><mat-icon>close</mat-icon></button>
+                <button type="button" class="mb-2" mat-icon-button color="warn" matTooltip="Избриши патник" (click)="removePassenger(i)" *ngIf="passengerControls.length > 1"><mat-icon>close</mat-icon></button>
                 <div class="row">
                     <div class="col-md">
                         <mat-form-field class="w-100">

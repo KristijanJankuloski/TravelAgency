@@ -5,22 +5,12 @@ using TravelAgency.Domain.Models;
 
 namespace TravelAgency.DataAccess.Repositories.Implementations
 {
-    public class PlanRepository : IPlanRepository
+    public class PlanRepository : BaseRepository<Plan>, IPlanRepository
     {
         private readonly TravelAppContext _context;
-        public PlanRepository(TravelAppContext context)
+        public PlanRepository(TravelAppContext context): base(context) 
         {
             _context = context;
-        }
-
-        public Task DeleteByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Plan>> GetAllAsync()
-        {
-            return await _context.Plans.ToListAsync();
         }
 
         public async Task<List<Plan>> GetAllByAgencyAsync(int agencyId, int userId)
@@ -39,21 +29,9 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<Plan> GetByIdAsync(int id)
+        public override async Task<Plan> GetByIdAsync(int id)
         {
             return await _context.Plans.Include(x => x.AvailableDates).Include(x => x.Agency).FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task InsertAsync(Plan entity)
-        {
-            await _context.Plans.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(Plan entity)
-        {
-            _context.Plans.Update(entity);
-            await _context.SaveChangesAsync();
         }
     }
 }
