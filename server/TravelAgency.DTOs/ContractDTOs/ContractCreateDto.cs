@@ -23,6 +23,8 @@ namespace TravelAgency.DTOs.ContractDTOs
         [Required]
         public DateTime EndDate { get; set; }
 
+        public DateTime? DepartureTime { get; set; }
+
         [Required]
         [Range(0, int.MaxValue)]
         public double TotalPrice { get; set; }

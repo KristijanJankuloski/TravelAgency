@@ -15,6 +15,7 @@ namespace TravelAgency.DTOs.ContractDTOs
         public DateTime ContractDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime? DepartureTime { get; set; }
         public string? RoomType { get; set; }
         public string? ServiceType { get; set; }
         public string? TransportationType { get; set; }

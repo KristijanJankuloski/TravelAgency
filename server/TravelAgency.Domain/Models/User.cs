@@ -28,8 +28,11 @@ namespace TravelAgency.Domain.Models
         [MaxLength(30)]
         public string? PhoneNumber { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(60)]
         public string? Address { get; set; }
+
+        [MaxLength(100)]
+        public string? Website { get; set; }
 
         [Required]
         public byte[] PasswordHash { get; set; }

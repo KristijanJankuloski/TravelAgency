@@ -24,6 +24,8 @@ namespace TravelAgency.DTOs.ContractDTOs
         [Required]
         public string EndDate { get; set; }
 
+        public string? DepartureTime { get; set; }
+
         [Required]
         [Range(0, int.MaxValue)]
         public double TotalPrice { get; set; }
@@ -34,10 +36,10 @@ namespace TravelAgency.DTOs.ContractDTOs
 
         public PlanCreateDto Plan { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string RoomType { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(40)]
         public string ServiceType { get; set; }
 
         [MaxLength(20)]

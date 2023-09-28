@@ -25,5 +25,8 @@ namespace TravelAgency.DTOs.UserDTOs
 
         [MaxLength(50)]
         public string? Address { get; set; }
+
+        [MaxLength(50)]
+        public string? Website { get; set; }
     }
 }

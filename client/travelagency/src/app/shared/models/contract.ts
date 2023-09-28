@@ -9,6 +9,7 @@ export interface ContractCreateModel {
     contractLocation: string;
     startDate: string;
     endDate: string;
+    departureTime: string;
     totalPrice: number;
     ammountPaid: number;
     plan: PlanCreateModel;
@@ -39,6 +40,7 @@ export interface ContractDetailsModel {
     contractNumber: string;
     startDate: Date;
     endDate: Date;
+    departureTime: Date;
     contractDate: Date;
     contractLocation: string;
     amountPaid: number;

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TravelAgency.Domain.Enums;
 
 namespace TravelAgency.Domain.Models
 {
@@ -30,10 +31,14 @@ namespace TravelAgency.Domain.Models
         [Required]
         public DateTime EndDate { get; set; }
 
-        [MaxLength(20)]
+        public DateTime? DepartureTime { get; set; }
+
+        public PaymentMethods PaymentMethod { get; set; }
+
+        [MaxLength(30)]
         public string? RoomType { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(40)]
         public string? ServiceType { get; set; }
 
         [MaxLength(20)]

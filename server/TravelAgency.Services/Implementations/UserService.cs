@@ -60,7 +60,7 @@ namespace TravelAgency.Services.Implementations
             user.PhoneNumber = dto.PhoneNumber;
             user.Address = dto.Address;
             user.BankAccountNumber = dto.BankAccountNumber;
-
+            user.Website = dto.Website;
             await _userRepository.UpdateAsync(user);
         }
     }

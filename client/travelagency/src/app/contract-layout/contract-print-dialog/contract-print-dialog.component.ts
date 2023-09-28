@@ -20,6 +20,7 @@ export class ContractPrintDialogComponent {
       this.contract.startDate = new Date(response.startDate);
       this.contract.endDate = new Date(response.endDate);
       this.contract.contractDate = new Date(response.contractDate);
+      this.contract.departureTime = new Date(response.departureTime);
       for(let i = 0; i < this.contract.passengers.length; i++){
         this.contract.passengers[i].birthDate = new Date(response.passengers[i].birthDate);
         this.contract.passengers[i].passportExpirationDate = new Date(response.passengers[i].passportExpirationDate);

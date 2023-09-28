@@ -29,6 +29,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
     contractLocation: new FormControl('', [Validators.required]),
     startDate: new FormControl(),
     endDate: new FormControl(),
+    departureTime: new FormControl(),
     totalPrice: new FormControl(0, [Validators.required]),
     ammountPaid: new FormControl(0, [Validators.required]),
     agencyId: new FormControl(0, [Validators.required]),
@@ -131,6 +132,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
 
   contractFormSubmit(){
     if(this.createForm.invalid){
+      console.log(this.createForm.errors);
       return;
     }
     const values = this.createForm.value;
@@ -140,6 +142,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
       contractLocation: values.contractLocation!,
       startDate: values.startDate.toJSON(),
       endDate: values.endDate.toJSON(),
+      departureTime: values.departureTime!,
       totalPrice: values.totalPrice!,
       ammountPaid: values.ammountPaid!,
       plan: {

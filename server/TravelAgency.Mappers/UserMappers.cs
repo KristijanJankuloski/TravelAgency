@@ -75,6 +75,7 @@ namespace TravelAgency.Mappers
                 Address = user.Address ?? "/",
                 PhoneNumber = user.PhoneNumber ?? "/",
                 ImageLink = user.ImagePath ?? "/noImage.png",
+                Website = user.Website ?? "/",
             };
         }
     }

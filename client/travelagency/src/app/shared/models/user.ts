@@ -32,6 +32,7 @@ export interface UserDetailsModel {
     bankAccountNumber: string;
     phoneNumber: string;
     address: string;
+    website: string;
     imageLink?: string | undefined;
 }
 
