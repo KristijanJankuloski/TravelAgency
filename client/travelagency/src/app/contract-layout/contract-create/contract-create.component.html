@@ -79,6 +79,16 @@
                     <input type="datetime-local" matInput formControlName="departureTime">
                 </mat-form-field>
             </div>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Начин на плаќање</mat-label>
+                    <mat-select [formControl]="createForm.controls.paymentMethod" required>
+                        <mat-option *ngFor="let method of paymentMethods index as i" [value]="i">
+                            {{ method }}
+                          </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
         <h3 class="display-5 pt-5">Податоци за патување</h3>
         <hr class="hr" />

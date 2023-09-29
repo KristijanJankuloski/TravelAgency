@@ -1,4 +1,5 @@
-﻿using TravelAgency.Domain.Models;
+﻿using TravelAgency.Domain.Enums;
+using TravelAgency.Domain.Models;
 using TravelAgency.DTOs.ContractDTOs;
 
 namespace TravelAgency.Mappers
@@ -33,6 +34,7 @@ namespace TravelAgency.Mappers
                 ContractLocation = dto.ContractLocation,
                 StartDate = DateTime.Parse(dto.StartDate),
                 EndDate = DateTime.Parse(dto.EndDate),
+                PaymentMethod = (PaymentMethods)dto.PaymentMethod,
                 DepartureTime = dto.DepartureTime != null? DateTime.Parse(dto.DepartureTime) : null,
                 TotalPrice = dto.TotalPrice,
                 AmmountPaid = dto.AmmountPaid,
@@ -72,6 +74,7 @@ namespace TravelAgency.Mappers
                 PhoneNumber = contract.PhoneNumber,
                 ContractDate = contract.ContractDate,
                 ContractLocation = contract.ContractLocation,
+                PaymentMethod = (int)contract.PaymentMethod,
                 StartDate = contract.StartDate,
                 EndDate = contract.EndDate,
                 DepartureTime = contract.DepartureTime,

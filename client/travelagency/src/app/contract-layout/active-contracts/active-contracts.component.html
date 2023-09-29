@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let contract of contracts">
-                <td>{{ contract.contractNumber }}</td>
+                <td [ngClass]="getDateClass(contract.startDate, contract.endDate)" >{{ contract.contractNumber }}</td>
                 <td>{{ contract.email }}</td>
                 <td>{{ contract.hotelName }}</td>
                 <td>{{ contract.startDate.toLocaleDateString("en-gb") }}</td>

@@ -18,11 +18,14 @@ namespace TravelAgency.DTOs.ContractDTOs
         [MaxLength(30)]
         public string ContractLocation { get; set; }
 
+        public int PaymentMethod { get; set; }
+
         [Required]
         public string StartDate { get; set; }
 
         [Required]
         public string EndDate { get; set; }
+
 
         public string? DepartureTime { get; set; }
 

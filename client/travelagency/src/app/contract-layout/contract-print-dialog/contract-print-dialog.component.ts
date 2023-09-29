@@ -11,7 +11,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 export class ContractPrintDialogComponent {
   contract: ContractDetailsModel;
   image = localStorage.getItem("Image");
-
+  paymentMethods = ["Кеш", "Картичка", "Фактура", "Друго"];
   constructor(private _dialogRef: MatDialogRef<ContractPrintDialogComponent>, private api: ApiService, @Inject(MAT_DIALOG_DATA) public data: number){}
 
   ngOnInit(){

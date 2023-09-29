@@ -12,6 +12,7 @@ namespace TravelAgency.DTOs.ContractDTOs
         public string PhoneNumber { get; set; } = string.Empty;
         public string ContractNumber { get; set; } = string.Empty;
         public string ContractLocation { get; set; } = string.Empty;
+        public int PaymentMethod {  get; set; }
         public DateTime ContractDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

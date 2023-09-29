@@ -77,7 +77,7 @@
             </div>
             <div class="plan-double">
                 <p>Точен датум на поаѓање</p>
-                <p> {{ contract.startDate.toLocaleDateString("en-gb") }} </p>
+                <p> {{ contract.departureTime.toLocaleString("en-gb") }} </p>
             </div>
             <div class="plan-double">
                 <p>Осигурување</p>
@@ -87,17 +87,6 @@
                 <p>Напомена</p>
                 <p> </p>
             </div>
-            <!-- <div>
-                <p>Име на престој: <b style="display: inline;">{{ contract.plan.hotelName }}</b></p>
-                <p>Локација: {{ contract.plan.location }}</p>
-                <p>Земја: {{ contract.plan.country }}</p>
-            </div>
-            <div>
-                <p>Тип на соба: {{ contract.roomType }}</p>
-                <p>Тип на услуга: {{ contract.serviceType }}</p>
-                <p>Тип на превоз: {{ contract.transportationType }}</p>
-                <p>Датум на влез: {{ contract.startDate.toLocaleDateString("en-gb") }}<br/>Датум на излез: {{ contract.endDate.toLocaleDateString("en-gb") }} </p>
-            </div> -->
         </div>
     </div>
     <hr />
@@ -128,6 +117,7 @@
     <div style="background-color: #abf1ff;"><small>Податоци за уплата</small></div>
     <div class="payment-info">
         <div>
+            <p>Начин на плаќање: {{ paymentMethods[contract.paymentMethod] }}</p>
             <p>Вкупно: {{ convertCurrency(contract.totalPrice) }}ден.</p>
             <p>Уплатено: {{ convertCurrency(contract.amountPaid) }}ден.</p>
             <hr>

@@ -12,6 +12,7 @@ export interface ContractCreateModel {
     departureTime: string;
     totalPrice: number;
     ammountPaid: number;
+    paymentMethod: number;
     plan: PlanCreateModel;
     roomType: string;
     serviceType: string;
@@ -43,6 +44,7 @@ export interface ContractDetailsModel {
     departureTime: Date;
     contractDate: Date;
     contractLocation: string;
+    paymentMethod: number;
     amountPaid: number;
     totalPrice: number;
     roomType: string;

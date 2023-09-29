@@ -15,6 +15,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 })
 export class ContractCreateComponent implements OnInit, OnDestroy {
   agenciesList: AgencyListModel[];
+  paymentMethods = ["Кеш", "Картичка", "Фактура", "Друго"]
   roomTypes = ["Студио"];
   transportationTypes = ["Авионски", "Автобуски", "Сопствен", "Друго"];
   filteredTravelOptions: Observable<string[]>;
@@ -30,6 +31,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
     startDate: new FormControl(),
     endDate: new FormControl(),
     departureTime: new FormControl(),
+    paymentMethod: new FormControl(0),
     totalPrice: new FormControl(0, [Validators.required]),
     ammountPaid: new FormControl(0, [Validators.required]),
     agencyId: new FormControl(0, [Validators.required]),
@@ -143,6 +145,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
       startDate: values.startDate.toJSON(),
       endDate: values.endDate.toJSON(),
       departureTime: values.departureTime!,
+      paymentMethod: values.paymentMethod!,
       totalPrice: values.totalPrice!,
       ammountPaid: values.ammountPaid!,
       plan: {

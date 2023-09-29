@@ -13,12 +13,13 @@ import { Subscription } from 'rxjs';
 export class ActiveContractsComponent implements OnInit, OnDestroy {
   contracts: ContractListModel[] = [];
   subscription: Subscription;
+  today = Date.now();
 
   constructor(private api: ApiService, private matDialog: MatDialog){}
   
   ngOnInit(){
     this.subscription = this.api.getActiveContracts().subscribe(data => {
-      this.contracts = [...data];
+      this.contracts = data.sort((a, b) => b.id - a.id);
       for(let i = 0; i < this.contracts.length; i++){
         this.contracts[i].startDate = new Date(this.contracts[i].startDate);
         this.contracts[i].endDate = new Date(this.contracts[i].endDate);
@@ -28,6 +29,17 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  getDateClass(start: Date, end: Date) : string{
+    if(start.getTime() > this.today){
+      return "cell-bg-green";
+    }
+
+    if(start.getTime() <= this.today && end.getTime() > this.today){
+      return "cell-bg-yellow";
+    }
+    return "cell-bg-red";
   }
 
   showPrintDialog(id: number) {
