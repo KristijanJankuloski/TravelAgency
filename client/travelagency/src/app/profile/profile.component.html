@@ -64,8 +64,16 @@
                             <input matInput type="text" name="bankAccountNumber" id="bankAccountNumber" [(ngModel)]="updateRequest.bankAccountNumber">
                         </mat-form-field>
                     </div>
+                    <div class="col-md-4 d-grid p-2">
+                        <mat-form-field>
+                            <mat-label>Веб страна</mat-label>
+                            <input matInput type="text" name="bankAccountNumber" id="bankAccountNumber" [(ngModel)]="updateRequest.bankAccountNumber">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4 p-2">
-                        <button class="h-75" mat-raised-button (click)="uploadImageDialog()">Прикачи слика <mat-icon>cloud_upload</mat-icon></button>
+                        <button mat-raised-button (click)="uploadImageDialog()">Прикачи слика <mat-icon>cloud_upload</mat-icon></button>
                     </div>
                 </div>
             </div>

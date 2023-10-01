@@ -80,7 +80,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-4">
-                <mat-form-field>
+                <mat-form-field class="w-100">
                     <mat-label>Начин на плаќање</mat-label>
                     <mat-select [formControl]="createForm.controls.paymentMethod" required>
                         <mat-option *ngFor="let method of paymentMethods index as i" [value]="i">
