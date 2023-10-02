@@ -1,4 +1,5 @@
 ﻿using TravelAgency.DataAccess.Repositories.Interfaces;
+using TravelAgency.Domain.Exceptions;
 using TravelAgency.Domain.Models;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.PassengerDTOs;
@@ -18,6 +19,14 @@ namespace TravelAgency.Services.Implementations
             _userRepository = userRepository;
             _planRepository = planRepository;
 
+        }
+
+        public async Task ArchiveContract(int id, int userId)
+        {
+            Contract contract = await _contractRepository.GetByIdAsync(id);
+            if (contract == null || contract.UserId != userId) throw new UnauthorizedException();
+            contract.IsArchived = true;
+            await _contractRepository.UpdateAsync(contract);
         }
 
         public async Task CreateContract(ContractCreateDto dto, int usedId)

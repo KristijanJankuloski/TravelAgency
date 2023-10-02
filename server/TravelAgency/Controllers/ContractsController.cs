@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TravelAgency.Domain.Exceptions;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.UserDTOs;
 using TravelAgency.Helpers;
@@ -47,6 +48,26 @@ namespace TravelAgency.Controllers
                     return NotFound();
                 }
                 return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("archive/{id}")]
+        [Authorize]
+        public async Task<IActionResult> ArchiveContract(int id)
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(User);
+                await _contractService.ArchiveContract(id, user.Id);
+                return Ok();
+            }
+            catch(UnauthorizedException ex)
+            {
+                return NotFound();
             }
             catch (Exception ex)
             {
