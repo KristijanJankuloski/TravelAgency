@@ -44,6 +44,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ActiveContractsComponent } from './contract-layout/active-contracts/active-contracts.component';
 import { ArchivedContractsComponent } from './contract-layout/archived-contracts/archived-contracts.component';
 import { ContractPrintDialogComponent } from './contract-layout/contract-print-dialog/contract-print-dialog.component';
+import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ContractPrintDialogComponent } from './contract-layout/contract-print-d
     FooterComponent,
     ActiveContractsComponent,
     ArchivedContractsComponent,
-    ContractPrintDialogComponent
+    ContractPrintDialogComponent,
+    CountryPieChartComponent
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
 import { AgencyCreateModel, AgencyListModel } from '../models/agency';
-import { ContractCreateModel, ContractDetailsModel, ContractListModel } from '../models/contract';
+import { ContractCreateModel, ContractDetailsModel, ContractListModel, ContractStatsModel } from '../models/contract';
 import { PlanListModel } from '../models/plan';
 
 @Injectable({
@@ -46,8 +46,16 @@ export class ApiService {
     return this.http.get<ContractDetailsModel>(`${environment.apiBaseUrl}/contracts/details/${id}`);
   }
 
+  public getContractStats(){
+    return this.http.get<ContractStatsModel>(`${environment.apiBaseUrl}/contracts/stats`);
+  }
+
   public getActiveContracts() {
     return this.http.get<ContractListModel[]>(`${environment.apiBaseUrl}/contracts/active`);
+  }
+
+  public archiveContract(id: number){
+    return this.http.get(`${environment.apiBaseUrl}/contracts/archive/${id}`);
   }
 
   public updateUserImage(payload: FormData) {

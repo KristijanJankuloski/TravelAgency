@@ -4,6 +4,7 @@ import { ContractListModel } from 'src/app/shared/models/contract';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ContractPrintDialogComponent } from '../contract-print-dialog/contract-print-dialog.component';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-active-contracts',
@@ -15,7 +16,7 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   today = Date.now();
 
-  constructor(private api: ApiService, private matDialog: MatDialog){}
+  constructor(private api: ApiService, private matDialog: MatDialog, private _snackBar: MatSnackBar){}
   
   ngOnInit(){
     this.subscription = this.api.getActiveContracts().subscribe(data => {
@@ -44,5 +45,11 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
 
   showPrintDialog(id: number) {
     this.matDialog.open(ContractPrintDialogComponent, {data: id});
+  }
+
+  archiveContract(id: number){
+    this.api.archiveContract(id).subscribe(data => {
+      this._snackBar.open("Contract archived", "The contract has been archived", {duration: 5000});
+    });
   }
 }

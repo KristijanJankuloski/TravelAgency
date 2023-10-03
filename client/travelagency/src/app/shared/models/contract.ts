@@ -55,3 +55,11 @@ export interface ContractDetailsModel {
     agency: AgencyListModel;
     passengers: PassengerDetailsModel[];
 }
+
+export interface ContractStatsModel {
+    activeContracts: ContractListModel[],
+    countries: {name: string, amount: number}[],
+    amountOfActiveContracts: number,
+    summedPaid: number,
+    totalSummedCost: number
+}
