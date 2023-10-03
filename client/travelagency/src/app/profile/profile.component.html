@@ -1,4 +1,5 @@
-<div class="container">
+<mat-spinner *ngIf="!user"></mat-spinner>
+<div *ngIf="user" class="container">
     <div *ngIf="user" class="pt-lg-5 pt-2 px-md-3 pb-5">
         <div class="card">
             <div class="card-header bg-green">

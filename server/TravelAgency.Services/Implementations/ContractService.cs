@@ -91,6 +91,28 @@ namespace TravelAgency.Services.Implementations
             return contract.ToContractDetailsDto();
         }
 
+        public async Task<ContractStatsDto> GetStats(int userId)
+        {
+            List<Contract> contracts = await _contractRepository.GetActiveByUserIdAsync(userId);
+            ContractStatsDto result = new ContractStatsDto();
+
+            result.ActiveContracts = contracts.Select(x => x.ToListDto()).ToList();
+            result.AmountOfActiveContracts = contracts.Count;
+            result.TotalSummedCost = contracts.Sum(x => x.TotalPrice);
+            result.SummedPaid = contracts.Sum(x => x.AmmountPaid);
+
+            Dictionary<string, int> count = new Dictionary<string, int>();
+            foreach (var contract in contracts)
+            {
+                if(count.ContainsKey(contract.Plan.Country))
+                    count[contract.Plan.Country]++;
+                else
+                    count.Add(contract.Plan.Country, 1);
+            }
+            result.Countries = count.Select(pair => new DestinationCountryStat { Name = pair.Key, Amount = pair.Value }).ToList();
+            return result;
+        }
+
         private string GenerateContractNumber(int iterator)
         {
             string number = string.Format("{0:0000}/", iterator);

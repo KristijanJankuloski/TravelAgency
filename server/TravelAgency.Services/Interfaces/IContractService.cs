@@ -9,5 +9,6 @@ namespace TravelAgency.Services.Interfaces
         Task<List<ContractListDto>> GetActiveContracts(int userId);
         Task ArchiveContract(int id, int userId);
         Task<ContractDetailsDto> GetDetails(int contractId, int userId);
+        Task<ContractStatsDto> GetStats(int userId);
     }
 }

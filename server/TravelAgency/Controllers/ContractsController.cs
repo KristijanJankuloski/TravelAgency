@@ -75,6 +75,22 @@ namespace TravelAgency.Controllers
             }
         }
 
+        [HttpGet("stats")]
+        [Authorize]
+        public async Task<ActionResult<ContractStatsDto>> GetStats()
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                var stats = await _contractService.GetStats(user.Id);
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateContract(ContractCreateWithPlanDto dto)
