@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  travelagency:
+    image: ${DOCKER_REGISTRY-}travelagency
+    build:
+      context: .
+      dockerfile: TravelAgency/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Data Source=localhost\\SQLEXPRESS;Database=TravelAgencyDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False
+      - Jwt__Key=ForTheLoveOfAllThatIsHolyPleaseDoNotKeepThisHere
+      - Jwt__Issuer=http://localhost:5002
+      - Jwt__Audience=http://localhost:5002
+      - Jwt__ExpireTime=15
+      - Jwt__RefreshExpireTime=30
