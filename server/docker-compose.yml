@@ -13,3 +13,5 @@ services:
       - Jwt__Audience=http://localhost:5002
       - Jwt__ExpireTime=15
       - Jwt__RefreshExpireTime=30
+    ports:
+      - "80:80"

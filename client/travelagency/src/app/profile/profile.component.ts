@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserDetailsModel, UserUpdateModel } from '../shared/models/user';
 import { ApiService } from '../shared/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import { UpdateImageDialogComponent } from './update-image-dialog/update-image-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit, OnDestroy {
   user?: UserDetailsModel;
   updateRequest: UserUpdateModel = {
     displayName: "",
@@ -21,11 +22,12 @@ export class ProfileComponent {
     address: "",
     bankAccountNumber: "",
   };
+  userDetailsSub: Subscription;
 
   constructor(private api: ApiService, private _snackBar: MatSnackBar, public dialog: MatDialog){}
 
   ngOnInit(){
-    this.api.getUserDetails().subscribe(data => {
+    this.userDetailsSub = this.api.getUserDetails().subscribe(data => {
       this.user = data;
       this.updateRequest.displayName = data.displayName;
       this.updateRequest.firstName = data.firstName;
@@ -50,5 +52,9 @@ export class ProfileComponent {
 
   uploadImageDialog() {
     const dialogRef = this.dialog.open(UpdateImageDialogComponent);
+  }
+
+  ngOnDestroy() {
+    this.userDetailsSub.unsubscribe();
   }
 }

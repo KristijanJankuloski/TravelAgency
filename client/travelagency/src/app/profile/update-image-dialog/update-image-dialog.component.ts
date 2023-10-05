@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
@@ -9,12 +10,16 @@ import { ApiService } from 'src/app/shared/services/api.service';
   templateUrl: './update-image-dialog.component.html',
   styleUrls: ['./update-image-dialog.component.scss']
 })
-export class UpdateImageDialogComponent {
+export class UpdateImageDialogComponent implements OnDestroy {
   file: any = null;
   imageChangeEvent: any;
   selectedFileUrl: string | null = null;
+  subscription: Subscription;
 
   constructor(public dialogRef: MatDialogRef<UpdateImageDialogComponent>, private api: ApiService, private _snackBar: MatSnackBar, private sanitizer: DomSanitizer){}
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   onFileChange(event: any){
     this.imageChangeEvent = event;
@@ -44,7 +49,7 @@ export class UpdateImageDialogComponent {
     if(this.file){
       const data = new FormData();
       data.append('file', this.file, this.file.name);
-      this.api.updateUserImage(data).subscribe({next: (value) => {
+      this.subscription = this.api.updateUserImage(data).subscribe({next: (value) => {
         this._snackBar.open("Сликата е променета", "Затвори", {duration: 3000});
         this.dialogRef.close();
       }, error: (error) => {
