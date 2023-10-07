@@ -20,6 +20,7 @@ export interface UserUpdateModel {
     bankAccountNumber: string;
     phoneNumber: string;
     address: string;
+    website: string;
 }
 
 export interface UserDetailsModel {

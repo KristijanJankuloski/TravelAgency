@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     phoneNumber: "",
     address: "",
     bankAccountNumber: "",
+    website: "",
   };
   userDetailsSub: Subscription;
 
@@ -35,6 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.updateRequest.bankAccountNumber = data.bankAccountNumber;
       this.updateRequest.address = data.address;
       this.updateRequest.phoneNumber = data.phoneNumber;
+      this.updateRequest.website = data.website;
     });
   }
 
