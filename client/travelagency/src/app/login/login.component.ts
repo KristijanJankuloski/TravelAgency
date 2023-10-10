@@ -16,6 +16,7 @@ export class LoginComponent {
   });
   isLoading: boolean = false;
   isInvalidCredentials: boolean = false;
+  isPasswordVisible = false;
 
   constructor(private auth: AuthService, private router: Router){}
 

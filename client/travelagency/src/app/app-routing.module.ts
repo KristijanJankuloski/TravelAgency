@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './core/components/home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AgenciesComponent } from './agencies/agencies.component';
@@ -10,7 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { anonymousGuard } from './shared/anonymous.guard';
 import { ContractLayoutComponent } from './contract-layout/contract-layout.component';
 import { ContractCreateComponent } from './contract-layout/contract-create/contract-create.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 import { ActiveContractsComponent } from './contract-layout/active-contracts/active-contracts.component';
 import { ArchivedContractsComponent } from './contract-layout/archived-contracts/archived-contracts.component';
 

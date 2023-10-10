@@ -43,7 +43,7 @@
                         <input matStartDate formControlName="startDate" required placeholder="Start date">
                         <input matEndDate formControlName="endDate" required placeholder="End date">
                     </mat-date-range-input>
-                    <mat-hint class="small">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-hint class="small">DD/MM/YYYY – DD/MM/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="tripDates"></mat-datepicker-toggle>
                     <mat-date-range-picker #tripDates></mat-date-range-picker>
                     
@@ -196,7 +196,7 @@
                         <mat-form-field class="w-100">
                             <mat-label>Дата на истекување на пасош</mat-label>
                             <input matInput [matDatepicker]="expirePicker" required formControlName="passportExpirationDate">
-                            <mat-hint class="small">MM/DD/YYYY</mat-hint>
+                            <mat-hint class="small">DD/MM/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="expirePicker"></mat-datepicker-toggle>
                             <mat-datepicker #expirePicker></mat-datepicker>
                         </mat-form-field>
@@ -205,7 +205,7 @@
                         <mat-form-field class="w-100">
                             <mat-label>Дата на раѓање</mat-label>
                             <input matInput [matDatepicker]="birthDatePicker" required formControlName="birthDate">
-                            <mat-hint class="small">MM/DD/YYYY</mat-hint>
+                            <mat-hint class="small">DD/MM/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #birthDatePicker></mat-datepicker>
                         </mat-form-field>

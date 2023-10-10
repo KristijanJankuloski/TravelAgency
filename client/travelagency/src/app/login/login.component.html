@@ -15,7 +15,8 @@
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label for="password">Лозинка</mat-label>
-                            <input id="password" type="password" required matInput formControlName="password" />
+                            <input id="password" required matInput formControlName="password" [type]="isPasswordVisible ? 'text': 'password' " />
+                            <button type="button" mat-icon-button matSuffix (click)="isPasswordVisible = !isPasswordVisible"><mat-icon>{{ isPasswordVisible? 'visibility_off' : 'visibility' }}</mat-icon></button>
                         </mat-form-field>
                         <div class="row">
                             <div class="col">

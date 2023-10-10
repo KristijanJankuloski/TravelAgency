@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserLoginModel, UserLoginResponseModel, UserRegisterModel } from '../models/user';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -74,14 +74,14 @@ export class AuthService {
   }
 
   public loginUser(req: UserLoginModel) : Observable<UserLoginResponseModel> {
-    let request = this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/login`, req);
-    request.subscribe((data) => {
-      this.setUser(data);
-      this.setJwt(data.token);
-      this.setRefreshToken(data.refreshToken);
-      this.router.navigate(['profile']);
-    });
-    return request;
+    return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/login`, req).pipe(
+      tap((data) => {
+        this.setUser(data);
+        this.setJwt(data.token);
+        this.setRefreshToken(data.refreshToken);
+        this.router.navigate(['profile']);
+      })
+    );
   }
 
   public logout() {
@@ -96,12 +96,12 @@ export class AuthService {
   }
 
   public refreshSession(){
-    let request = this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/refresh-token`, {username: this.getLocalUser(), refreshToken: this.getRefreshToken()});
-    request.subscribe(data => {
-      this.setUser(data);
-      this.setJwt(data.token);
-      this.setRefreshToken(data.refreshToken);
-    });
-    return request;
+    return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/refresh-token`, {username: this.getLocalUser(), refreshToken: this.getRefreshToken()}).pipe(
+      tap(data => {
+        this.setUser(data);
+        this.setJwt(data.token);
+        this.setRefreshToken(data.refreshToken);
+      })
+    );
   }
 }

@@ -21,11 +21,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
+import { HeaderComponent } from './core/components/header/header.component';
+import { HomeComponent } from './core/components/home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AgenciesComponent } from './agencies/agencies.component';
@@ -39,18 +39,17 @@ import { DeleteAgencyDialogComponent } from './agencies/delete-agency-dialog/del
 import { EditAgencyDialogComponent } from './agencies/edit-agency-dialog/edit-agency-dialog.component';
 import { ContractLayoutComponent } from './contract-layout/contract-layout.component';
 import { ContractCreateComponent } from './contract-layout/contract-create/contract-create.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FooterComponent } from './footer/footer.component';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
+import { FooterComponent } from './core/components/footer/footer.component';
 import { ActiveContractsComponent } from './contract-layout/active-contracts/active-contracts.component';
 import { ArchivedContractsComponent } from './contract-layout/archived-contracts/archived-contracts.component';
 import { ContractPrintDialogComponent } from './contract-layout/contract-print-dialog/contract-print-dialog.component';
 import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-pie-chart.component';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    HomeComponent,
     LoginComponent,
     RegisterComponent,
     AgenciesComponent,
@@ -63,8 +62,6 @@ import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-
     EditAgencyDialogComponent,
     ContractLayoutComponent,
     ContractCreateComponent,
-    PageNotFoundComponent,
-    FooterComponent,
     ActiveContractsComponent,
     ArchivedContractsComponent,
     ContractPrintDialogComponent,
@@ -72,6 +69,7 @@ import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -95,7 +93,8 @@ import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-
     MatAutocompleteModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
 })
