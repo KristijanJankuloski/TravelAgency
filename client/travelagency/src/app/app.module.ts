@@ -24,8 +24,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-import { HeaderComponent } from './core/components/header/header.component';
-import { HomeComponent } from './core/components/home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AgenciesComponent } from './agencies/agencies.component';
@@ -39,8 +37,6 @@ import { DeleteAgencyDialogComponent } from './agencies/delete-agency-dialog/del
 import { EditAgencyDialogComponent } from './agencies/edit-agency-dialog/edit-agency-dialog.component';
 import { ContractLayoutComponent } from './contract-layout/contract-layout.component';
 import { ContractCreateComponent } from './contract-layout/contract-create/contract-create.component';
-import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
-import { FooterComponent } from './core/components/footer/footer.component';
 import { ActiveContractsComponent } from './contract-layout/active-contracts/active-contracts.component';
 import { ArchivedContractsComponent } from './contract-layout/archived-contracts/archived-contracts.component';
 import { ContractPrintDialogComponent } from './contract-layout/contract-print-dialog/contract-print-dialog.component';
