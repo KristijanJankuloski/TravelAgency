@@ -8,6 +8,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 
@@ -16,7 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { MatButtonModule } from '@angular/material/button';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoaderComponent
   ]
 })
 export class CoreModule { }

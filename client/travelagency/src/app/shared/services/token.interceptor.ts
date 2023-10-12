@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, filter, of, switchMap, take, throwError } from 'rxjs';
+import { Observable, catchError, filter, of, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -23,7 +23,23 @@ export class TokenInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${this.auth.getJwt()}`
         }
       });
-      return next.handle(newRequest).pipe(catchError(err => this.handleAuthError(err, newRequest, next)));
+      return next.handle(newRequest).pipe(catchError(err => {
+        if(err.status === 401 && !err.url.includes("refresh-token")){
+          return this.auth.refreshSession().pipe(switchMap(value => {
+            const refreshedRequest = request.clone({
+              setHeaders: {
+                Authorization: `Bearer ${value.token}`
+              }
+            });
+            return next.handle(refreshedRequest);
+          }));
+        }
+        else if(err.status === 401){
+          this.auth.logout();
+        }
+        return throwError(() => new Error(err));
+        // return next.handle(newRequest);
+      }));
     }
     return next.handle(request);
   }

@@ -42,6 +42,7 @@ import { ArchivedContractsComponent } from './contract-layout/archived-contracts
 import { ContractPrintDialogComponent } from './contract-layout/contract-print-dialog/contract-print-dialog.component';
 import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-pie-chart.component';
 import { CoreModule } from './core/core.module';
+import { LoadingInterceptor } from './shared/services/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { CoreModule } from './core/core.module';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
