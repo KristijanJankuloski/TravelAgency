@@ -25,7 +25,8 @@ export class TokenInterceptor implements HttpInterceptor {
       });
       return next.handle(newRequest).pipe(catchError(err => {
         if(err.status === 401 && !err.url.includes("refresh-token")){
-          return this.auth.refreshSession().pipe(switchMap(value => {
+          return this.auth.refreshSession().pipe(
+            switchMap(value => {
             const refreshedRequest = request.clone({
               setHeaders: {
                 Authorization: `Bearer ${value.token}`
@@ -38,7 +39,6 @@ export class TokenInterceptor implements HttpInterceptor {
           this.auth.logout();
         }
         return throwError(() => new Error(err));
-        // return next.handle(newRequest);
       }));
     }
     return next.handle(request);

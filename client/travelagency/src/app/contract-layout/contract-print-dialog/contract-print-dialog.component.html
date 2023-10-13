@@ -117,11 +117,11 @@
     <div style="background-color: #abf1ff;"><small>Податоци за уплата</small></div>
     <div class="payment-info">
         <div>
-            <p>Начин на плаќање: {{ paymentMethods[contract.paymentMethod] }}</p>
-            <p>Вкупно: {{ convertCurrency(contract.totalPrice) }}ден.</p>
-            <p>Уплатено: {{ convertCurrency(contract.amountPaid) }}ден.</p>
+            <p class="currency-line"><span>Начин на плаќање:</span><span>{{ paymentMethods[contract.paymentMethod] }}</span></p>
+            <p class="currency-line"><span>Вкупно:</span><span>{{ convertCurrency(contract.totalPrice) }}ден.</span></p>
+            <p class="currency-line"><span>Уплатено:</span><span>{{ convertCurrency(contract.amountPaid) }}ден.</span></p>
             <hr>
-            <p><b>За доплата: {{ convertCurrency(contract.totalPrice - contract.amountPaid) }}ден.</b></p>
+            <p class="currency-line"><span><b>За доплата:</b></span><span><b>{{ convertCurrency(contract.totalPrice - contract.amountPaid) }}ден.</b></span></p>
         </div>
         <div>
             <small>Забелешки</small>
@@ -137,13 +137,13 @@
     </div>
     <div class="contract-footer">
         <div class="user-signature-field">
-            <p>Потпис на патникот _______________________</p>
+            <small>Потпис на патникот _______________________</small>
         </div>
         <div>
-            <p>{{contract.contractDate.toLocaleDateString("en-gb")}} <span>{{ contract.contractLocation }}</span></p>
+            <small>{{contract.contractDate.toLocaleDateString("en-gb")}} <span>{{ contract.contractLocation }}</span></small>
         </div>
         <div class="employee-signature">
-            <p>Потпис на вработен _______________________</p>
+            <small>Потпис на вработен _______________________</small>
         </div>
     </div>
 </div>
