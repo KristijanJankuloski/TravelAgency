@@ -30,6 +30,7 @@ namespace TravelAgency.Services.Implementations
             dto.DisplayName = organization.Name;
             dto.Address = organization.Address ?? "/";
             dto.Website = organization.Website ?? "/";
+            dto.ImageLink = organization.ImagePath;
             return dto;
         }
 

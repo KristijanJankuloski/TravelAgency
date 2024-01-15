@@ -59,7 +59,7 @@ export class ApiService {
   }
 
   public updateUserImage(payload: FormData) {
-    return this.http.post(`${environment.apiBaseUrl}/users/update-image`, payload)
+    return this.http.post(`${environment.apiBaseUrl}/organizations/update-image`, payload)
   }
 
   public updateUserInfo(request: UserUpdateModel){

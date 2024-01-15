@@ -2,8 +2,6 @@
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.Enums;
 using TravelAgency.DTOs.UserDTOs;
-using TravelAgency.Mappers;
-using TravelAgency.Services.Helpers;
 using TravelAgency.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
@@ -40,6 +38,7 @@ namespace TravelAgency.Services.Implementations
                 BankAccountNumber = dto.BankAccountNumber,
                 Email = dto.Email,
                 ContractIterator = 1,
+                InvoiceIterator = 1,
                 OwnerId = user.Id
             };
 
@@ -96,22 +95,22 @@ namespace TravelAgency.Services.Implementations
             }
             user.LastToken = newToken;
             user.TokenExpireDate = DateTime.Now.AddDays(int.Parse(_configuration["Jwt:RefreshExpireTime"]));
-            var organizaion = await _organizationRepository.GetByUserId(user.Id);
+            var organization = await _organizationRepository.GetByUserId(user.Id);
 
             await _userManager.UpdateAsync(user);
 
             return new UserTokenDto
             {
                 Id = user.Id,
-                OrganizationId = organizaion.Id,
+                OrganizationId = organization.Id,
                 Username = user.UserName,
                 Email = user.Email,
-                Address = organizaion.Address ?? string.Empty,
-                DisplayName = organizaion.Name ?? string.Empty,
-                BankAccountNumber = organizaion.BankAccountNumber ?? string.Empty,
+                Address = organization.Address ?? string.Empty,
+                DisplayName = organization.Name ?? string.Empty,
+                BankAccountNumber = organization.BankAccountNumber ?? string.Empty,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                ImageUrl = organizaion.ImagePath,
+                ImageUrl = organization.ImagePath,
                 Role = user.Role
             };
         }

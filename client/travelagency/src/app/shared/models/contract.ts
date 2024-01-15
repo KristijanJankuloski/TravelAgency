@@ -22,6 +22,7 @@ export interface ContractCreateModel {
 
 export interface ContractListModel {
     id: number;
+    holderName: string;
     email: string;
     hotelName: string;
     location: string;

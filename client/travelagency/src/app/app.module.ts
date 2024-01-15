@@ -37,6 +37,7 @@ import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-
 import { CoreModule } from './core/core.module';
 import { LoadingInterceptor } from './shared/services/loading.interceptor';
 import { ContractLayoutModule } from './contract-layout/contract-layout.module';
+import { OrganizationEditComponent } from './organizations/organization-edit/organization-edit.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ContractLayoutModule } from './contract-layout/contract-layout.module';
     AddAgencyDialogComponent,
     DeleteAgencyDialogComponent,
     EditAgencyDialogComponent,
-    CountryPieChartComponent
+    CountryPieChartComponent,
+    OrganizationEditComponent
   ],
   imports: [
     BrowserModule,

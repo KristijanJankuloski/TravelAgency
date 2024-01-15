@@ -32,7 +32,7 @@ The user interface follows angular material standards and uses some bootstrap fo
 
 ### Database design
 All domain models (subject to change)
-![data_image](img/travel_data.jpg)
+![data_image](img/odiseydb.png)
 
 `Database diagram`
 

@@ -52,6 +52,7 @@ namespace TravelAgency.Mappers
             return new ContractListDto
             {
                 Id = contract.Id,
+                HolderName = contract.PrimaryPassenger,
                 ContractNumber = contract.ContractNumber,
                 Email = contract.Email,
                 HotelName = contract.Plan.HotelName,

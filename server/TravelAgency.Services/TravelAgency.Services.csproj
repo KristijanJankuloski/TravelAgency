@@ -11,6 +11,7 @@
     <PackageReference Include="Hangfire.Core" Version="1.8.7" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.7" />
     <PackageReference Include="MailKit" Version="4.3.0" />
+    <PackageReference Include="QuestPDF" Version="2023.12.3" />
   </ItemGroup>
 
   <ItemGroup>

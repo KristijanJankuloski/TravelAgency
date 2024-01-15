@@ -12,11 +12,13 @@ namespace TravelAgency.Services.Implementations
     public class ContractService : IContractService
     {
         private readonly IContractRepository _contractRepository;
+        private readonly IOrganizationRepository _organizationRepository;
         private readonly UserManager<TravelUser> _userManager;
         private readonly IPlanRepository _planRepository;
-        public ContractService(IContractRepository contractRepository, UserManager<TravelUser> userManager, IPlanRepository planRepository)
+        public ContractService(IContractRepository contractRepository, IOrganizationRepository organizationRepository, UserManager<TravelUser> userManager, IPlanRepository planRepository)
         {
             _contractRepository = contractRepository;
+            _organizationRepository = organizationRepository;
             _userManager = userManager;
             _planRepository = planRepository;
 
@@ -65,9 +67,11 @@ namespace TravelAgency.Services.Implementations
                 contract.Plan = existingPlan;
                 contract.PlanId = existingPlan.Id;
             }
+            contract.UserId = userId;
             contract.OrganizationId = user.OrganizationId;
             contract.ContractDate = DateTime.Now;
-            int iterator = user.Organization.ContractIterator++;
+            contract.PrimaryPassenger = $"{dto.Passengers[0]?.FirstName} {dto.Passengers[0]?.LastName}";
+            int iterator = await _organizationRepository.IterateContractNumber(user.OrganizationId);
             contract.ContractNumber = GenerateContractNumber(iterator);
             foreach (PassengerCreateDto p in dto.Passengers)
             {

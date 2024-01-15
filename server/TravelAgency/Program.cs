@@ -9,6 +9,7 @@ using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 // Add services to the container.
 
 builder.Services.AddControllers();

@@ -3,8 +3,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>E-mail</th>
                 <th>Име</th>
+                <th>Хотел</th>
                 <th>Почеток</th>
                 <th>Крај</th>
                 <th>Акции</th>
@@ -13,7 +13,7 @@
         <tbody>
             <tr *ngFor="let contract of contracts">
                 <td [ngClass]="getDateClass(contract.startDate, contract.endDate)" >{{ contract.contractNumber }}</td>
-                <td>{{ contract.email }}</td>
+                <td>{{ contract.holderName }}</td>
                 <td>{{ contract.hotelName }}</td>
                 <td>{{ contract.startDate.toLocaleDateString("en-gb") }}</td>
                 <td>{{ contract.endDate.toLocaleDateString("en-gb") }}</td>

@@ -44,7 +44,7 @@ namespace TravelAgency.DataAccess.Context
 
             modelBuilder.Entity<Invoice>()
                 .Property(x => x.Note)
-                .HasColumnType("text");
+                .HasColumnType("nvarchar(max)");
 
             modelBuilder.Entity<Invoice>()
                 .HasOne(x => x.User)
@@ -54,11 +54,11 @@ namespace TravelAgency.DataAccess.Context
 
             modelBuilder.Entity<Organization>()
                 .Property(x => x.DefaultFooter)
-                .HasColumnType("text");
+                .HasColumnType("nvarchar(max)");
 
             modelBuilder.Entity<Organization>()
                 .Property(x => x.InvoiceNote)
-                .HasColumnType("text");
+                .HasColumnType("nvarchar(max)");
 
             modelBuilder.Entity<TravelUser>()
                 .HasOne(x => x.Organization)
@@ -68,15 +68,15 @@ namespace TravelAgency.DataAccess.Context
 
             modelBuilder.Entity<Contract>()
                 .Property(x => x.Footer)
-                .HasColumnType("text");
+                .HasColumnType("nvarchar(max)");
 
             modelBuilder.Entity<ContractEmailEvent>()
                 .Property(x => x.Body)
-                .HasColumnType("text");
+                .HasColumnType("nvarchar(511)");
 
             modelBuilder.Entity<ContractEmailEvent>()
                 .Property(x => x.CreatedOn)
-                .HasDefaultValue(DateTime.Now);
+                .HasDefaultValueSql("GETDATE()");
 
             modelBuilder.Entity<ContractEmailEvent>()
                 .HasOne(x => x.CreatedBy)
@@ -86,11 +86,11 @@ namespace TravelAgency.DataAccess.Context
 
             modelBuilder.Entity<InvoiceEmailEvent>()
                 .Property(x => x.Body)
-                .HasColumnType("text");
+                .HasColumnType("nvarchar(511)");
 
             modelBuilder.Entity<InvoiceEmailEvent>()
                 .Property(x => x.SentOn)
-                .HasDefaultValue(DateTime.Now);
+                .HasDefaultValueSql("GETDATE()");
 
             modelBuilder.Entity<InvoiceEmailEvent>()
                 .HasOne(x => x.CreatedBy)

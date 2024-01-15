@@ -22,6 +22,10 @@ namespace TravelAgency.Domain.Models
         [MaxLength(30)]
         public string ContractLocation { get; set; } = string.Empty;
 
+        [Required]
+        [MaxLength(150)]
+        public string PrimaryPassenger { get; set; } = string.Empty;
+
         public string? Footer { get; set; }
 
         [Required]
@@ -57,12 +61,20 @@ namespace TravelAgency.Domain.Models
         public int DiscountPercentage { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(0, double.MaxValue)]
         public double TotalPrice { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
+        [Range(0, double.MaxValue)]
+        public double TotalOwedToVendor { get; set; }
+
+        [Required]
+        [Range(0, double.MaxValue)]
         public double AmmountPaid { get; set; }
+
+        [Required]
+        [Range(0, double.MaxValue)]
+        public double AmountPaidToVendor { get; set; }
 
         public bool IsPaid { get; set; }
 

@@ -1,0 +1,86 @@
+<div class="container pt-lg-5 pt-2 px-md-3 pb-5">
+    <form [formGroup]="editForm" (ngSubmit)="submitForm()">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="display-5">Мојата агенција</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Име</mat-label>
+                            <input matInput type="text" formControlName="name" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>E-mail</mat-label>
+                            <input matInput type="email" formControlName="email" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Број на жиро сметка</mat-label>
+                            <input matInput type="text" formControlName="bankAccountNumber" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Телефон</mat-label>
+                            <input matInput type="tel" formControlName="phoneNumber" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Адреса</mat-label>
+                            <input matInput type="text" formControlName="address" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Веб страна</mat-label>
+                            <input matInput type="url" formControlName="website" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <mat-label>Град</mat-label>
+                            <input matInput type="text" formControlName="location" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <mat-label>ДДВ %</mat-label>
+                            <input matInput type="number" formControlName="taxPercentage" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <hr class="bs-hr">
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Забелешка на договор</mat-label>
+                            <textarea matInput rows="7" formControlName="contractFooter"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label>Забелешка на фактура</mat-label>
+                            <textarea matInput rows="7" formControlName="invoiceNote"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer pt-3 pb-3">
+                <div class="d-flex justify-content-between">
+                    <button type="button" mat-raised-button (click)="uploadImageDialog()"><mat-icon>image</mat-icon> Прикачи слика</button>
+                    <button type="submit" mat-raised-button color="primary"><mat-icon>save</mat-icon> Зачувај промени</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
