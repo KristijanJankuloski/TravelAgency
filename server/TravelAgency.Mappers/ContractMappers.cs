@@ -84,7 +84,6 @@ namespace TravelAgency.Mappers
                 AmountPaid = contract.AmmountPaid,
                 TotalPrice = contract.TotalPrice,
                 IsPaid = contract.IsPaid,
-                User = contract.User.ToUserDetailsDto(),
                 Plan = contract.Plan.ToPlanListDto(),
                 Agency = contract.Plan.Agency.ToAgencyListDto(),
                 Passengers = contract.Passengers.Select(x => x.ToPassengerDetailsDto()).ToList(),

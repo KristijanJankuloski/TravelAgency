@@ -17,10 +17,11 @@ namespace TravelAgency.Helpers
 
             Claim[] claims = new[]
             {
+                new Claim(ClaimTypes.GroupSid, user.OrganizationId.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Username),
                 new Claim(ClaimTypes.GivenName, user.DisplayName),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                new Claim(ClaimTypes.Sid, user.Id),
                 new Claim(ClaimTypes.Role, user.Role ?? "USER"),
                 new Claim(ClaimTypes.Name, user.FirstName ?? "/"),
                 new Claim(ClaimTypes.Surname, user.LastName ?? "/"),
@@ -46,7 +47,8 @@ namespace TravelAgency.Helpers
         {
             return new UserTokenDto
             {
-                Id = int.Parse(user.FindFirst(ClaimTypes.Sid)?.Value),
+                OrganizationId = int.Parse(user.FindFirstValue(ClaimTypes.GroupSid)),
+                Id = user.FindFirst(ClaimTypes.Sid)?.Value,
                 Username = user.FindFirst(ClaimTypes.NameIdentifier)?.Value,
                 DisplayName = user.FindFirst(ClaimTypes.GivenName)?.Value,
                 Email = user.FindFirst(ClaimTypes.Email)?.Value,

@@ -14,19 +14,20 @@ namespace TravelAgency.Domain.Models
         public string Address { get; set; } = string.Empty;
 
         [Required]
-        [MaxLength(30)]
+        [MaxLength(50)]
         public string PhoneNumber { get; set; } = string.Empty;
 
-        [MaxLength(30)]
+        [MaxLength(50)]
         public string? Email { get; set; }
 
+        [MaxLength(100)]
         public string? AccountNumber { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public int OrganizationId { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        [ForeignKey(nameof(OrganizationId))]
+        public Organization Organization { get; set; }
 
         [InverseProperty("Agency")]
         public List<Plan> Plans { get; set; } = new();

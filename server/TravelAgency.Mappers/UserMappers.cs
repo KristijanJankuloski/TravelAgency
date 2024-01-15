@@ -5,28 +5,14 @@ namespace TravelAgency.Mappers
 {
     public static class UserMappers
     {
-        public static User ToUser(this UserRegisterDto dto)
-        {
-            return new User
-            {
-                Username = dto.Username,
-                DisplayName = dto.DisplayName,
-                Email = dto.Email,
-                BankAccountNumber = dto.BankAccountNumber,
-                ContractIterator = 1,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-            };
-        }
-
-        public static UserLoginResponseDto ToLoginResponse(this User user)
+        public static UserLoginResponseDto ToLoginResponse(this TravelUser user)
         {
             return new UserLoginResponseDto
             {
-                Username = user.Username,
-                DisplayName = user.DisplayName,
+                Username = user.UserName,
+                DisplayName = user.Organization?.Name,
                 Email = user.Email,
-                ImageUrl = user.ImagePath?? "/noImage.png"
+                ImageUrl = user.Organization?.ImagePath ?? "/noImage.png"
             };
         }
 
@@ -44,38 +30,38 @@ namespace TravelAgency.Mappers
             };
         }
 
-        public static UserTokenDto ToTokenDto(this User user)
+        public static UserTokenDto ToTokenDto(this TravelUser user)
         {
             return new UserTokenDto
             {
                 Id = user.Id,
-                Username = user.Username,
+                Username = user.UserName,
                 FirstName= user.FirstName,
                 LastName= user.LastName,
-                Address = user.Address,
+                Address = user.Organization?.Address,
                 Role = user.Role,
-                DisplayName = user.DisplayName,
+                DisplayName = user.Organization?.Name,
                 Email = user.Email,
-                BankAccountNumber = user.BankAccountNumber,
-                ImageUrl = user.ImagePath
+                BankAccountNumber = user.Organization?.BankAccountNumber,
+                ImageUrl = user.Organization?.ImagePath
             };
         }
 
-        public static UserDetailsDto ToUserDetailsDto(this User user)
+        public static UserDetailsDto ToUserDetailsDto(this TravelUser user)
         {
             return new UserDetailsDto
             {
                 Id = user.Id,
-                Username = user.Username,
+                Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DisplayName = user.DisplayName,
+                DisplayName = user.Organization?.Name,
                 Email = user.Email,
-                BankAccountNumber = user.BankAccountNumber,
-                Address = user.Address ?? "/",
-                PhoneNumber = user.PhoneNumber ?? "/",
-                ImageLink = user.ImagePath ?? "/noImage.png",
-                Website = user.Website ?? "/",
+                BankAccountNumber = user.Organization?.BankAccountNumber,
+                Address = user.Organization?.Name ?? "/",
+                PhoneNumber = user.Organization?.Name ?? "/",
+                ImageLink = user.Organization?.Name ?? "/noImage.png",
+                Website = user.Organization?.Name ?? "/",
             };
         }
     }

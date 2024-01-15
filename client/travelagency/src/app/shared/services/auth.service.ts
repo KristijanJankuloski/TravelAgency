@@ -76,6 +76,7 @@ export class AuthService {
   public loginUser(req: UserLoginModel) : Observable<UserLoginResponseModel> {
     return this.http.post<UserLoginResponseModel>(`${environment.apiBaseUrl}/auth/login`, req).pipe(
       tap((data) => {
+        console.log(data);
         this.setUser(data);
         this.setJwt(data.token);
         this.setRefreshToken(data.refreshToken);

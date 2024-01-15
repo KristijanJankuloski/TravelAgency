@@ -22,6 +22,8 @@ namespace TravelAgency.Domain.Models
         [MaxLength(30)]
         public string ContractLocation { get; set; } = string.Empty;
 
+        public string? Footer { get; set; }
+
         [Required]
         public DateTime ContractDate { get; set; }
 
@@ -32,6 +34,8 @@ namespace TravelAgency.Domain.Models
         public DateTime EndDate { get; set; }
 
         public DateTime? DepartureTime { get; set; }
+
+        public DateTime? CanceledOn {  get; set; }
 
         public PaymentMethods PaymentMethod { get; set; }
 
@@ -45,6 +49,14 @@ namespace TravelAgency.Domain.Models
         public string? TransportationType { get; set; }
 
         [Required]
+        [Range(0, 100)]
+        public int TaxPercentage { get; set; }
+
+        [Required]
+        [Range(0, 100)]
+        public int DiscountPercentage { get; set; }
+
+        [Required]
         [Range(0, int.MaxValue)]
         public double TotalPrice { get; set; }
 
@@ -56,11 +68,18 @@ namespace TravelAgency.Domain.Models
 
         public bool IsArchived { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
+        public string? FilePath { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        [Required]
+        public int OrganizationId { get; set; }
+
+        [ForeignKey(nameof(OrganizationId))]
+        public Organization Organization { get; set; }
+
+        public string UserId { get; set; } = string.Empty;
+
+        [ForeignKey(nameof(UserId))]
+        public TravelUser User { get; set; }
 
         [Required]
         public int PlanId { get; set; }
@@ -70,5 +89,8 @@ namespace TravelAgency.Domain.Models
 
         [InverseProperty("Contract")]
         public List<Passenger> Passengers { get; set; } = new();
+
+        [InverseProperty("Contract")]
+        public List<ContractEmailEvent> EmailEvents { get; set; } = new();
     }
 }

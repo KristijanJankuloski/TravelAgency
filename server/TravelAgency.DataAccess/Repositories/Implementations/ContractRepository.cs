@@ -15,14 +15,14 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
 
         public async Task<List<Contract>> GetActiveByUserIdAsync(int userId)
         {
-            return await _context.Contracts.Include(x => x.Plan).Where(x => x.UserId == userId && !x.IsArchived).ToListAsync();
+            return await _context.Contracts.Include(x => x.Plan).Where(x => x.OrganizationId == userId && !x.IsArchived).ToListAsync();
         }
 
         public override async Task<Contract> GetByIdAsync(int id)
         {
             return await _context.Contracts
                 .Include(x => x.Passengers)
-                .Include(x => x.User)
+                .Include(x => x.Organization)
                 .Include(x => x.Plan)
                 .ThenInclude(x => x.Agency)
                 .FirstOrDefaultAsync(x => x.Id == id);

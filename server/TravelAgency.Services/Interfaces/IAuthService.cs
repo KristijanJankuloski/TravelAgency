@@ -8,6 +8,6 @@ namespace TravelAgency.Services.Interfaces
         Task RegisterUser(UserRegisterDto dto);
         Task<UserTokenDto> Login(UserLoginDto dto);
         Task<UserTokenDto> CheckLastToken(string username, string lastToken, string newToken);
-        Task SaveToken(int userId, string token);
+        Task SaveToken(string userId, string token);
     }
 }

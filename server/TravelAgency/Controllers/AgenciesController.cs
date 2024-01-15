@@ -30,7 +30,7 @@ namespace TravelAgency.Controllers
                 {
                     return Unauthorized();
                 }
-                var agencies = await _agencyService.GetAgencyList(user.Id);
+                var agencies = await _agencyService.GetAgencyList(user.OrganizationId);
                 return Ok(agencies);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace TravelAgency.Controllers
                 {
                     return Unauthorized();
                 }
-                AgencyDetailsDto dto = await _agencyService.GetAgencyDetails(id, user.Id);
+                AgencyDetailsDto dto = await _agencyService.GetAgencyDetails(id, user.OrganizationId);
                 if (dto == null)
                 {
                     return NotFound();
@@ -74,7 +74,7 @@ namespace TravelAgency.Controllers
                 {
                     return Unauthorized();
                 }
-                await _agencyService.UpdateAgency(id, dto, user.Id);
+                await _agencyService.UpdateAgency(id, dto, user.OrganizationId);
                 return Ok("Agency updated");
             }
             catch (UnauthorizedException ex)
@@ -98,7 +98,7 @@ namespace TravelAgency.Controllers
                 {
                     return Unauthorized();
                 }
-                if(await _agencyService.DeleteById(id, user.Id))
+                if(await _agencyService.DeleteById(id, user.OrganizationId))
                 {
                     return Ok("Agency Deleted");
                 }
@@ -121,7 +121,7 @@ namespace TravelAgency.Controllers
                 {
                     return Unauthorized();
                 }
-                await _agencyService.CreateAgency(dto, user.Id);
+                await _agencyService.CreateAgency(dto, user.OrganizationId);
                 return StatusCode(StatusCodes.Status201Created, "Agency Created");
             }
             catch (Exception ex)

@@ -20,7 +20,7 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
 
         public async Task<List<Agency>> GetAllByUserIdAsync(int userId)
         {
-            return await _context.Agencies.Where(x => x.UserId == userId).ToListAsync();
+            return await _context.Agencies.Where(x => x.OrganizationId == userId).ToListAsync();
         }
     }
 }

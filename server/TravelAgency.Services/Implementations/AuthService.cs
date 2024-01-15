@@ -6,47 +6,78 @@ using TravelAgency.Mappers;
 using TravelAgency.Services.Helpers;
 using TravelAgency.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 
 namespace TravelAgency.Services.Implementations
 {
     public class AuthService : IAuthService
     {
-        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
-        public AuthService(IUserRepository userRepository, IConfiguration configuration)
+        private readonly IOrganizationRepository _organizationRepository;
+        private readonly UserManager<TravelUser> _userManager;
+        public AuthService(UserManager<TravelUser> userManager, IConfiguration configuration, IOrganizationRepository organizationRepository)
         {
-            _userRepository = userRepository;
+            _userManager = userManager;
             _configuration = configuration;
+            _organizationRepository = organizationRepository;
         }
 
         public async Task RegisterUser(UserRegisterDto dto)
         {
-            User user = dto.ToUser();
-            PasswordHelper.CreatePasswordHash(dto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            user.RegisterDate = DateTime.Now;
-            user.Role = Role.User;
-            await _userRepository.InsertAsync(user);
+            TravelUser user = new TravelUser()
+            {
+                UserName = dto.Username,
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Role = Role.User,
+                RegisterDate = DateTime.Now
+            };
+
+            user.Organization = new Organization
+            {
+                Name = dto.DisplayName,
+                BankAccountNumber = dto.BankAccountNumber,
+                Email = dto.Email,
+                ContractIterator = 1,
+                OwnerId = user.Id
+            };
+
+            await _userManager.CreateAsync(user, dto.Password);
         }
 
         public async Task<UserTokenDto> Login(UserLoginDto dto)
         {
-            User user = await _userRepository.GetByUsernameAync(dto.Username);
+            TravelUser user = await _userManager.FindByNameAsync(dto.Username);
             if (user == null)
             {
                 return null;
             }
-            if(!PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, user.PasswordSalt))
+            bool passwordValid = await _userManager.CheckPasswordAsync(user, dto.Password);
+            if (!passwordValid)
             {
                 return null;
             }
-            return user.ToTokenDto();
+            var organizaion = await _organizationRepository.GetByUserId(user.Id);
+            return new UserTokenDto
+            {
+                Id = user.Id,
+                OrganizationId = organizaion.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                Address = organizaion.Address ?? string.Empty,
+                DisplayName = organizaion.Name ?? string.Empty,
+                BankAccountNumber = organizaion.BankAccountNumber ?? string.Empty,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                ImageUrl = organizaion.ImagePath,
+                Role = user.Role
+            };
         }
 
         public async Task<UserTokenDto> CheckLastToken(string username, string lastToken, string newToken)
         {
-            User user = await _userRepository.GetByUsernameAync(username);
+            TravelUser user = await _userManager.FindByNameAsync(username);
             if (user == null)
             {
                 return null;
@@ -65,18 +96,35 @@ namespace TravelAgency.Services.Implementations
             }
             user.LastToken = newToken;
             user.TokenExpireDate = DateTime.Now.AddDays(int.Parse(_configuration["Jwt:RefreshExpireTime"]));
-            await _userRepository.UpdateAsync(user);
-            return user.ToTokenDto();
+            var organizaion = await _organizationRepository.GetByUserId(user.Id);
+
+            await _userManager.UpdateAsync(user);
+
+            return new UserTokenDto
+            {
+                Id = user.Id,
+                OrganizationId = organizaion.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                Address = organizaion.Address ?? string.Empty,
+                DisplayName = organizaion.Name ?? string.Empty,
+                BankAccountNumber = organizaion.BankAccountNumber ?? string.Empty,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                ImageUrl = organizaion.ImagePath,
+                Role = user.Role
+            };
         }
 
-        public async Task SaveToken(int userId, string token)
+        public async Task SaveToken(string userId, string token)
         {
-            User user = await _userRepository.GetByIdAsync(userId);
+            TravelUser user = await _userManager.FindByIdAsync(userId);
             if (user == null)
                 return;
+
             user.LastToken = token;
             user.TokenExpireDate = DateTime.Now.AddDays(int.Parse(_configuration["Jwt:RefreshExpireTime"]));
-            await _userRepository.UpdateAsync(user);
+            await _userManager.UpdateAsync(user);
         }
     }
 }

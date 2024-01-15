@@ -1,0 +1,9 @@
+﻿using TravelAgency.Domain.Models;
+
+namespace TravelAgency.DataAccess.Repositories.Interfaces
+{
+    public interface IOrganizationRepository : IRepository<Organization>
+    {
+        Task<Organization> GetByUserId(string userId);
+    }
+}

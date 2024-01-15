@@ -1,4 +1,5 @@
-﻿using TravelAgency.DataAccess.Repositories.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using TravelAgency.DataAccess.Repositories.Interfaces;
 using TravelAgency.Domain.Models;
 using TravelAgency.DTOs.UserDTOs;
 using TravelAgency.Mappers;
@@ -8,25 +9,33 @@ namespace TravelAgency.Services.Implementations
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly UserManager<TravelUser> _userManager;
+        private readonly IOrganizationRepository _organizationRepository;
+        public UserService(UserManager<TravelUser> userManager, IOrganizationRepository organizationRepository)
         {
-            _userRepository = userRepository;
+            _userManager = userManager;
+            _organizationRepository = organizationRepository;
         }
 
-        public async Task<UserDetailsDto> GetDetails(int userId)
+        public async Task<UserDetailsDto> GetDetails(string userId)
         {
-            User user = await _userRepository.GetByIdAsync(userId);
-            if(user == null)
+            TravelUser user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
             {
                 return null;
             }
-            return user.ToUserDetailsDto();
+            UserDetailsDto dto = user.ToUserDetailsDto();
+            Organization organization = await _organizationRepository.GetByUserId(user.Id);
+            dto.BankAccountNumber = organization.BankAccountNumber;
+            dto.DisplayName = organization.Name;
+            dto.Address = organization.Address ?? "/";
+            dto.Website = organization.Website ?? "/";
+            return dto;
         }
 
         public async Task<bool> IsEmailTaken(string email)
         {
-            User user = await _userRepository.GetByEmailAync(email);
+            TravelUser user = await _userManager.FindByEmailAsync(email);
             if (user == null)
                 return false;
             return true;
@@ -34,34 +43,19 @@ namespace TravelAgency.Services.Implementations
 
         public async Task<bool> IsUserTaken(string username)
         {
-            User user = await _userRepository.GetByUsernameAync(username);
-            if(user == null)
+            TravelUser user = await _userManager.FindByNameAsync(username);
+            if (user == null)
                 return false;
             return true;
         }
 
-        public async Task UpdateImage(int userId, string imagePath)
+        public async Task UpdateUserInfo(string userId, UserUpdateDto dto)
         {
-            User user = await _userRepository.GetByIdAsync(userId);
-            if (user == null)
-            {
-                return;
-            }
-            user.ImagePath = imagePath;
-            await _userRepository.UpdateAsync(user);
-        }
-
-        public async Task UpdateUserInfo(int userId, UserUpdateDto dto)
-        {
-            User user = await _userRepository.GetByIdAsync(userId) ?? throw new Exception("No user");
-            user.DisplayName = dto.DisplayName;
+            TravelUser user = await _userManager.FindByIdAsync(userId) ?? throw new Exception("No user");
             user.FirstName = dto.FirstName;
             user.LastName = dto.LastName;
             user.PhoneNumber = dto.PhoneNumber;
-            user.Address = dto.Address;
-            user.BankAccountNumber = dto.BankAccountNumber;
-            user.Website = dto.Website;
-            await _userRepository.UpdateAsync(user);
+            await _userManager.UpdateAsync(user);
         }
     }
 }

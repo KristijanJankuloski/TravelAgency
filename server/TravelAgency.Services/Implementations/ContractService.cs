@@ -1,4 +1,5 @@
-﻿using TravelAgency.DataAccess.Repositories.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using TravelAgency.DataAccess.Repositories.Interfaces;
 using TravelAgency.Domain.Exceptions;
 using TravelAgency.Domain.Models;
 using TravelAgency.DTOs.ContractDTOs;
@@ -11,34 +12,35 @@ namespace TravelAgency.Services.Implementations
     public class ContractService : IContractService
     {
         private readonly IContractRepository _contractRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly UserManager<TravelUser> _userManager;
         private readonly IPlanRepository _planRepository;
-        public ContractService(IContractRepository contractRepository, IUserRepository userRepository, IPlanRepository planRepository)
+        public ContractService(IContractRepository contractRepository, UserManager<TravelUser> userManager, IPlanRepository planRepository)
         {
             _contractRepository = contractRepository;
-            _userRepository = userRepository;
+            _userManager = userManager;
             _planRepository = planRepository;
 
         }
 
-        public async Task ArchiveContract(int id, int userId)
+        public async Task ArchiveContract(int id, string userId)
         {
             Contract contract = await _contractRepository.GetByIdAsync(id);
-            if (contract == null || contract.UserId != userId) throw new UnauthorizedException();
+            if (contract == null || contract.Organization?.OwnerId != userId) throw new UnauthorizedException();
             contract.IsArchived = true;
             await _contractRepository.UpdateAsync(contract);
         }
 
-        public async Task CreateContract(ContractCreateDto dto, int usedId)
+        public async Task CreateContract(ContractCreateDto dto, string userId)
         {
             if(dto.Passengers.Length == 0)
             {
                 throw new ArgumentException("Contract has no passengers");
             }
+            TravelUser user = await _userManager.FindByIdAsync(userId);
             Contract contract = dto.ToContract();
-            contract.UserId = usedId;
+            contract.OrganizationId = user.OrganizationId;
             contract.ContractDate = DateTime.Now;
-            int iterator = await _userRepository.IterateContractNumber(usedId);
+            int iterator = user.Organization.ContractIterator++;
             contract.ContractNumber = GenerateContractNumber(iterator);
             foreach(PassengerCreateDto p in  dto.Passengers)
             {
@@ -49,22 +51,23 @@ namespace TravelAgency.Services.Implementations
             await _contractRepository.InsertAsync(contract);
         }
 
-        public async Task CreateContract(ContractCreateWithPlanDto dto, int usedId)
+        public async Task CreateContract(ContractCreateWithPlanDto dto, string userId)
         {
             if (dto.Passengers.Length == 0)
             {
                 throw new ArgumentException("Contract has no passengers");
             }
+            TravelUser user = await _userManager.FindByIdAsync(userId);
             Contract contract = dto.ToContract();
-            Plan existingPlan = await _planRepository.GetByHotelNameAndLocation(dto.Plan.HotelName, dto.Plan.Location, dto.Plan.AgencyId, usedId);
+            Plan existingPlan = await _planRepository.GetByHotelNameAndLocation(dto.Plan.HotelName, dto.Plan.Location, dto.Plan.AgencyId, user.OrganizationId);
             if(existingPlan != null)
             {
                 contract.Plan = existingPlan;
                 contract.PlanId = existingPlan.Id;
             }
-            contract.UserId = usedId;
+            contract.OrganizationId = user.OrganizationId;
             contract.ContractDate = DateTime.Now;
-            int iterator = await _userRepository.IterateContractNumber(usedId);
+            int iterator = user.Organization.ContractIterator++;
             contract.ContractNumber = GenerateContractNumber(iterator);
             foreach (PassengerCreateDto p in dto.Passengers)
             {
@@ -75,25 +78,28 @@ namespace TravelAgency.Services.Implementations
             await _contractRepository.InsertAsync(contract);
         }
 
-        public async Task<List<ContractListDto>> GetActiveContracts(int userId)
+        public async Task<List<ContractListDto>> GetActiveContracts(string userId)
         {
-            var contracts = await _contractRepository.GetActiveByUserIdAsync(userId);
+            TravelUser user = await _userManager.FindByIdAsync(userId);
+            var contracts = await _contractRepository.GetActiveByUserIdAsync(user.OrganizationId);
             return contracts.Select(c => c.ToListDto()).ToList();
         }
 
-        public async Task<ContractDetailsDto> GetDetails(int contractId, int userId)
+        public async Task<ContractDetailsDto> GetDetails(int contractId, string userId)
         {
             Contract contract = await _contractRepository.GetByIdAsync(contractId);
-            if(contract == null || contract.UserId != userId)
+            TravelUser user = await _userManager.FindByIdAsync(userId);
+            if (contract == null || contract.OrganizationId != user.OrganizationId)
             {
                 return null;
             }
             return contract.ToContractDetailsDto();
         }
 
-        public async Task<ContractStatsDto> GetStats(int userId)
+        public async Task<ContractStatsDto> GetStats(string userId)
         {
-            List<Contract> contracts = await _contractRepository.GetActiveByUserIdAsync(userId);
+            TravelUser user = await _userManager.FindByIdAsync(userId);
+            List<Contract> contracts = await _contractRepository.GetActiveByUserIdAsync(user.OrganizationId);
             ContractStatsDto result = new ContractStatsDto();
 
             result.ActiveContracts = contracts.Select(x => x.ToListDto()).ToList();

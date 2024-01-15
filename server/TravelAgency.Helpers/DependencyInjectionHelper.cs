@@ -17,11 +17,11 @@ namespace TravelAgency.Helpers
 
         public static void InjectRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAgencyRepository, AgencyRepository>();
             services.AddScoped<IPassengerRepository, PassengerRepository>();
             services.AddScoped<IContractRepository, ContractRepository>();
             services.AddScoped<IPlanRepository,  PlanRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         }
 
         public static void InjectServices(this IServiceCollection services)

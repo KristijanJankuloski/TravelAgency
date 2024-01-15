@@ -18,14 +18,14 @@ namespace TravelAgency.Services.Implementations
         public async Task CreateAgency(AgencyCreateDto dto, int useId)
         {
             Agency agency = dto.ToAgency();
-            agency.UserId = useId;
+            agency.OrganizationId = useId;
             await _agencyRepository.InsertAsync(agency);
         }
 
         public async Task<bool> DeleteById(int agencyId, int userId)
         {
             Agency agency = await _agencyRepository.GetByIdAsync(agencyId);
-            if(agency == null || agency.UserId != userId)
+            if(agency == null || agency.OrganizationId != userId)
             {
                 return false;
             }
@@ -36,7 +36,7 @@ namespace TravelAgency.Services.Implementations
         public async Task<AgencyDetailsDto> GetAgencyDetails(int agencyId, int userId)
         {
             Agency agency = await _agencyRepository.GetByIdAsync(agencyId);
-            if (agency == null || agency.UserId != userId)
+            if (agency == null || agency.OrganizationId != userId)
             {
                 return null;
             }
@@ -52,7 +52,7 @@ namespace TravelAgency.Services.Implementations
         public async Task UpdateAgency(int agencyId, AgencyCreateDto dto, int userId)
         {
             Agency agency = await _agencyRepository.GetByIdAsync(agencyId);
-            if(agency == null || agency.UserId != userId)
+            if(agency == null || agency.OrganizationId != userId)
             {
                 throw new UnauthorizedException();
             }

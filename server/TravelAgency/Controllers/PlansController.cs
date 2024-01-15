@@ -27,7 +27,7 @@ namespace TravelAgency.Controllers
                 UserTokenDto user = JwtHelper.GetCurrentUser(User);
                 if(agencyId != null)
                 {
-                    List<PlanListDto> plans = await _planService.GetPlansByAgencyId((int)agencyId, user.Id);
+                    List<PlanListDto> plans = await _planService.GetPlansByAgencyId(agencyId.Value, user.OrganizationId);
                     return Ok(plans);
                 }
                 return Ok(new List<PlanListDto>());

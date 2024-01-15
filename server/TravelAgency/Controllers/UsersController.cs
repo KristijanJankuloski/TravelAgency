@@ -94,44 +94,6 @@ namespace TravelAgency.Controllers
             }
         }
 
-        [HttpPost("update-image")]
-        [Authorize]
-        public async Task<IActionResult> UpdateImage([FromForm] IFormFile file)
-        {
-            try
-            {
-                if (file == null)
-                    return BadRequest("No image provided");
-
-                if (file.Length > 3500000)
-                    return BadRequest("File is too large. Image must be less than 3.5MB");
-
-                if (file.ContentType != "image/png")
-                    return StatusCode(StatusCodes.Status415UnsupportedMediaType, "File must be image type of png");
-
-                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
-
-                string fileImagePath = _environment.WebRootPath + "\\Uploads\\";
-                if (!Directory.Exists(fileImagePath))
-                {
-                    Directory.CreateDirectory(fileImagePath);
-                }
-                string fileExtension = file.FileName.Split('.').Last();
-                string imagePath = fileImagePath + $"\\{user.Id}_{user.Username}.png";
-
-                using (FileStream stream = new FileStream(imagePath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-                await _userService.UpdateImage(user.Id, $"/Uploads/{user.Id}_{user.Username}.png");
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
         [HttpDelete]
         [Authorize]
         public async Task<IActionResult> DeleteRequest(UserLoginDto dto)

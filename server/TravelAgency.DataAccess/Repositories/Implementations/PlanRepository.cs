@@ -15,7 +15,7 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
 
         public async Task<List<Plan>> GetAllByAgencyAsync(int agencyId, int userId)
         {
-            return await _context.Plans.Include(x => x.Agency).Include(x => x.AvailableDates).Where(x => x.AgencyId == agencyId && x.Agency.UserId == userId).ToListAsync();
+            return await _context.Plans.Include(x => x.Agency).Include(x => x.AvailableDates).Where(x => x.AgencyId == agencyId && x.Agency.OrganizationId == userId).ToListAsync();
         }
 
         public async Task<Plan> GetByHotelNameAndLocation(string hotelName, string location, int agencyId, int userId)
@@ -25,7 +25,7 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
                 .Where(p => p.HotelName.ToLower() == hotelName.ToLower() 
                 && p.Location.ToLower() == location.ToLower() 
                 && p.AgencyId == agencyId
-                && p.Agency.UserId == userId)
+                && p.Agency.OrganizationId == userId)
                 .FirstOrDefaultAsync();
         }
 

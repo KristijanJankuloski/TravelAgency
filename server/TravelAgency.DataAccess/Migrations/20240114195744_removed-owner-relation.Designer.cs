@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelAgency.DataAccess.Context;
 
@@ -11,9 +12,11 @@ using TravelAgency.DataAccess.Context;
 namespace TravelAgency.DataAccess.Migrations
 {
     [DbContext(typeof(TravelAppContext))]
-    partial class TravelAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240114195744_removed-owner-relation")]
+    partial class removedownerrelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,9 +234,6 @@ namespace TravelAgency.DataAccess.Migrations
                     b.Property<double>("AmmountPaid")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("CanceledOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("ContractDate")
                         .HasColumnType("datetime2");
 
@@ -250,9 +250,6 @@ namespace TravelAgency.DataAccess.Migrations
                     b.Property<DateTime?>("DepartureTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DiscountPercentage")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -260,9 +257,6 @@ namespace TravelAgency.DataAccess.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Footer")
                         .HasColumnType("text");
@@ -298,19 +292,12 @@ namespace TravelAgency.DataAccess.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TaxPercentage")
-                        .HasColumnType("int");
-
                     b.Property<double>("TotalPrice")
                         .HasColumnType("float");
 
                     b.Property<string>("TransportationType")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -320,8 +307,6 @@ namespace TravelAgency.DataAccess.Migrations
                     b.HasIndex("OrganizationId");
 
                     b.HasIndex("PlanId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Contracts");
                 });
@@ -336,19 +321,13 @@ namespace TravelAgency.DataAccess.Migrations
 
                     b.Property<string>("Body")
                         .HasMaxLength(511)
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(511)");
 
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 1, 15, 1, 53, 1, 713, DateTimeKind.Local).AddTicks(7263));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -366,103 +345,8 @@ namespace TravelAgency.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ContractId");
-
-                    b.HasIndex("CreatedById");
 
                     b.ToTable("ContractEmailEvents");
-                });
-
-            modelBuilder.Entity("TravelAgency.Domain.Models.Invoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("AmountRemaining")
-                        .HasColumnType("float");
-
-                    b.Property<double>("AmountToPay")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ContractId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CratedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("PaidOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContractId");
-
-                    b.HasIndex("Number")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("TravelAgency.Domain.Models.InvoiceEmailEvent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Body")
-                        .HasMaxLength(511)
-                        .HasColumnType("text");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("EventType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SentOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 1, 15, 1, 53, 1, 713, DateTimeKind.Local).AddTicks(8893));
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.ToTable("InvoiceEmailEvents");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.Organization", b =>
@@ -499,12 +383,6 @@ namespace TravelAgency.DataAccess.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InvoiceIterator")
-                        .HasColumnType("int");
-
-                    b.Property<string>("InvoiceNote")
-                        .HasColumnType("text");
-
                     b.Property<string>("Location")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -521,9 +399,6 @@ namespace TravelAgency.DataAccess.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("TaxPercentage")
-                        .HasColumnType("int");
 
                     b.Property<string>("Website")
                         .HasMaxLength(100)
@@ -803,17 +678,9 @@ namespace TravelAgency.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TravelAgency.Domain.Models.TravelUser", "User")
-                        .WithMany("Contracts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Organization");
 
                     b.Navigation("Plan");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.ContractEmailEvent", b =>
@@ -824,53 +691,7 @@ namespace TravelAgency.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TravelAgency.Domain.Models.TravelUser", "CreatedBy")
-                        .WithMany("ContractEmails")
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Contract");
-
-                    b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("TravelAgency.Domain.Models.Invoice", b =>
-                {
-                    b.HasOne("TravelAgency.Domain.Models.Contract", "Contract")
-                        .WithMany()
-                        .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TravelAgency.Domain.Models.TravelUser", "User")
-                        .WithMany("Invoices")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Contract");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("TravelAgency.Domain.Models.InvoiceEmailEvent", b =>
-                {
-                    b.HasOne("TravelAgency.Domain.Models.TravelUser", "CreatedBy")
-                        .WithMany("InvoiceEmails")
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("TravelAgency.Domain.Models.Invoice", "Invoice")
-                        .WithMany("EmailEvents")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.Passenger", b =>
@@ -918,11 +739,6 @@ namespace TravelAgency.DataAccess.Migrations
                     b.Navigation("Passengers");
                 });
 
-            modelBuilder.Entity("TravelAgency.Domain.Models.Invoice", b =>
-                {
-                    b.Navigation("EmailEvents");
-                });
-
             modelBuilder.Entity("TravelAgency.Domain.Models.Organization", b =>
                 {
                     b.Navigation("Agencies");
@@ -935,17 +751,6 @@ namespace TravelAgency.DataAccess.Migrations
             modelBuilder.Entity("TravelAgency.Domain.Models.Plan", b =>
                 {
                     b.Navigation("AvailableDates");
-                });
-
-            modelBuilder.Entity("TravelAgency.Domain.Models.TravelUser", b =>
-                {
-                    b.Navigation("ContractEmails");
-
-                    b.Navigation("Contracts");
-
-                    b.Navigation("InvoiceEmails");
-
-                    b.Navigation("Invoices");
                 });
 #pragma warning restore 612, 618
         }

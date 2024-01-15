@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TravelAgency.DataAccess.Context;
+using TravelAgency.Domain.Models;
 using TravelAgency.Helpers;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +27,14 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddIdentityCore<TravelUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<TravelAppContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -38,6 +50,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 builder.Services.InjectDatabase(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+builder.Services.AddHangfire(config => config
+.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+.UseSimpleAssemblyNameTypeSerializer()
+.UseRecommendedSerializerSettings()
+.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddHangfireServer();
+
 builder.Services.InjectRepositories();
 builder.Services.InjectServices();
 
@@ -57,5 +78,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseHangfireDashboard();
+app.MapHangfireDashboard("/hangfire");
 
 app.Run();
