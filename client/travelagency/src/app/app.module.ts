@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { NgxPrintModule } from 'ngx-print';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,7 +21,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -35,14 +33,10 @@ import { UpdateImageDialogComponent } from './profile/update-image-dialog/update
 import { AddAgencyDialogComponent } from './agencies/add-agency-dialog/add-agency-dialog.component';
 import { DeleteAgencyDialogComponent } from './agencies/delete-agency-dialog/delete-agency-dialog.component';
 import { EditAgencyDialogComponent } from './agencies/edit-agency-dialog/edit-agency-dialog.component';
-import { ContractLayoutComponent } from './contract-layout/contract-layout.component';
-import { ContractCreateComponent } from './contract-layout/contract-create/contract-create.component';
-import { ActiveContractsComponent } from './contract-layout/active-contracts/active-contracts.component';
-import { ArchivedContractsComponent } from './contract-layout/archived-contracts/archived-contracts.component';
-import { ContractPrintDialogComponent } from './contract-layout/contract-print-dialog/contract-print-dialog.component';
 import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-pie-chart.component';
 import { CoreModule } from './core/core.module';
 import { LoadingInterceptor } from './shared/services/loading.interceptor';
+import { ContractLayoutModule } from './contract-layout/contract-layout.module';
 
 @NgModule({
   declarations: [
@@ -57,11 +51,6 @@ import { LoadingInterceptor } from './shared/services/loading.interceptor';
     AddAgencyDialogComponent,
     DeleteAgencyDialogComponent,
     EditAgencyDialogComponent,
-    ContractLayoutComponent,
-    ContractCreateComponent,
-    ActiveContractsComponent,
-    ArchivedContractsComponent,
-    ContractPrintDialogComponent,
     CountryPieChartComponent
   ],
   imports: [
@@ -73,7 +62,6 @@ import { LoadingInterceptor } from './shared/services/loading.interceptor';
     FormsModule,
     ReactiveFormsModule,
     ImageCropperModule,
-    NgxPrintModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
@@ -87,7 +75,6 @@ import { LoadingInterceptor } from './shared/services/loading.interceptor';
     MatDatepickerModule,
     MatSelectModule,
     MatNativeDateModule,
-    MatAutocompleteModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

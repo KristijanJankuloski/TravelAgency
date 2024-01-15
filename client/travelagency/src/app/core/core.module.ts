@@ -4,11 +4,11 @@ import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { AppRoutingModule } from '../app-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { LoaderComponent } from './components/loader/loader.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -22,7 +22,7 @@ import { LoaderComponent } from './components/loader/loader.component';
   ],
   imports: [
     CommonModule,
-    AppRoutingModule,
+    RouterModule.forChild([]),
     MatIconModule,
     MatTooltipModule,
     MatButtonModule
