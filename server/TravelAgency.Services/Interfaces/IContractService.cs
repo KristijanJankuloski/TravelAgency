@@ -1,4 +1,5 @@
 ﻿using TravelAgency.DTOs.ContractDTOs;
+using TravelAgency.DTOs.OrganizationDTOs;
 
 namespace TravelAgency.Services.Interfaces
 {
@@ -10,5 +11,7 @@ namespace TravelAgency.Services.Interfaces
         Task ArchiveContract(int id, string userId);
         Task<ContractDetailsDto> GetDetails(int contractId, string userId);
         Task<ContractStatsDto> GetStats(string userId);
+        Task GeneratePdf(int id);
+        Task<OrganizationContractSetupDto> GetSetupInfo(int organizationId);
     }
 }

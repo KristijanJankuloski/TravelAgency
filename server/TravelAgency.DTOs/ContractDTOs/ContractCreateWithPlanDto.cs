@@ -26,6 +26,13 @@ namespace TravelAgency.DTOs.ContractDTOs
         [Required]
         public string EndDate { get; set; }
 
+        [MaxLength(127)]
+        public string? Insurance { get; set; }
+
+        [MaxLength(255)]
+        public string? Note { get; set; }
+
+        public string? Footer { get; set; }
 
         public string? DepartureTime { get; set; }
 

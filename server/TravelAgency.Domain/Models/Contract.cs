@@ -26,6 +26,12 @@ namespace TravelAgency.Domain.Models
         [MaxLength(150)]
         public string PrimaryPassenger { get; set; } = string.Empty;
 
+        [MaxLength(127)]
+        public string? Insurance {  get; set; }
+
+        [MaxLength(255)]
+        public string? Note { get; set; }
+
         public string? Footer { get; set; }
 
         [Required]

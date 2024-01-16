@@ -90,6 +90,14 @@
                 </mat-form-field>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label>Напомена</mat-label>
+                    <textarea matInput formControlName="note" rows="3"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
         <h3 class="display-5 pt-5">Податоци за патување</h3>
         <hr class="hr" />
         <div class="row">
@@ -207,7 +215,7 @@
                             <input matInput [matDatepicker]="birthDatePicker" required formControlName="birthDate">
                             <mat-hint class="small">DD/MM/YYYY</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
-                            <mat-datepicker #birthDatePicker></mat-datepicker>
+                            <mat-datepicker #birthDatePicker startView="multi-year"></mat-datepicker>
                         </mat-form-field>
                     </div>
                 </div>
@@ -241,6 +249,12 @@
                 </div>
             </div>
             <button type="button" class="mt-2" mat-raised-button color="primary" (click)="addPassenger()">Додади патник</button>
+        </div>
+        <div class="pt-5">
+            <mat-form-field class="w-100">
+                <mat-label>Услови за договор</mat-label>
+                <textarea matInput formControlName="footer" rows="5"></textarea>
+            </mat-form-field>
         </div>
         <div class="mt-3 d-flex justify-content-end">
             <button type="submit" mat-raised-button color="primary"><h5 class="p-2">Креирај договор</h5></button>

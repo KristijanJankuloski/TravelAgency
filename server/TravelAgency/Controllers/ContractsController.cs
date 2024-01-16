@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAgency.Domain.Exceptions;
 using TravelAgency.DTOs.ContractDTOs;
+using TravelAgency.DTOs.OrganizationDTOs;
 using TravelAgency.DTOs.UserDTOs;
 using TravelAgency.Helpers;
 using TravelAgency.Services.Interfaces;
@@ -84,6 +85,22 @@ namespace TravelAgency.Controllers
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
                 var stats = await _contractService.GetStats(user.Id);
                 return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("setup")]
+        [Authorize]
+        public async Task<ActionResult<OrganizationContractSetupDto>> GetSetupInfo()
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                var response = await _contractService.GetSetupInfo(user.OrganizationId);
+                return Ok(response);
             }
             catch (Exception ex)
             {

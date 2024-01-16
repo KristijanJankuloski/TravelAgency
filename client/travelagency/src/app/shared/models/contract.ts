@@ -11,6 +11,8 @@ export interface ContractCreateModel {
     endDate: string;
     departureTime: string;
     totalPrice: number;
+    note: string;
+    footer: string;
     ammountPaid: number;
     paymentMethod: number;
     plan: PlanCreateModel;
@@ -55,6 +57,12 @@ export interface ContractDetailsModel {
     plan: PlanListModel;
     agency: AgencyListModel;
     passengers: PassengerDetailsModel[];
+}
+
+export interface ContractSetupInfo {
+    footer: string;
+    city: string;
+    taxPercentage: number;
 }
 
 export interface ContractStatsModel {
