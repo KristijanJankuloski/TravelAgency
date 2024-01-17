@@ -37,5 +37,33 @@ namespace TravelAgency.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Create(int id, PlanCreateDto dto)
+        {
+            try
+            {
+                await _planService.AddPlan(dto, id);
+                return StatusCode(201);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update(int id, PlanCreateDto dto)
+        {
+            try
+            {
+                await _planService.UpdatePlan(dto, id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

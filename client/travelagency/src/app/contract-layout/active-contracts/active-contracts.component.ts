@@ -47,6 +47,15 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
     this.matDialog.open(ContractPrintDialogComponent, {data: id});
   }
 
+  generateDocument(id: number){
+    this._snackBar.open("Креирање документ во позадина", "Затвори", {duration: 3000});
+    this.api.generateContractPdf(id).subscribe({
+      next: data => {
+        window.open(data.url, "_blank");
+      }
+    });
+  }
+
   archiveContract(id: number){
     this.api.archiveContract(id).subscribe(data => {
       this._snackBar.open("Contract archived", "The contract has been archived", {duration: 5000});

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -11,13 +12,23 @@ namespace TravelAgency.Services.Documents
     public class PdfService : IPdfService
     {
         private readonly IWebHostEnvironment _environment;
+        private readonly string _folderPath;
         public PdfService(IWebHostEnvironment environment)
         {
             _environment = environment;
+            _folderPath = "/Generated";
+            if (!Directory.Exists(_environment.WebRootPath + _folderPath))
+                Directory.CreateDirectory(_environment.WebRootPath + _folderPath);
         }
 
-        public async Task GenerateContractPdf(ContractPdf contract)
+        public async Task<string> GenerateContractPdf(ContractPdf contract)
         {
+            string folderPath = _folderPath + "/Contracts";
+            string fullPath = _environment.WebRootPath + folderPath;
+
+            if (!Directory.Exists(fullPath))
+                Directory.CreateDirectory(fullPath);
+
             await Task.Run(() =>
             {
                 int borderSize = 1;
@@ -165,8 +176,9 @@ namespace TravelAgency.Services.Documents
                             row.RelativeItem().AlignRight().Text("Потпис на вработен _______________________");
                         });
                     });
-                }).ShowInPreviewerAsync();
+                }).GeneratePdf($"{fullPath}/{contract.Number.Replace('/', '_')}.pdf");
             });
+            return $"{folderPath}/{contract.Number.Replace('/', '_')}.pdf";
         }
     }
 }

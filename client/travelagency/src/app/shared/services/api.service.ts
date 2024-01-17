@@ -62,6 +62,10 @@ export class ApiService {
     return this.http.get(`${environment.apiBaseUrl}/contracts/archive/${id}`);
   }
 
+  public generateContractPdf(id: number){
+    return this.http.get<{url: string}>(`${environment.apiBaseUrl}/contracts/generate/${id}`);
+  }
+
   public updateUserImage(payload: FormData) {
     return this.http.post(`${environment.apiBaseUrl}/organizations/update-image`, payload)
   }

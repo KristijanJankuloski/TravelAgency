@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using TravelAgency.DataAccess.Repositories.Interfaces;
 using TravelAgency.Domain.Enums;
 using TravelAgency.Domain.Exceptions;
@@ -92,10 +93,10 @@ namespace TravelAgency.Services.Implementations
             await _contractRepository.InsertAsync(contract);
         }
 
-        public async Task GeneratePdf(int id)
+        public async Task<GenerateResponse> GeneratePdf(int id, HttpRequest request)
         {
             Contract contract = await _contractRepository.GetByIdAsync(id);
-            if (contract == null) return;
+            if (contract == null) throw new Exception("No contract found");
 
             TimeSpan contractTimeSpan = contract.EndDate - contract.StartDate;
 
@@ -152,7 +153,11 @@ namespace TravelAgency.Services.Implementations
                 });
             }
 
-            await _pdfService.GenerateContractPdf(pdf);
+            string pdfFilePath = await _pdfService.GenerateContractPdf(pdf);
+            contract.FilePath = pdfFilePath;
+            await _contractRepository.UpdateAsync(contract);
+
+            return new GenerateResponse { Url = $"{request.Scheme}://{request.Host}{pdfFilePath}" };
         }
 
         public async Task<List<ContractListDto>> GetActiveContracts(string userId)

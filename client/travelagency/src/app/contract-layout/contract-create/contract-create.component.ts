@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subscription, map, startWith } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map, startWith } from 'rxjs';
 import { AgencyListModel } from 'src/app/shared/models/agency';
 import { ContractCreateModel } from 'src/app/shared/models/contract';
 import { PassengerCreateModel } from 'src/app/shared/models/passenger';
@@ -23,6 +23,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
   filteredServiceOptions: Observable<string[]>;
   planOptions: PlanListModel[] = [];
   planFilteredOptions: Observable<PlanListModel[]>;
+  dateAlerts: BehaviorSubject<number>[] = [];
   selectedAgency?: AgencyListModel;
   createForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -102,7 +103,18 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
         this.createForm.controls.passengers.controls[0].controls.phoneNumber.setValue(value);
       }
     });
-    }
+
+    this.dateAlerts[0] = new BehaviorSubject<number>(0);
+    this.createForm.controls.passengers.controls[0].controls.passportExpirationDate.valueChanges.subscribe(value => {
+      const date = value as Date;
+      if (date && this.createForm.controls.endDate.valid){
+        const endDate = this.createForm.value.endDate?? new Date();
+        let subtracted = endDate.getTime() - date.getTime();
+        subtracted = subtracted / 1000 / 3600 / -24;
+        this.dateAlerts[0].next(Math.floor(subtracted));
+      }
+    });
+  }
 
     ngOnDestroy(): void {
       if (this.agencySubscription)
@@ -148,11 +160,24 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
     });
 
     const passengers = this.createForm.get('passengers') as FormArray;
+    const newAlert = new BehaviorSubject<number>(0);
+    this.dateAlerts.push(newAlert);
+    newPassenger.controls.passportExpirationDate.valueChanges.subscribe(value => {
+      const date = value as Date;
+      if (date && this.createForm.controls.endDate.valid){
+        const endDate = this.createForm.value.endDate?? new Date();
+        let subtracted = endDate.getTime() - date.getTime();
+        subtracted = subtracted / 1000 / 3600 / -24;
+        newAlert.next(Math.floor(subtracted));
+      }
+    });
     passengers.push(newPassenger);
   }
 
   removePassenger(index: number){
     const passengers = this.createForm.get('passengers') as FormArray;
+    this.dateAlerts[index]?.complete();
+    this.dateAlerts = this.dateAlerts.splice(index);
     passengers.removeAt(index);
   }
 

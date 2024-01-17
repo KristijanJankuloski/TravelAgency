@@ -1,5 +1,7 @@
-﻿using TravelAgency.DTOs.ContractDTOs;
+﻿using Microsoft.AspNetCore.Http;
+using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.OrganizationDTOs;
+using TravelAgency.DTOs.PdfDTOs;
 
 namespace TravelAgency.Services.Interfaces
 {
@@ -11,7 +13,7 @@ namespace TravelAgency.Services.Interfaces
         Task ArchiveContract(int id, string userId);
         Task<ContractDetailsDto> GetDetails(int contractId, string userId);
         Task<ContractStatsDto> GetStats(string userId);
-        Task GeneratePdf(int id);
+        Task<GenerateResponse> GeneratePdf(int id, HttpRequest request);
         Task<OrganizationContractSetupDto> GetSetupInfo(int organizationId);
     }
 }

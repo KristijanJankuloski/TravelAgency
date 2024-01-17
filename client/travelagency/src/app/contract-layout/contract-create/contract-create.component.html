@@ -1,4 +1,4 @@
-<div class="py-5">
+<div class="p-5 bg-white">
     <form [formGroup]="createForm" (ngSubmit)="contractFormSubmit()">
         <h3 class="display-5">Податоци за договор</h3>
         <hr class="hr" />
@@ -201,7 +201,7 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md">
-                        <mat-form-field class="w-100">
+                        <mat-form-field class="w-100" #expireDate>
                             <mat-label>Дата на истекување на пасош</mat-label>
                             <input matInput [matDatepicker]="expirePicker" required formControlName="passportExpirationDate">
                             <mat-hint class="small">DD/MM/YYYY</mat-hint>
@@ -246,6 +246,11 @@
                             <input type="text" matInput formControlName="comment" />
                         </mat-form-field>
                     </div>
+                </div>
+                <div *ngIf="dateAlerts[i] | async as days" class="row">
+                    <div *ngIf="createForm.controls.passengers.controls[i].controls.passportExpirationDate.touched && days < 90" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Скоро истекување!</strong> Датумот на истекување на пасошот е {{ days }} дена до датите на патување.
+                      </div>
                 </div>
             </div>
             <button type="button" class="mt-2" mat-raised-button color="primary" (click)="addPassenger()">Додади патник</button>

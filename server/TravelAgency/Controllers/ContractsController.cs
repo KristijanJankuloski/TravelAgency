@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAgency.Domain.Exceptions;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.OrganizationDTOs;
+using TravelAgency.DTOs.PdfDTOs;
 using TravelAgency.DTOs.UserDTOs;
 using TravelAgency.Helpers;
 using TravelAgency.Services.Interfaces;
@@ -69,6 +70,22 @@ namespace TravelAgency.Controllers
             catch(UnauthorizedException ex)
             {
                 return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("generate/{id}")]
+        [Authorize]
+        public async Task<ActionResult<GenerateResponse>> GenerateDocument(int id)
+        {
+            try
+            {
+                UserTokenDto dto = JwtHelper.GetCurrentUser(User);
+                var result = await _contractService.GeneratePdf(id, Request);
+                return Ok(result);
             }
             catch (Exception ex)
             {

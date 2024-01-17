@@ -4,6 +4,6 @@ namespace TravelAgency.Services.Documents
 {
     public interface IPdfService
     {
-        Task GenerateContractPdf(ContractPdf contract);
+        Task<string> GenerateContractPdf(ContractPdf contract);
     }
 }
