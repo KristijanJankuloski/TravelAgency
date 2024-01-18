@@ -114,9 +114,9 @@
                 <div class="card-body">
                     <a type="button" class="m-1 w-100" mat-raised-button color="primary" [href]="contract.pdfLink" target="_blank" [disabled]="!contract.pdfLink"><mat-icon>folder</mat-icon> ПДФ докумнет</a>
                     <br>
-                    <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>cloud</mat-icon> Генерирај нов документ</button>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary" (click)="generateDocument(contract.id)"><mat-icon>cloud</mat-icon> Генерирај нов документ</button>
                     <br>
-                    <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>mail</mat-icon><mat-icon>arrow_forward</mat-icon> Испрати договор</button>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary" [disabled]="!contract.pdfLink"><mat-icon>mail</mat-icon><mat-icon>arrow_forward</mat-icon> Испрати договор</button>
                     <br>
                     <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>insert_drive_file</mat-icon> Фактури</button>
                     <br>
