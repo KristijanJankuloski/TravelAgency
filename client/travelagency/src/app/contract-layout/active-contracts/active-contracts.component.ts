@@ -15,12 +15,16 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
   contracts: ContractListModel[] = [];
   subscription: Subscription;
   today = Date.now();
+  pages = [1];
+  pageIndex = 1;
 
   constructor(private api: ApiService, private matDialog: MatDialog, private _snackBar: MatSnackBar){}
   
   ngOnInit(){
-    this.subscription = this.api.getActiveContracts().subscribe(data => {
-      this.contracts = data.sort((a, b) => b.id - a.id);
+    this.subscription = this.api.getActiveContracts(this.pageIndex).subscribe(data => {
+      this.contracts = [...data.items];
+      this.pageIndex = data.pages;
+      this.pages = Array<number>(data.pages).fill(0).map((x:number,i)=>i+1);
       for(let i = 0; i < this.contracts.length; i++){
         this.contracts[i].startDate = new Date(this.contracts[i].startDate);
         this.contracts[i].endDate = new Date(this.contracts[i].endDate);
@@ -45,6 +49,18 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
 
   showPrintDialog(id: number) {
     this.matDialog.open(ContractPrintDialogComponent, {data: id});
+  }
+
+  changePage(index: number){
+    this.api.getActiveContracts(index).subscribe(data => {
+      this.contracts = [...data.items];
+      this.pageIndex = data.pages;
+      this.pages = Array<number>(data.pages).fill(0).map((x:number,i)=>i+1);
+      for(let i = 0; i < this.contracts.length; i++){
+        this.contracts[i].startDate = new Date(this.contracts[i].startDate);
+        this.contracts[i].endDate = new Date(this.contracts[i].endDate);
+      }
+    });
   }
 
   generateDocument(id: number){

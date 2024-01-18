@@ -23,7 +23,6 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
   filteredServiceOptions: Observable<string[]>;
   planOptions: PlanListModel[] = [];
   planFilteredOptions: Observable<PlanListModel[]>;
-  dateAlerts: BehaviorSubject<number>[] = [];
   selectedAgency?: AgencyListModel;
   createForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -33,6 +32,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
     endDate: new FormControl(new Date()),
     departureTime: new FormControl(),
     paymentMethod: new FormControl(0),
+    insurance: new FormControl(''),
     note: new FormControl(''),
     footer: new FormControl(''),
     totalPrice: new FormControl(0, [Validators.required]),
@@ -103,17 +103,6 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
         this.createForm.controls.passengers.controls[0].controls.phoneNumber.setValue(value);
       }
     });
-
-    this.dateAlerts[0] = new BehaviorSubject<number>(0);
-    this.createForm.controls.passengers.controls[0].controls.passportExpirationDate.valueChanges.subscribe(value => {
-      const date = value as Date;
-      if (date && this.createForm.controls.endDate.valid){
-        const endDate = this.createForm.value.endDate?? new Date();
-        let subtracted = endDate.getTime() - date.getTime();
-        subtracted = subtracted / 1000 / 3600 / -24;
-        this.dateAlerts[0].next(Math.floor(subtracted));
-      }
-    });
   }
 
     ngOnDestroy(): void {
@@ -139,6 +128,13 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
     return this.planOptions.filter(option => option.hotelName.toLowerCase().includes(filterValue));
   }
 
+  _calculateDays(date: Date) : number {
+    const endDate = this.createForm.value.endDate?? new Date();
+    let subtracted = endDate.getTime() - date.getTime();
+    subtracted = subtracted / 1000 / 3600 / -24;
+    return Math.floor(subtracted);
+  }
+
   agencySelected() {
     this.selectedAgency = this.agenciesList.find(x => x.id === this.createForm.value.agencyId);
     this.planSubscription = this.api.getPlanByAgency(this.selectedAgency?.id?? 0).subscribe({next: data => {
@@ -160,24 +156,11 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
     });
 
     const passengers = this.createForm.get('passengers') as FormArray;
-    const newAlert = new BehaviorSubject<number>(0);
-    this.dateAlerts.push(newAlert);
-    newPassenger.controls.passportExpirationDate.valueChanges.subscribe(value => {
-      const date = value as Date;
-      if (date && this.createForm.controls.endDate.valid){
-        const endDate = this.createForm.value.endDate?? new Date();
-        let subtracted = endDate.getTime() - date.getTime();
-        subtracted = subtracted / 1000 / 3600 / -24;
-        newAlert.next(Math.floor(subtracted));
-      }
-    });
     passengers.push(newPassenger);
   }
 
   removePassenger(index: number){
     const passengers = this.createForm.get('passengers') as FormArray;
-    this.dateAlerts[index]?.complete();
-    this.dateAlerts = this.dateAlerts.splice(index);
     passengers.removeAt(index);
   }
 
@@ -196,6 +179,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
       departureTime: values.departureTime!,
       paymentMethod: values.paymentMethod!,
       totalPrice: values.totalPrice!,
+      insurance: values.insurance!,
       note: values.note!,
       footer: values.footer!,
       ammountPaid: values.ammountPaid!,
@@ -223,7 +207,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
         return mapped;
     })!
     }
-    console.log(request);
+
     this.api.createContract(request).subscribe({next: res => {
       this.router.navigate(['contract', 'active']);
     }, error: err => {

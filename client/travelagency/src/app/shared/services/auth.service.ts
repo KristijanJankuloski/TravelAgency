@@ -80,7 +80,7 @@ export class AuthService {
         this.setUser(data);
         this.setJwt(data.token);
         this.setRefreshToken(data.refreshToken);
-        this.router.navigate(['profile']);
+        this.router.navigate(['/contract/active']);
       })
     );
   }

@@ -33,11 +33,12 @@ import { UpdateImageDialogComponent } from './profile/update-image-dialog/update
 import { AddAgencyDialogComponent } from './agencies/add-agency-dialog/add-agency-dialog.component';
 import { DeleteAgencyDialogComponent } from './agencies/delete-agency-dialog/delete-agency-dialog.component';
 import { EditAgencyDialogComponent } from './agencies/edit-agency-dialog/edit-agency-dialog.component';
-import { CountryPieChartComponent } from './dashboard/country-pie-chart/country-pie-chart.component';
 import { CoreModule } from './core/core.module';
 import { LoadingInterceptor } from './shared/services/loading.interceptor';
 import { ContractLayoutModule } from './contract-layout/contract-layout.module';
 import { OrganizationEditComponent } from './organizations/organization-edit/organization-edit.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,6 @@ import { OrganizationEditComponent } from './organizations/organization-edit/org
     AddAgencyDialogComponent,
     DeleteAgencyDialogComponent,
     EditAgencyDialogComponent,
-    CountryPieChartComponent,
     OrganizationEditComponent
   ],
   imports: [
@@ -77,6 +77,7 @@ import { OrganizationEditComponent } from './organizations/organization-edit/org
     MatDatepickerModule,
     MatSelectModule,
     MatNativeDateModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

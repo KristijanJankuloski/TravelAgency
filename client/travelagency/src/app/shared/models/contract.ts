@@ -12,6 +12,7 @@ export interface ContractCreateModel {
     departureTime: string;
     totalPrice: number;
     note: string;
+    insurance: string;
     footer: string;
     ammountPaid: number;
     paymentMethod: number;
@@ -48,6 +49,7 @@ export interface ContractDetailsModel {
     contractDate: Date;
     contractLocation: string;
     paymentMethod: number;
+    insurance: string;
     amountPaid: number;
     totalPrice: number;
     roomType: string;

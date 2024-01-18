@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAgency.Domain.Exceptions;
+using TravelAgency.DTOs.Common;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.OrganizationDTOs;
+using TravelAgency.DTOs.PassengerDTOs;
 using TravelAgency.DTOs.PdfDTOs;
 using TravelAgency.DTOs.UserDTOs;
 using TravelAgency.Helpers;
@@ -13,6 +15,7 @@ namespace TravelAgency.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ContractsController : ControllerBase
     {
         private readonly IContractService _contractService;
@@ -23,12 +26,12 @@ namespace TravelAgency.Controllers
 
         [HttpGet("active")]
         [Authorize]
-        public async Task<ActionResult<List<ContractListDto>>> GetActive()
+        public async Task<ActionResult<PaginatedResponse<ContractListDto>>> GetActive([FromQuery] int? page = 1)
         {
             try
             {
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
-                var contracts = await _contractService.GetActiveContracts(user.Id);
+                var contracts = await _contractService.GetActiveContracts(user.Id, page.Value);
                 return Ok(contracts);
             }
             catch (Exception ex)
@@ -77,7 +80,7 @@ namespace TravelAgency.Controllers
             }
         }
 
-        [HttpGet("generate/{id}")]
+        [HttpGet("{id}/generate")]
         [Authorize]
         public async Task<ActionResult<GenerateResponse>> GenerateDocument(int id)
         {
@@ -133,6 +136,89 @@ namespace TravelAgency.Controllers
             {
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
                 await _contractService.CreateContract(dto, user.Id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPatch("{id}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateBaseInfo(int id)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> CancelContract(int id)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("{id}/passenger")]
+        [Authorize]
+        public async Task<IActionResult> AddPassenger(int id, PassengerCreateDto dto)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPatch("{id}/passenger/{passengerId}")]
+        [Authorize]
+        public async Task<IActionResult> UpdatePassenger(int id, int passengerId, PassengerCreateDto dto)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}/passenger")]
+        [Authorize]
+        public async Task<IActionResult> DeletePassenger(int id)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPatch("{id}/change-plan")]
+        [Authorize]
+        public async Task<IActionResult> ChangePlan(int id, [FromQuery] int? plan)
+        {
+            try
+            {
                 return Ok();
             }
             catch (Exception ex)

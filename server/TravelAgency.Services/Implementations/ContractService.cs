@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using TravelAgency.DataAccess.Repositories.Interfaces;
 using TravelAgency.Domain.Enums;
 using TravelAgency.Domain.Exceptions;
 using TravelAgency.Domain.Models;
+using TravelAgency.DTOs.Common;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.OrganizationDTOs;
 using TravelAgency.DTOs.PassengerDTOs;
@@ -149,7 +151,9 @@ namespace TravelAgency.Services.Implementations
                     PassportNumber = passenger.PassportNumber,
                     BirthDate = passenger.BirthDate,
                     Address = passenger.Address ?? "/",
-                    Phone = passenger.PhoneNumber ?? "/"
+                    Phone = passenger.PhoneNumber ?? "/",
+                    Email = passenger.Email ?? "/",
+                    Note = passenger.Comment ?? string.Empty,
                 });
             }
 
@@ -160,11 +164,17 @@ namespace TravelAgency.Services.Implementations
             return new GenerateResponse { Url = $"{request.Scheme}://{request.Host}{pdfFilePath}" };
         }
 
-        public async Task<List<ContractListDto>> GetActiveContracts(string userId)
+        public async Task<PaginatedResponse<ContractListDto>> GetActiveContracts(string userId, int pageIndex)
         {
+            int itemCount = 20;
             TravelUser user = await _userManager.FindByIdAsync(userId);
-            var contracts = await _contractRepository.GetActiveByUserIdAsync(user.OrganizationId);
-            return contracts.Select(c => c.ToListDto()).ToList();
+            PaginatedResponse<ContractListDto> response = new PaginatedResponse<ContractListDto>();
+            int totalItemCount = await _contractRepository.CountActiveAsync(user.OrganizationId);
+            response.Pages = (int)Math.Ceiling((double)totalItemCount / itemCount);
+            response.PageIndex = pageIndex;
+            List<Contract> contracts = await _contractRepository.GetActivePaginatedAsync(user.OrganizationId, (pageIndex-1)*itemCount, itemCount);
+            response.Items = contracts.Select(x => x.ToListDto()).ToList();
+            return response;
         }
 
         public async Task<ContractDetailsDto> GetDetails(int contractId, string userId)
@@ -192,8 +202,11 @@ namespace TravelAgency.Services.Implementations
 
         public async Task<ContractStatsDto> GetStats(string userId)
         {
+            DateTime today = DateTime.Now;
+            DateTime startDate = new DateTime(today.Year, today.Month, 1);
+            DateTime endDate = startDate.AddMonths(1).AddDays(7);
             TravelUser user = await _userManager.FindByIdAsync(userId);
-            List<Contract> contracts = await _contractRepository.GetActiveByUserIdAsync(user.OrganizationId);
+            List<Contract> contracts = await _contractRepository.GetActiveByRangeAsync(user.OrganizationId, startDate, endDate);
             ContractStatsDto result = new ContractStatsDto();
 
             result.ActiveContracts = contracts.Select(x => x.ToListDto()).ToList();

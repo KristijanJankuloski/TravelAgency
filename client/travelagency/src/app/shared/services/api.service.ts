@@ -6,6 +6,7 @@ import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '..
 import { AgencyCreateModel, AgencyListModel } from '../models/agency';
 import { ContractCreateModel, ContractDetailsModel, ContractListModel, ContractSetupInfo, ContractStatsModel } from '../models/contract';
 import { PlanListModel } from '../models/plan';
+import { PaginatedResponse } from '../models/common';
 
 @Injectable({
   providedIn: 'root'
@@ -54,8 +55,8 @@ export class ApiService {
     return this.http.get<ContractSetupInfo>(`${environment.apiBaseUrl}/contracts/setup`);
   }
 
-  public getActiveContracts() {
-    return this.http.get<ContractListModel[]>(`${environment.apiBaseUrl}/contracts/active`);
+  public getActiveContracts(index: number = 1) {
+    return this.http.get<PaginatedResponse<ContractListModel>>(`${environment.apiBaseUrl}/contracts/active?page=${index}`);
   }
 
   public archiveContract(id: number){
@@ -63,7 +64,7 @@ export class ApiService {
   }
 
   public generateContractPdf(id: number){
-    return this.http.get<{url: string}>(`${environment.apiBaseUrl}/contracts/generate/${id}`);
+    return this.http.get<{url: string}>(`${environment.apiBaseUrl}/contracts/${id}/generate`);
   }
 
   public updateUserImage(payload: FormData) {

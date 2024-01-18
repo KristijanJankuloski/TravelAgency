@@ -44,19 +44,14 @@ namespace TravelAgency.Services.Documents
                         page.Size(PageSizes.A4);
                         page.PageColor(Colors.White);
                         page.Margin(5, Unit.Millimetre);
-                        page.DefaultTextStyle(x => x.FontSize(11).FontFamily(Fonts.Arial));
+                        page.DefaultTextStyle(x => x.FontSize(10).FontFamily(Fonts.Arial));
 
                         page
                         .Header()
                         .Row(row =>
                         {
                             row.ConstantItem(40, Unit.Millimetre).Image(_environment.WebRootPath + contract.Company.ImagePath);
-                            row.RelativeItem(3).AlignCenter().Padding(10, Unit.Millimetre).Text(t =>
-                            {
-                                t.Span("Договор за патување број:\n");
-                                t.Span(contract.Number).FontSize(16).Bold();
-                            });
-                            row.RelativeItem(4).AlignCenter().Padding(10, Unit.Millimetre).Column(x =>
+                            row.RelativeItem().AlignRight().PaddingHorizontal(10, Unit.Millimetre).Column(x =>
                             {
                                 x.Item().Text(contract.Company.Name).FontSize(14).Bold();
                                 x.Item().Text(contract.Company.Address);
@@ -70,6 +65,12 @@ namespace TravelAgency.Services.Documents
                         .PaddingVertical(5, Unit.Millimetre)
                         .Column(x =>
                         {
+                            x.Item().Background(headerColor).AlignCenter().Text(t =>
+                            {
+                                t.Span("Договор за патување број: ").FontSize(12).Bold();
+                                t.Span(contract.Number).FontSize(12).Bold();
+                            });
+                            x.Item().PaddingTop(2, Unit.Millimetre);
                             x.Item().Background(headerColor).Text("Податоци за патување");
                             x.Item().Table(table =>
                             {
@@ -95,7 +96,7 @@ namespace TravelAgency.Services.Documents
                                 table.Cell().ColumnSpan(1).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text($"До\n{string.Format(dateFormat, contract.EndDate)}");
                                 table.Cell().ColumnSpan(1).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text($"Денови\n{contract.Days}");
                                 table.Cell().ColumnSpan(1).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text($"Ноќи\n{contract.Nights}");
-                                table.Cell().ColumnSpan(1).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text($"Певоз\n{contract.TransportationType}");
+                                table.Cell().ColumnSpan(1).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text($"Превоз\n{contract.TransportationType}");
                                 table.Cell().ColumnSpan(1).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text($"Влез\n{string.Format(dateFormat, contract.StartDate)}");
 
                                 table.Cell().ColumnSpan(2).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text($"Точен датум на поаѓање\n{string.Format(longDateFormat, contract.DepartureTime)}");
@@ -113,21 +114,24 @@ namespace TravelAgency.Services.Documents
                                     cols.RelativeColumn(2);
                                     cols.RelativeColumn(2);
                                     cols.RelativeColumn(3);
+                                    cols.RelativeColumn(3);
                                 });
 
-                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Име и Презиме");
-                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Број на пасош");
-                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Дата на раѓање");
-                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Телефон");
-                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Адреса");
+                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Име и Презиме").FontSize(8).Bold();
+                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Дата на раѓање").FontSize(8).Bold();
+                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Број на пасош").FontSize(8).Bold();
+                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Телефон").FontSize(8).Bold();
+                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Адреса").FontSize(8).Bold();
+                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Email").FontSize(8).Bold();
 
                                 foreach(var item in contract.Passengers)
                                 {
                                     table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(item.FullName);
-                                    table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(item.PassportNumber);
                                     table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(string.Format(dateFormat, item.BirthDate));
+                                    table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(item.PassportNumber);
                                     table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(item.Phone);
                                     table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(item.Address);
+                                    table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(item.Email);
                                 }
                             });
 
@@ -163,10 +167,18 @@ namespace TravelAgency.Services.Documents
                                         r.RelativeItem().AlignRight().Text(remaining.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK"))).Bold();
                                     });
                                 });
-                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Забелешки");
+                                table.Cell().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(t =>
+                                {
+                                    t.Span("Забелешки");
+                                    foreach (var item in contract.Passengers)
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(item.Note))
+                                            t.Span($"\n{item.Note}");
+                                    }
+                                });
                             });
                             x.Item().Padding(2);
-                            x.Item().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(contract.Footer);
+                            x.Item().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(contract.Footer).FontSize(8);
                         });
 
                         page.Footer().PaddingBottom(5, Unit.Millimetre).Row(row =>

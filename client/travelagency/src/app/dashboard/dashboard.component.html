@@ -1,1 +1,11 @@
-<app-country-pie-chart *ngIf="contractStats" [countryData]="contractStats.countries"></app-country-pie-chart>
+<div class="container py-5">
+    <div>
+        <mwl-calendar-month-view 
+            [events]="events" 
+            [viewDate]="today" 
+            [activeDayIsOpen]="true" 
+            [activeDay]="selectedDay"
+            (dayClicked)="daySelected($event.day)">
+        </mwl-calendar-month-view>
+    </div>
+</div>

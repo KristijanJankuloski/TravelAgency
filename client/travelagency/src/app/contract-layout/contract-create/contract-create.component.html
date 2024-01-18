@@ -89,6 +89,12 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div class="col-md-4">
+                <mat-form-field class="w-100">
+                    <mat-label>Осигуривање</mat-label>
+                    <input type="text" matInput formControlName="insurance">
+                </mat-form-field>
+            </div>
         </div>
         <div class="row">
             <div class="col-md">
@@ -213,7 +219,7 @@
                         <mat-form-field class="w-100">
                             <mat-label>Дата на раѓање</mat-label>
                             <input matInput [matDatepicker]="birthDatePicker" required formControlName="birthDate">
-                            <mat-hint class="small">DD/MM/YYYY</mat-hint>
+                            <mat-hint class="small">YYYY-MM-DD</mat-hint>
                             <mat-datepicker-toggle matIconSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #birthDatePicker startView="multi-year"></mat-datepicker>
                         </mat-form-field>
@@ -247,10 +253,13 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div *ngIf="dateAlerts[i] | async as days" class="row">
-                    <div *ngIf="createForm.controls.passengers.controls[i].controls.passportExpirationDate.touched && days < 90" class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>Скоро истекување!</strong> Датумот на истекување на пасошот е {{ days }} дена до датите на патување.
-                      </div>
+                <div *ngIf="createForm.controls.passengers.controls[i].controls.passportExpirationDate.valueChanges | async as date" class="row">
+                    <div *ngIf="_calculateDays(date) <= 90 && _calculateDays(date) > 0" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Скоро истекување!</strong> Датумот на истекување на пасошот е {{ _calculateDays(date) }} дена до датите на патување.
+                    </div>
+                    <div *ngIf="_calculateDays(date) <= 0" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Истечен пасош!</strong> Датумот на истекување на пасошот завршува пред датум на враќање.
+                    </div>
                 </div>
             </div>
             <button type="button" class="mt-2" mat-raised-button color="primary" (click)="addPassenger()">Додади патник</button>
@@ -262,7 +271,7 @@
             </mat-form-field>
         </div>
         <div class="mt-3 d-flex justify-content-end">
-            <button type="submit" mat-raised-button color="primary"><h5 class="p-2">Креирај договор</h5></button>
+            <button type="submit" mat-raised-button color="primary" [disabled]="createForm.invalid"><h5 class="p-2">Креирај договор</h5></button>
         </div>
     </form>
 </div>
