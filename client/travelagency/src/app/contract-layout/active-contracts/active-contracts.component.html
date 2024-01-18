@@ -18,7 +18,7 @@
                 <td>{{ contract.startDate.toLocaleDateString("en-gb") }}</td>
                 <td>{{ contract.endDate.toLocaleDateString("en-gb") }}</td>
                 <td>
-                    <button mat-mini-fab color="primary" (click)="generateDocument(contract.id)"><mat-icon>print</mat-icon></button>
+                    <button mat-mini-fab color="primary" [routerLink]="['/contract', 'details', contract.id]"><mat-icon>list</mat-icon></button>
                     <button mat-mini-fab color="secondary" class="ms-2" (click)="archiveContract(contract.id)"><mat-icon>work</mat-icon></button>
                 </td>
             </tr>

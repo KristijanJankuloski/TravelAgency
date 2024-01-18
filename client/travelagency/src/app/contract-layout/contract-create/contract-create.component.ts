@@ -209,7 +209,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
     }
 
     this.api.createContract(request).subscribe({next: res => {
-      this.router.navigate(['contract', 'active']);
+      this.router.navigate(['/contract', 'active']);
     }, error: err => {
       console.error(err);
     }});

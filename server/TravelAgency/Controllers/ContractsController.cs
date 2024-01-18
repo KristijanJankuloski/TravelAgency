@@ -52,6 +52,8 @@ namespace TravelAgency.Controllers
                 {
                     return NotFound();
                 }
+                if (!string.IsNullOrWhiteSpace(dto.PdfLink))
+                    dto.PdfLink = $"{Request.Scheme}://{Request.Host}{dto.PdfLink}";
                 return Ok(dto);
             }
             catch (Exception ex)
@@ -146,10 +148,11 @@ namespace TravelAgency.Controllers
 
         [HttpPatch("{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdateBaseInfo(int id)
+        public async Task<IActionResult> UpdateBaseInfo(int id, ContractUpdateBaseInfoDto dto)
         {
             try
             {
+                await _contractService.UpdateContractBaseInfo(id, dto);
                 return Ok();
             }
             catch (Exception ex)

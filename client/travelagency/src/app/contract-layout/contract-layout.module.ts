@@ -4,7 +4,6 @@ import { ContractLayoutComponent } from './contract-layout.component';
 import { ContractCreateComponent } from './contract-create/contract-create.component';
 import { ActiveContractsComponent } from './active-contracts/active-contracts.component';
 import { ArchivedContractsComponent } from './archived-contracts/archived-contracts.component';
-import { ContractPrintDialogComponent } from './contract-print-dialog/contract-print-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPrintModule } from 'ngx-print';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +15,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { ContractLayoutRoutingModule } from './contract-layout-routing.module';
+import { ContractDetailsComponent } from './contract-details/contract-details.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PaymentMethodCastPipe } from './pipes/payment-method-cast.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { ContractLayoutRoutingModule } from './contract-layout-routing.module';
     ContractCreateComponent,
     ActiveContractsComponent,
     ArchivedContractsComponent,
-    ContractPrintDialogComponent
+    ContractDetailsComponent,
+    PaymentMethodCastPipe
   ],
   imports: [
     CommonModule,
@@ -38,7 +41,8 @@ import { ContractLayoutRoutingModule } from './contract-layout-routing.module';
     MatButtonModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   bootstrap: [ContractLayoutComponent]
 })

@@ -16,5 +16,6 @@ namespace TravelAgency.Services.Interfaces
         Task<ContractStatsDto> GetStats(string userId);
         Task<GenerateResponse> GeneratePdf(int id, HttpRequest request);
         Task<OrganizationContractSetupDto> GetSetupInfo(int organizationId);
+        Task UpdateContractBaseInfo(int id, ContractUpdateBaseInfoDto dto);
     }
 }

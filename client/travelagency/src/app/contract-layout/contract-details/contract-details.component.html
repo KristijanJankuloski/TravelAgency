@@ -1,0 +1,163 @@
+<div class="container-fluid p-5" *ngIf="contract; else loading">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center ps-4 pe-4">
+                        <h1 class="display-4">{{ contract.contractNumber }}</h1>
+                        <h3 class="display-6">{{ contract.startDate | date : 'dd MM YYYY' }} -<mat-icon>flight</mat-icon>- {{ contract.endDate | date : 'dd MM YYYY' }}</h3>
+                        <h3 class="display-6">{{ contract.contractDate | date : 'dd MMMM YYYY' }}</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row ps-3 pe-3">
+                        <div class="col-md">
+                            <mat-icon>mail</mat-icon> <p><b>Е-маил:</b> {{ contract.email }}</p>
+                            <br>
+                            <mat-icon>phone</mat-icon> <p><b>Телефон:</b> {{ contract.phoneNumber }}</p>
+                        </div>
+                        <div class="col-md">
+                            <mat-icon>domain</mat-icon> <p><b>Град на договор:</b> {{ contract.contractLocation }}</p>
+                            <br>
+                            <mat-icon>attach_money</mat-icon> <p><b>Тип на наплата:</b> {{ contract.paymentMethod | paymentMethodCast }}</p>
+                        </div>
+                        <div class="col-md">
+                            <mat-icon>flight</mat-icon> <p><b>Превоз:</b> {{ contract.transportationType }}</p>
+                            <br>
+                            <mat-icon>shield</mat-icon> <p><b>Осигуривање:</b> {{ contract.insurance }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><b>Агенција:</b> {{ contract.agency.name }}</p>
+                            <p><b>Адреса на агенција:</b> {{ contract.agency.address }}</p>
+                            <p><b>Телефон на агенција:</b> {{ contract.agency.phoneNumber }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mt-3 ps-3 pe-3">
+                        <p><b>Напомена:</b></p>
+                        <p>{{ contract.note }}</p>
+                    </div>
+                    <div class="row ps-3 pe-3">
+                        <p><b>Услови:</b></p>
+                        <p>{{ contract.footer }}</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end ps-4 pe-4">
+                        <button type="button" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center ps-4 pe-4">
+                        <h3 class="display-6">Сместување</h3>
+                        <button type="button" mat-mini-fab color="primary"><mat-icon>refresh</mat-icon></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row ps-3 pe-3">
+                        <div class="col-md">
+                            <p class="text-justify">Име на хотел: <b>{{ contract.plan.hotelName }}</b></p>
+                            <p class="text-justify">Локација: <b>{{ contract.plan.location }}</b></p>
+                            <p class="text-justify">Држава: <b>{{ contract.plan.country }}</b></p>
+                        </div>
+                        <div class="col-md">
+                            <p class="text-justify">Тип на соба: <b>{{ contract.roomType }}</b></p>
+                            <p class="text-justify">Тип на сервис: <b>{{ contract.serviceType }}</b></p>
+                            <p class="text-justify">Тип на превоз: <b>{{ contract.transportationType }}</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center ps-4 pe-4">
+                        <h3 class="display-6">Патници</h3>
+                        <button type="button" mat-mini-fab color="primary"><mat-icon>add</mat-icon></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Име</th>
+                                <th>Презиме</th>
+                                <th>Број на пасош</th>
+                                <th>Дата на раѓање</th>
+                                <th>Број</th>
+                                <th>E-mail</th>
+                                <th>...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let passenger of contract.passengers">
+                                <td>{{ passenger.firstName }}</td>
+                                <td>{{ passenger.lastName }}</td>
+                                <td>{{ passenger.passportNumber }}</td>
+                                <td>{{ passenger.birthDate | date: 'dd/MM/YYYY' }}</td>
+                                <td>{{ passenger.phoneNumber }}</td>
+                                <td>{{ passenger.email }}</td>
+                                <td>
+                                    <button type="button" mat-flat-button color="accent"><mat-icon>edit</mat-icon></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-lg-2">
+            <div class="card">
+                <div class="card-body">
+                    <a type="button" class="m-1 w-100" mat-raised-button color="primary" [href]="contract.pdfLink" target="_blank" [disabled]="!contract.pdfLink"><mat-icon>folder</mat-icon> ПДФ докумнет</a>
+                    <br>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>cloud</mat-icon> Генерирај нов документ</button>
+                    <br>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>mail</mat-icon><mat-icon>arrow_forward</mat-icon> Испрати договор</button>
+                    <br>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>insert_drive_file</mat-icon> Фактури</button>
+                    <br>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>message</mat-icon> Известувања</button>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Уплата</span>
+                </div>
+                <div class="card-body bg-green">
+                    <span>Вкупна цена</span>
+                    <h3>{{ contract.totalPrice | currency : ' ' }}</h3>
+                </div>
+                <div class="card-body" [ngClass]="contract.amountPaid < contract.totalPrice ? 'bg-orange' : 'bg-green'">
+                    <span>Уплатено од патник</span>
+                    <h3>{{ contract.amountPaid | currency : ' ' }}</h3>
+                </div>
+                <div class="card-body bg-blue">
+                    <span>Баланс до агенција</span>
+                    <h3>{{ contract.totalForAgency | currency : ' ' }}</h3>
+                    <h3>{{ contract.amountPaidToAgency | currency : ' ' }}</h3>
+                </div>
+                <div class="card-footer">
+                    <h6>Додавање уплата</h6>
+                    <div class="d-flex justify-content-between">
+                        <button mat-raised-button color="accent">Патник</button>
+                        <button mat-raised-button color="accent">Агенција</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    <div class="container p-5" *ngIf="!notFound">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="container p-5" *ngIf="notFound">
+        <h1 class="display-1">Not found</h1>
+    </div>
+</ng-template>

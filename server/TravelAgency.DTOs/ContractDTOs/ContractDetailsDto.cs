@@ -17,11 +17,18 @@ namespace TravelAgency.DTOs.ContractDTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime? DepartureTime { get; set; }
+        public DateTime? CanceledOn { get; set; }
         public string? RoomType { get; set; }
         public string? ServiceType { get; set; }
         public string? TransportationType { get; set; }
+        public string? Insurance { get; set; }
+        public string? Footer { get; set; }
+        public string? Note { get; set; }
+        public string? PdfLink { get; set; }
         public double TotalPrice { get; set; }
+        public double TotalForAgency { get; set; }
         public double AmountPaid { get; set; }
+        public double AmountPaidToAgency { get; set; }
         public bool IsPaid { get; set; }
         public UserDetailsDto User { get; set; }
         public PlanListDto Plan { get; set; }

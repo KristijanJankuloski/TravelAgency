@@ -4,13 +4,15 @@ import { ContractCreateComponent } from "./contract-create/contract-create.compo
 import { ActiveContractsComponent } from "./active-contracts/active-contracts.component";
 import { ArchivedContractsComponent } from "./archived-contracts/archived-contracts.component";
 import { ContractLayoutComponent } from "./contract-layout.component";
+import { ContractDetailsComponent } from "./contract-details/contract-details.component";
 
 const routes: Routes = [
   { path: '', component: ContractLayoutComponent, 
       children: [
     { path: 'create', component: ContractCreateComponent },
     { path: 'active', component: ActiveContractsComponent },
-    { path: 'archive', component: ArchivedContractsComponent }
+    { path: 'archive', component: ArchivedContractsComponent },
+    { path: 'details/:id', component: ContractDetailsComponent }
   ]}
 ]
 

@@ -185,7 +185,10 @@ namespace TravelAgency.Services.Implementations
             {
                 return null;
             }
-            return contract.ToContractDetailsDto();
+            var dto = contract.ToContractDetailsDto();
+            if (!string.IsNullOrWhiteSpace(contract.FilePath))
+                dto.PdfLink = contract.FilePath;
+            return dto;
         }
 
         public async Task<OrganizationContractSetupDto> GetSetupInfo(int organizationId)
@@ -224,6 +227,29 @@ namespace TravelAgency.Services.Implementations
             }
             result.Countries = count.Select(pair => new DestinationCountryStat { Name = pair.Key, Amount = pair.Value }).ToList();
             return result;
+        }
+
+        public async Task UpdateContractBaseInfo(int id, ContractUpdateBaseInfoDto dto)
+        {
+            Contract contract = await _contractRepository.GetByIdAsync(id);
+            contract.Email = dto.Email;
+            contract.StartDate = DateTime.Parse(dto.StartDate);
+            contract.EndDate = DateTime.Parse(dto.EndDate);
+            contract.ContractLocation = dto.ContractLocation;
+            contract.Footer = dto.Footer;
+            contract.Note = dto.Note;
+            contract.Insurance = dto.Insurance;
+            contract.PhoneNumber = dto.PhoneNumber;
+            contract.TotalPrice = dto.TotalPrice;
+            contract.TotalOwedToVendor = dto.TotalToAgency;
+            contract.PaymentMethod = (PaymentMethods)dto.PaymentMethod;
+            if (dto.DepartureTime != null)
+                contract.DepartureTime = DateTime.Parse(dto.DepartureTime);
+            contract.RoomType = dto.RoomType;
+            contract.ServiceType = dto.ServiceType;
+            contract.TransportationType = dto.TransportationType;
+
+            await _contractRepository.UpdateAsync(contract);
         }
 
         private string GenerateContractNumber(int iterator)

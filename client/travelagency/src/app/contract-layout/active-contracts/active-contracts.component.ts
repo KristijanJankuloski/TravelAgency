@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContractListModel } from 'src/app/shared/models/contract';
 import { ApiService } from 'src/app/shared/services/api.service';
-import { ContractPrintDialogComponent } from '../contract-print-dialog/contract-print-dialog.component';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -48,7 +47,6 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
   }
 
   showPrintDialog(id: number) {
-    this.matDialog.open(ContractPrintDialogComponent, {data: id});
   }
 
   changePage(index: number){
