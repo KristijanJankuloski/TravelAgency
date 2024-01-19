@@ -15,6 +15,7 @@ namespace TravelAgency.DataAccess.Context
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<ContractEmailEvent> ContractEmailEvents { get; set; }
         public DbSet<InvoiceEmailEvent> InvoiceEmailEvents { get; set; }
+        public DbSet<PaymentEvent> PaymentEvents { get; set; }
 
         public TravelAppContext(DbContextOptions options) : base(options) {}
 
@@ -97,6 +98,27 @@ namespace TravelAgency.DataAccess.Context
                 .WithMany(x => x.InvoiceEmails)
                 .HasForeignKey(x => x.CreatedById)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PaymentEvent>()
+                .Property(x => x.CreatedOn)
+                .HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<PaymentEvent>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PaymentEvent>()
+                .HasOne(x => x.Contract)
+                .WithMany()
+                .HasForeignKey(x => x.ContractId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PaymentEvent>()
+                .HasOne(x => x.Invoice)
+                .WithMany()
+                .HasForeignKey(x => x.InvoiceId);
         }
     }
 }
