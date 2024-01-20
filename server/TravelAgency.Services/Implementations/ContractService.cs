@@ -19,28 +19,46 @@ namespace TravelAgency.Services.Implementations
     public class ContractService : IContractService
     {
         private readonly IContractRepository _contractRepository;
+        private readonly IPassengerRepository _passengerRepository;
         private readonly IOrganizationRepository _organizationRepository;
         private readonly UserManager<TravelUser> _userManager;
         private readonly IPlanRepository _planRepository;
         private readonly IPdfService _pdfService;
         public ContractService(
             IContractRepository contractRepository,
+            IPassengerRepository passengerRepository,
             IOrganizationRepository organizationRepository,
             UserManager<TravelUser> userManager,
             IPlanRepository planRepository,
             IPdfService pdfService)
         {
             _contractRepository = contractRepository;
+            _passengerRepository = passengerRepository;
             _organizationRepository = organizationRepository;
             _userManager = userManager;
             _planRepository = planRepository;
             _pdfService = pdfService;
         }
 
+        public async Task AddPassenger(int id, PassengerCreateDto dto)
+        {
+            Passenger passenger = dto.ToPassenger();
+            passenger.ContractId = id;
+            await _passengerRepository.InsertAsync(passenger);
+        }
+
         public async Task ArchiveContract(int id, string userId)
         {
             Contract contract = await _contractRepository.GetByIdAsync(id);
             if (contract == null || contract.Organization?.OwnerId != userId) throw new UnauthorizedException();
+            contract.IsArchived = true;
+            await _contractRepository.UpdateAsync(contract);
+        }
+
+        public async Task CancelContract(int id)
+        {
+            Contract contract = await _contractRepository.GetByIdAsync(id);
+            contract.CanceledOn = DateTime.Now;
             contract.IsArchived = true;
             await _contractRepository.UpdateAsync(contract);
         }
@@ -93,6 +111,11 @@ namespace TravelAgency.Services.Implementations
                 contract.Passengers.Add(passenger);
             }
             await _contractRepository.InsertAsync(contract);
+        }
+
+        public async Task DeletePassenger(int id)
+        {
+            await _passengerRepository.DeleteByIdAsync(id);
         }
 
         public async Task<GenerateResponse> GeneratePdf(int id, HttpRequest request)
@@ -250,6 +273,24 @@ namespace TravelAgency.Services.Implementations
             contract.TransportationType = dto.TransportationType;
 
             await _contractRepository.UpdateAsync(contract);
+        }
+
+        public async Task UpdatePassengerInfo(int id, PassengerCreateDto dto)
+        {
+            Passenger passenger = await _passengerRepository.GetByIdAsync(id);
+            passenger.FirstName = dto.FirstName;
+            passenger.LastName = dto.LastName;
+            passenger.PassportExpirationDate = DateTime.Parse(dto.PassportExpirationDate);
+            passenger.BirthDate = DateTime.Parse(dto.BirthDate);
+            passenger.PhoneNumber = dto.PhoneNumber;
+            passenger.PassportNumber = dto.PassportNumber;
+            passenger.Email = dto.Email;
+            passenger.Address = dto.Address;
+            if (!string.IsNullOrWhiteSpace(dto.Comment))
+            {
+                passenger.Comment = dto.Comment;
+            }
+            await _passengerRepository.UpdateAsync(passenger);
         }
 
         private string GenerateContractNumber(int iterator)

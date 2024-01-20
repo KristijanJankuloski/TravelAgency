@@ -11,6 +11,7 @@ export interface PassengerCreateModel {
 }
 
 export interface PassengerDetailsModel {
+    id: number;
     firstName: string;
     lastName: string;
     passportNumber: string;

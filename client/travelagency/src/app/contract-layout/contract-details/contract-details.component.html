@@ -101,7 +101,7 @@
                                 <td>{{ passenger.phoneNumber }}</td>
                                 <td>{{ passenger.email }}</td>
                                 <td>
-                                    <button type="button" mat-flat-button color="accent"><mat-icon>edit</mat-icon></button>
+                                    <button type="button" mat-flat-button color="accent" (click)="editPassenger(passenger)"><mat-icon>edit</mat-icon></button>
                                 </td>
                             </tr>
                         </tbody>

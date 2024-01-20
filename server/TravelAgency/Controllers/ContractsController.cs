@@ -162,11 +162,13 @@ namespace TravelAgency.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> CancelContract(int id)
         {
             try
             {
-                return Ok();
+                await _contractService.CancelContract(id);
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -180,7 +182,8 @@ namespace TravelAgency.Controllers
         {
             try
             {
-                return Ok();
+                await _contractService.AddPassenger(id, dto);
+                return StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception ex)
             {
@@ -194,6 +197,7 @@ namespace TravelAgency.Controllers
         {
             try
             {
+                await _contractService.UpdatePassengerInfo(passengerId, dto);
                 return Ok();
             }
             catch (Exception ex)
@@ -202,13 +206,14 @@ namespace TravelAgency.Controllers
             }
         }
 
-        [HttpDelete("{id}/passenger")]
+        [HttpDelete("{id}/passenger/{passengerId}")]
         [Authorize]
-        public async Task<IActionResult> DeletePassenger(int id)
+        public async Task<IActionResult> DeletePassenger(int id, int passengerId)
         {
             try
             {
-                return Ok();
+                await _contractService.DeletePassenger(passengerId);
+                return NoContent();
             }
             catch (Exception ex)
             {

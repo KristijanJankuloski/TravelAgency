@@ -17,7 +17,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { ContractLayoutRoutingModule } from './contract-layout-routing.module';
 import { ContractDetailsComponent } from './contract-details/contract-details.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PaymentMethodCastPipe } from './pipes/payment-method-cast.pipe';
+import { EditPassengerDialogComponent } from './edit-passenger-dialog/edit-passenger-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { PaymentMethodCastPipe } from './pipes/payment-method-cast.pipe';
     ActiveContractsComponent,
     ArchivedContractsComponent,
     ContractDetailsComponent,
-    PaymentMethodCastPipe
+    PaymentMethodCastPipe,
+    EditPassengerDialogComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,8 @@ import { PaymentMethodCastPipe } from './pipes/payment-method-cast.pipe';
     MatFormFieldModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSlideToggleModule
   ],
   bootstrap: [ContractLayoutComponent]
 })

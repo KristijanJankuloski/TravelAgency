@@ -2,6 +2,7 @@
 using TravelAgency.DTOs.Common;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.OrganizationDTOs;
+using TravelAgency.DTOs.PassengerDTOs;
 using TravelAgency.DTOs.PdfDTOs;
 
 namespace TravelAgency.Services.Interfaces
@@ -17,5 +18,9 @@ namespace TravelAgency.Services.Interfaces
         Task<GenerateResponse> GeneratePdf(int id, HttpRequest request);
         Task<OrganizationContractSetupDto> GetSetupInfo(int organizationId);
         Task UpdateContractBaseInfo(int id, ContractUpdateBaseInfoDto dto);
+        Task AddPassenger(int id, PassengerCreateDto dto);
+        Task UpdatePassengerInfo(int id, PassengerCreateDto dto);
+        Task DeletePassenger(int id);
+        Task CancelContract(int id);
     }
 }
