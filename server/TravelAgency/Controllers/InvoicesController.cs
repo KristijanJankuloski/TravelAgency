@@ -34,12 +34,28 @@ namespace TravelAgency.Controllers
             }
         }
 
+        [HttpGet("{contractId}/list")]
+        public async Task<ActionResult> GetInvoicesByContractId(int contractId)
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                var invoices = await _invoiceService.GetInvoicesByContract(contractId);
+                return Ok(invoices);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpGet("{id}/generate")]
         public async Task<ActionResult<GenerateResponse>> GenerateDocument(int id)
         {
             try
             {
                 var res = await _invoiceService.GenerateInvoicePdf(id);
+                res.Url = $"{Request.Scheme}://{Request.Host}{res.Url}";
                 return Ok(res);
             }
             catch (ArgumentException ex)

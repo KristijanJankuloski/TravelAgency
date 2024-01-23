@@ -24,6 +24,7 @@ namespace TravelAgency.Mappers
             return new InvoiceListDto
             {
                 Id = invoice.Id,
+                Number = invoice.Number,
                 ContractId = invoice.ContractId,
                 AmountToPay = invoice.AmountToPay,
                 Note = invoice.Note,

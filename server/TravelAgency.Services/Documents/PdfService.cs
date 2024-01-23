@@ -6,6 +6,7 @@ using QuestPDF.Infrastructure;
 using QuestPDF.Previewer;
 using System.Globalization;
 using TravelAgency.DTOs.PdfDTOs;
+using TravelAgency.Services.BarCodes;
 
 namespace TravelAgency.Services.Documents
 {
@@ -205,7 +206,7 @@ namespace TravelAgency.Services.Documents
             {
                 int borderSize = 1;
                 int cellPadding = 2;
-                string headerColor = Colors.Grey.Lighten4;
+                string headerColor = Colors.Grey.Lighten3;
                 string dateFormat = "{0:dd/MM/yyyy}";
                 string longDateFormat = "{0:dd/MM/yyyy - HH:mm}";
                 double tax = invoice.AmountToPayWithTax - invoice.AmountToPay;
@@ -260,10 +261,11 @@ namespace TravelAgency.Services.Documents
                                 row.RelativeItem(1).Column(c =>
                                 {
                                     c.Item().Text("Клиент").Bold();
-                                    c.Item().BorderBottom(2).BorderTop(2).Padding(3, Unit.Millimetre).Text(invoice.ClientName);
+                                    c.Item().BorderBottom(2).BorderTop(2).Padding(3, Unit.Millimetre).Text(invoice.ClientName).FontSize(12);
                                 });
+                                row.RelativeItem(1).AlignRight().MaxWidth(20, Unit.Millimetre).PaddingRight(5, Unit.Millimetre).Image(BarCodeGenerator.GenerateDataMatrix(invoice.Number));
                             });
-                            x.Item().PaddingTop(2, Unit.Millimetre).Text($"Фактура {invoice.Number}").FontSize(16).Bold();
+                            x.Item().PaddingTop(3, Unit.Millimetre).Text($"Фактура {invoice.Number}").FontSize(16).Bold();
                             x.Item().Text(text =>
                             {
                                 text.Span("Издавање: ").Bold();
@@ -296,16 +298,16 @@ namespace TravelAgency.Services.Documents
                                 table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPay.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
 
                                 table.Cell().ColumnSpan(4);
-                                table.Cell().Background(headerColor).BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Вкупно");
-                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPay.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                                table.Cell().Background(headerColor).BorderBottom(borderSize).BorderTop(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Вкупно");
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).AlignRight().Text(invoice.AmountToPay.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
 
                                 table.Cell().ColumnSpan(4);
-                                table.Cell().Background(headerColor).BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text("ДДВ");
-                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(tax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                                table.Cell().Background(headerColor).BorderBottom(borderSize).BorderTop(borderSize).Padding(cellPadding, Unit.Millimetre).Text("ДДВ");
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).AlignRight().Text(tax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
                                 
                                 table.Cell().ColumnSpan(4);
-                                table.Cell().Background(headerColor).BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text("За плаќање");
-                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPayWithTax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                                table.Cell().Background(headerColor).BorderBottom(borderSize).BorderTop(borderSize).Padding(cellPadding, Unit.Millimetre).Text("За плаќање");
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).AlignRight().Text(invoice.AmountToPayWithTax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
                             });
 
                             x.Item().PaddingTop(2, Unit.Millimetre);

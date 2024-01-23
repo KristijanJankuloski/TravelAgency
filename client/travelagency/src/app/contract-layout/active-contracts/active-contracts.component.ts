@@ -4,6 +4,7 @@ import { ContractListModel } from 'src/app/shared/models/contract';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { WarningDialogComponent } from '../warning-dialog/warning-dialog.component';
 
 @Component({
   selector: 'app-active-contracts',
@@ -46,9 +47,6 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
     return "cell-bg-red";
   }
 
-  showPrintDialog(id: number) {
-  }
-
   changePage(index: number){
     this.api.getActiveContracts(index).subscribe(data => {
       this.contracts = [...data.items];
@@ -61,18 +59,14 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
     });
   }
 
-  generateDocument(id: number){
-    this._snackBar.open("Креирање документ во позадина", "Затвори", {duration: 3000});
-    this.api.generateContractPdf(id).subscribe({
-      next: data => {
-        window.open(data.url, "_blank");
-      }
-    });
-  }
-
   archiveContract(id: number){
-    this.api.archiveContract(id).subscribe(data => {
-      this._snackBar.open("Contract archived", "The contract has been archived", {duration: 5000});
+    let contractNumber = this.contracts.find(x => x.id === id)?.contractNumber;
+    const ref = this.matDialog.open(WarningDialogComponent, {data: {message: `Договорот број: ${contractNumber} ќе биде архивиран.`}});
+    ref.afterClosed().subscribe(res => {
+      if (!res) return;
+      this.api.archiveContract(id).subscribe(data => {
+        this._snackBar.open("Contract archived", "The contract has been archived", {duration: 5000});
+      });
     });
   }
 }

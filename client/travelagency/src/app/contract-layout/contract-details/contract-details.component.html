@@ -118,7 +118,7 @@
                     <br>
                     <button type="button" class="m-1 w-100" mat-raised-button color="primary" [disabled]="!contract.pdfLink"><mat-icon>mail</mat-icon><mat-icon>arrow_forward</mat-icon> Испрати договор</button>
                     <br>
-                    <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>insert_drive_file</mat-icon> Фактури</button>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary" [routerLink]="['/contract/invoices', contract.id]"><mat-icon>insert_drive_file</mat-icon> Фактури</button>
                     <br>
                     <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>message</mat-icon> Известувања</button>
                 </div>
@@ -144,8 +144,8 @@
                 <div class="card-footer">
                     <h6>Додавање уплата</h6>
                     <div class="d-flex justify-content-between">
-                        <button mat-raised-button color="accent">Патник</button>
-                        <button mat-raised-button color="accent">Агенција</button>
+                        <button mat-raised-button color="accent" (click)="passengerPayment()">Патник</button>
+                        <button mat-raised-button color="accent" (click)="agencyPayment()">Агенција</button>
                     </div>
                 </div>
             </div>

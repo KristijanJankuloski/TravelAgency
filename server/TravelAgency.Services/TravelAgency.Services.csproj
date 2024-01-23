@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BarCode" Version="2023.12.4" />
     <PackageReference Include="Hangfire" Version="1.8.7" />
     <PackageReference Include="Hangfire.Core" Version="1.8.7" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.8.7" />

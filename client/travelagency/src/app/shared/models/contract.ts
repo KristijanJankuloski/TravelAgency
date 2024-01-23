@@ -81,3 +81,10 @@ export interface ContractStatsModel {
     summedPaid: number,
     totalSummedCost: number
 }
+
+export interface ContractPaymentCreate {
+    contractId: number;
+    note?: string | null;
+    amount: number;
+    invoiceId?: number | null;
+}

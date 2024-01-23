@@ -6,6 +6,7 @@ using TravelAgency.DTOs.Common;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.OrganizationDTOs;
 using TravelAgency.DTOs.PassengerDTOs;
+using TravelAgency.DTOs.PaymentDTOs;
 using TravelAgency.DTOs.PdfDTOs;
 using TravelAgency.DTOs.UserDTOs;
 using TravelAgency.Helpers;
@@ -32,6 +33,22 @@ namespace TravelAgency.Controllers
             {
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
                 var contracts = await _contractService.GetActiveContracts(user.Id, page.Value);
+                return Ok(contracts);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("archived")]
+        [Authorize]
+        public async Task<ActionResult<PaginatedResponse<ContractListDto>>> GetArchived([FromQuery] int? page = 1)
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                var contracts = await _contractService.GetArchivedContracts(user.Id, page.Value);
                 return Ok(contracts);
             }
             catch (Exception ex)
@@ -100,12 +117,15 @@ namespace TravelAgency.Controllers
 
         [HttpGet("stats")]
         [Authorize]
-        public async Task<ActionResult<ContractStatsDto>> GetStats()
+        public async Task<ActionResult<ContractStatsDto>> GetStats([FromQuery] int? month)
         {
             try
             {
+                if (month.HasValue && (month.Value <= 0 || month.Value > 12))
+                    return BadRequest("Month value invalid");
+
                 UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
-                var stats = await _contractService.GetStats(user.Id);
+                var stats = await _contractService.GetStats(user.Id, month);
                 return Ok(stats);
             }
             catch (Exception ex)
@@ -228,6 +248,36 @@ namespace TravelAgency.Controllers
             try
             {
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("passenger-payment")]
+        public async Task<IActionResult> PassengerPayment(NewContractPaymentDto dto)
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                await _contractService.AddPaymentFromCustomer(dto, user.Id);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("agency-payment")]
+        public async Task<IActionResult> AgencyPayment(NewContractPaymentDto dto)
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(HttpContext.User);
+                await _contractService.AddPaymentFromAgency(dto, user.Id);
+                return StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception ex)
             {

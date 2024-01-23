@@ -3,3 +3,7 @@ export interface PaginatedResponse<T> {
     pages: number;
     items: T[];
 }
+
+export interface UrlResponse {
+    url: string;
+}

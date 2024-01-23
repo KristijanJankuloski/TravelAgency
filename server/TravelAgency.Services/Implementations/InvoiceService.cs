@@ -87,5 +87,11 @@ namespace TravelAgency.Services.Implementations
             string filePath = await _pdfService.GenerateInvoicePdf(dto);
             return new GenerateResponse { Url = filePath };
         }
+
+        public async Task<List<InvoiceListDto>> GetInvoicesByContract(int contractId)
+        {
+            List<Invoice> invoices = await _invoiceRepository.GetByContractIdAsync(contractId);
+            return invoices.Select(x => x.ToListDto()).ToList();
+        }
     }
 }

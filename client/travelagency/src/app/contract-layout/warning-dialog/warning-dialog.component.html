@@ -1,0 +1,13 @@
+<div class="card border-danger">
+    <div class="card-header bg-danger"></div>
+    <div class="card-body">
+        <h1 class="display-6">{{ warningMessage }}</h1>
+        <p class="card-text">Дали сакате да продолжите?</p>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-between py-3">
+            <button mat-raised-button (click)="cancelClick()"><mat-icon>close</mat-icon> Одкажи</button>
+            <button mat-raised-button color="warn" (click)="confirmClick()"><mat-icon>check</mat-icon> Продолжи</button>
+        </div>
+    </div>
+</div>

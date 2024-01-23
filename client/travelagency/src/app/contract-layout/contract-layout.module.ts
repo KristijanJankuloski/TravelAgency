@@ -18,8 +18,13 @@ import { ContractLayoutRoutingModule } from './contract-layout-routing.module';
 import { ContractDetailsComponent } from './contract-details/contract-details.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { PaymentMethodCastPipe } from './pipes/payment-method-cast.pipe';
 import { EditPassengerDialogComponent } from './edit-passenger-dialog/edit-passenger-dialog.component';
+import { InvoiceListComponent } from './invoice-list/invoice-list.component';
+import { InvoiceCreateComponent } from './invoice-create/invoice-create.component';
+import { WarningDialogComponent } from './warning-dialog/warning-dialog.component';
+import { AddPaymentDialogComponent } from './add-payment-dialog/add-payment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,11 @@ import { EditPassengerDialogComponent } from './edit-passenger-dialog/edit-passe
     ArchivedContractsComponent,
     ContractDetailsComponent,
     PaymentMethodCastPipe,
-    EditPassengerDialogComponent
+    EditPassengerDialogComponent,
+    InvoiceListComponent,
+    InvoiceCreateComponent,
+    WarningDialogComponent,
+    AddPaymentDialogComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +55,8 @@ import { EditPassengerDialogComponent } from './edit-passenger-dialog/edit-passe
     MatDatepickerModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTooltipModule
   ],
   bootstrap: [ContractLayoutComponent]
 })

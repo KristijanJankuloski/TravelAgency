@@ -6,6 +6,8 @@ namespace TravelAgency.DTOs.InvoiceDTOs
     {
         public int Id { get; set; }
 
+        public string Number { get; set; } = string.Empty;
+
         public int ContractId { get; set; }
 
         public double AmountToPay { get; set; }

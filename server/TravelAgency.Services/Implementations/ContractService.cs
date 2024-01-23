@@ -25,13 +25,15 @@ namespace TravelAgency.Services.Implementations
         private readonly UserManager<TravelUser> _userManager;
         private readonly IPlanRepository _planRepository;
         private readonly IPdfService _pdfService;
+        private readonly IInvoiceService _invoiceService;
         public ContractService(
             IContractRepository contractRepository,
             IPassengerRepository passengerRepository,
             IOrganizationRepository organizationRepository,
             UserManager<TravelUser> userManager,
             IPlanRepository planRepository,
-            IPdfService pdfService)
+            IPdfService pdfService,
+            IInvoiceService invoiceService)
         {
             _contractRepository = contractRepository;
             _passengerRepository = passengerRepository;
@@ -39,6 +41,8 @@ namespace TravelAgency.Services.Implementations
             _userManager = userManager;
             _planRepository = planRepository;
             _pdfService = pdfService;
+            _invoiceService = invoiceService;
+
         }
 
         public async Task AddPassenger(int id, PassengerCreateDto dto)
@@ -75,6 +79,9 @@ namespace TravelAgency.Services.Implementations
                 UserId = userId,
                 Type = PaymentEventType.FromCustomer
             };
+
+            if (dto.InvoiceId.HasValue)
+                await _invoiceService.AddPayment(dto);
             await _contractRepository.AddCustomerPaymentAsync(payment);
         }
 
@@ -231,6 +238,19 @@ namespace TravelAgency.Services.Implementations
             return response;
         }
 
+        public async Task<PaginatedResponse<ContractListDto>> GetArchivedContracts(string userId, int pageIndex)
+        {
+            int itemCount = 20;
+            TravelUser user = await _userManager.FindByIdAsync(userId);
+            PaginatedResponse<ContractListDto> response = new PaginatedResponse<ContractListDto>();
+            int totalItemCount = await _contractRepository.CountArchivedAsync(user.OrganizationId);
+            response.Pages = (int)Math.Ceiling((double)totalItemCount / itemCount);
+            response.PageIndex = pageIndex;
+            List<Contract> contracts = await _contractRepository.GetArchivedPaginatedAsync(user.OrganizationId, (pageIndex - 1) * itemCount, itemCount);
+            response.Items = contracts.Select(x => x.ToListDto()).ToList();
+            return response;
+        }
+
         public async Task<ContractDetailsDto> GetDetails(int contractId, string userId)
         {
             Contract contract = await _contractRepository.GetByIdAsync(contractId);
@@ -257,10 +277,11 @@ namespace TravelAgency.Services.Implementations
             };
         }
 
-        public async Task<ContractStatsDto> GetStats(string userId)
+        public async Task<ContractStatsDto> GetStats(string userId, int? month)
         {
             DateTime today = DateTime.Now;
-            DateTime startDate = new DateTime(today.Year, today.Month, 1);
+            int monthToCheck = month.HasValue ? month.Value : today.Month;
+            DateTime startDate = new DateTime(today.Year, monthToCheck, 1);
             DateTime endDate = startDate.AddMonths(1).AddDays(7);
             TravelUser user = await _userManager.FindByIdAsync(userId);
             List<Contract> contracts = await _contractRepository.GetActiveByRangeAsync(user.OrganizationId, startDate, endDate);

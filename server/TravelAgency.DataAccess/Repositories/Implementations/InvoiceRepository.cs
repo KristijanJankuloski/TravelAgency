@@ -13,6 +13,11 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
             _context = context;
         }
 
+        public async Task<List<Invoice>> GetByContractIdAsync(int id)
+        {
+            return await _context.Invoices.Where(x => x.ContractId == id).ToListAsync();
+        }
+
         public override async Task<Invoice> GetByIdAsync(int id)
         {
             return await _context.Invoices

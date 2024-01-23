@@ -1,0 +1,38 @@
+<div class="card">
+    <div class="card-header" [ngClass]="{'bg-info' : fromAgency, 'bg-success' : !fromAgency}"></div>
+    <div class="card-body">
+        <h2 class="display-6">{{ fromAgency? 'Плаќање кон организатор' : 'Плаќање од патник' }}</h2>
+        <div class="row mb-2">
+            <div class="col-md">
+                <mat-form-field>
+                    <mat-label>Количина</mat-label>
+                    <input type="number" matInput [formControl]="amountControl" />
+                </mat-form-field>
+            </div>
+            <div class="col-md">
+                <mat-form-field *ngIf="!fromAgency">
+                    <mat-label>Фактура</mat-label>
+                    <mat-select [formControl]="invoiceControl">
+                        <mat-option *ngFor="let invoice of invoices" [value]="invoice">
+                            {{ invoice.number }}
+                          </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="w-100">
+                    <mat-label>Запис</mat-label>
+                    <textarea matInput rows="3" [formControl]="noteControl"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-between">
+            <button mat-raised-button (click)="cancel()"><mat-icon>close</mat-icon> Одкажи</button>
+            <button mat-raised-button color="primary" [disabled]="amountControl.invalid" (click)="fromAgency? submitAgency() : submitPassenger()"><mat-icon>save</mat-icon> Зачувај</button>
+        </div>
+    </div>
+</div>

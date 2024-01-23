@@ -7,6 +7,7 @@ namespace TravelAgency.Services.Interfaces
     public interface IInvoiceService
     {
         Task<GenerateResponse> GenerateInvoicePdf(int id);
+        Task<List<InvoiceListDto>> GetInvoicesByContract(int contractId);
         Task CreateInvoice(InvoiceCreateDto dto, string userId, int orgId);
         Task AddPayment(NewContractPaymentDto dto);
     }

@@ -1,0 +1,28 @@
+<form [formGroup]="createForm" (ngSubmit)="submitCreateForm()">
+    <div class="card dialog-card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field>
+                        <mat-label>Количина</mat-label>
+                        <input type="number" matInput formControlName="amountToPay" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Услови</mat-label>
+                        <textarea matInput rows="3" formControlName="note"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <button type="button" mat-raised-button (click)="cancel()"><mat-icon>close</mat-icon> Одкажи</button>
+                <button type="submit" mat-raised-button color="primary"><mat-icon>save</mat-icon> Креирај</button>
+            </div>
+        </div>
+    </div>
+</form>

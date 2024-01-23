@@ -22,7 +22,11 @@ export class DashboardComponent implements OnInit {
   constructor(private api: ApiService, private router: Router){}
 
   ngOnInit(): void {
-    this.api.getContractStats().subscribe(data => {
+    this.getMonthData(this.today.getMonth());
+  }
+  
+  getMonthData(month: number){
+    this.api.getContractStats(month + 1).subscribe(data => {
       this.contractStats = data;
       let colorIterator = 0;
       this.events = data.activeContracts.map(contract => {
@@ -50,5 +54,6 @@ export class DashboardComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+    this.getMonthData(this.today.getMonth());
   }
 }

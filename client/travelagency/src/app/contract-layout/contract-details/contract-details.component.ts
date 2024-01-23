@@ -6,6 +6,7 @@ import { ContractDetailsModel } from 'src/app/shared/models/contract';
 import { PassengerDetailsModel } from 'src/app/shared/models/passenger';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { EditPassengerDialogComponent } from '../edit-passenger-dialog/edit-passenger-dialog.component';
+import { AddPaymentDialogComponent } from '../add-payment-dialog/add-payment-dialog.component';
 
 @Component({
   selector: 'app-contract-details',
@@ -49,6 +50,22 @@ export class ContractDetailsComponent implements OnInit {
     const ref = this.dialog.open(EditPassengerDialogComponent, {data: passenger});
     ref.afterClosed().subscribe(refresh => {
       if (!refresh) return;
+      this.updateContractData(this.contract.id);
+    });
+  }
+
+  passengerPayment(){
+    const ref = this.dialog.open(AddPaymentDialogComponent, {data: {id: this.contract.id, total: this.contract.totalPrice, paid: this.contract.amountPaid, fromAgency: false}});
+    ref.afterClosed().subscribe(res => {
+      if (!res) return;
+      this.updateContractData(this.contract.id);
+    });
+  }
+
+  agencyPayment(){
+    const ref = this.dialog.open(AddPaymentDialogComponent, {data: {id: this.contract.id, total: this.contract.totalForAgency, paid: this.contract.amountPaidToAgency, fromAgency: true}});
+    ref.afterClosed().subscribe(res => {
+      if (!res) return;
       this.updateContractData(this.contract.id);
     });
   }

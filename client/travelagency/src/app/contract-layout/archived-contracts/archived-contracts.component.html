@@ -1,1 +1,46 @@
-<p>archived-contracts works!</p>
+<div class="container py-5 bg-light">
+    <div>
+        <h1 class="display-4">Архива</h1>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Име</th>
+                <th>Хотел</th>
+                <th>Почеток</th>
+                <th>Крај</th>
+                <th>Акции</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let contract of contracts">
+                <td [ngClass]="getDateClass(contract.startDate, contract.endDate)" >{{ contract.contractNumber }}</td>
+                <td>{{ contract.holderName }}</td>
+                <td>{{ contract.hotelName }}</td>
+                <td>{{ contract.startDate.toLocaleDateString("en-gb") }}</td>
+                <td>{{ contract.endDate.toLocaleDateString("en-gb") }}</td>
+                <td>
+                    <button mat-mini-fab color="primary" [routerLink]="['/contract', 'details', contract.id]"><mat-icon>list</mat-icon></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center pt-2">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item" [ngClass]="{'disabled' : pageIndex === 1}">
+                <a class="page-link" [ngClass]="{'disabled' : pageIndex === 1}" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li *ngFor="let page of pages" class="page-item" [ngClass]="{'active' : page === pageIndex}" (click)="changePage(page)"><a class="page-link">{{ page }}</a></li>
+              <li class="page-item" [ngClass]="{'disabled' : pageIndex === pages.length}">
+                <a class="page-link" [ngClass]="{'disabled' : pageIndex === pages.length}" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+        </nav>
+    </div>
+</div>

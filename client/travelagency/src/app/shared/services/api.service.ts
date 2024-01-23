@@ -47,8 +47,8 @@ export class ApiService {
     return this.http.get<ContractDetailsModel>(`${environment.apiBaseUrl}/contracts/details/${id}`);
   }
 
-  public getContractStats(){
-    return this.http.get<ContractStatsModel>(`${environment.apiBaseUrl}/contracts/stats`);
+  public getContractStats(month: number){
+    return this.http.get<ContractStatsModel>(`${environment.apiBaseUrl}/contracts/stats?month=${month}`);
   }
 
   public getContractSetup(){
@@ -57,6 +57,10 @@ export class ApiService {
 
   public getActiveContracts(index: number = 1) {
     return this.http.get<PaginatedResponse<ContractListModel>>(`${environment.apiBaseUrl}/contracts/active?page=${index}`);
+  }
+
+  public getArchivedContracts(index: number = 1) {
+    return this.http.get<PaginatedResponse<ContractListModel>>(`${environment.apiBaseUrl}/contracts/archived?page=${index}`);
   }
 
   public archiveContract(id: number){

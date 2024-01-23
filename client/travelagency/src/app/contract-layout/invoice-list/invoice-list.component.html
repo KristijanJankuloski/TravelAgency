@@ -1,0 +1,47 @@
+<div class="bg-light">
+    <div class="container py-5 bg-white">
+        <div class="d-flex justify-content-between">
+            <h2 class="display-4">Фактури</h2>
+            <button type="button" mat-raised-button color="primary" (click)="createButtonClick()"><mat-icon>add</mat-icon> Креирај фактура</button>
+        </div>
+        <div class="pt-3" *ngIf="invoices.length > 0; else noInvoices">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Број</th>
+                        <th>Дата</th>
+                        <th>Количина</th>
+                        <th>Платено на</th>
+                        <th>...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of invoices">
+                        <td>{{ item.number }}</td>
+                        <td>{{ item.createdOn | date : 'dd.MM.YYYY' }}</td>
+                        <td>{{ item.amountToPay | currency : ' ' }}</td>
+                        <td *ngIf="item.paidOn != null">{{ item.paidOn | date : 'dd.MM.YYYY' }}</td>
+                        <td *ngIf="item.paidOn === null">/</td>
+                        <td style="max-width: 50px;">
+                            <button type="button" mat-icon-button color="primary"><mat-icon>more</mat-icon></button>
+                            <button type="button" mat-icon-button (click)="generateDocument(item.id)"><mat-icon>insert_drive_file</mat-icon></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<ng-template #noInvoices>
+    <div class="pt-3">
+        <div class="card">
+            <div class="card-header">
+                <p class="card-text">Нема податоци</p>
+            </div>
+            <div class="card-body">
+                <h3 class="display-6">Нема пронајдено фактури за договорот</h3>
+            </div>
+        </div>
+    </div>
+</ng-template>

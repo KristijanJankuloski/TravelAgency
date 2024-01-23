@@ -41,6 +41,11 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
             return await _context.Contracts.Where(x => x.OrganizationId == organizationId && x.IsArchived == false).CountAsync();
         }
 
+        public async Task<int> CountArchivedAsync(int organizationId)
+        {
+            return await _context.Contracts.Where(x => x.OrganizationId == organizationId && x.IsArchived == true).CountAsync();
+        }
+
         public async Task<List<Contract>> GetActiveByRangeAsync(int userId, DateTime start, DateTime end)
         {
             return await _context.Contracts
@@ -61,6 +66,17 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
             return _context.Contracts
                 .Include(x => x.Plan)
                 .Where(x => x.OrganizationId == organizationId && x.IsArchived == false)
+                .Skip(skip)
+                .Take(take)
+                .OrderByDescending(x => x.Id)
+                .ToListAsync();
+        }
+
+        public Task<List<Contract>> GetArchivedPaginatedAsync(int organizationId, int skip, int take)
+        {
+            return _context.Contracts
+                .Include(x => x.Plan)
+                .Where(x => x.OrganizationId == organizationId && x.IsArchived == true)
                 .Skip(skip)
                 .Take(take)
                 .OrderByDescending(x => x.Id)
