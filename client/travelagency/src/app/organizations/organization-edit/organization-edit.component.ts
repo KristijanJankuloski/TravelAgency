@@ -42,6 +42,7 @@ export class OrganizationEditComponent implements OnInit {
   }
 
   setInfo(data: OrganizationModel){
+    console.log(data);
     this.editForm.controls['name'].setValue(data.name);
     this.editForm.controls['email'].setValue(data.email);
     this.editForm.controls['bankAccountNumber'].setValue(data.bankAccountNumber);

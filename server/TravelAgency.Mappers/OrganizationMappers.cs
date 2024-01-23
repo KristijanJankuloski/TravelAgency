@@ -19,7 +19,10 @@ namespace TravelAgency.Mappers
                 Location = organization.Location,
                 InvoiceNote = organization.InvoiceNote,
                 DefaultFooter = organization.DefaultFooter,
-                TaxPercentage = organization.TaxPercentage
+                TaxPercentage = organization.TaxPercentage,
+                BankName = organization.BankName,
+                UniqueSubjectNumber = organization.UniqueSubjectNumber,
+                UniqueTaxNumber = organization.UniqueTaxNumber,
             };
         }
     }
