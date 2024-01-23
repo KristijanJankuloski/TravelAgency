@@ -9,6 +9,7 @@ using TravelAgency.DTOs.Common;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.OrganizationDTOs;
 using TravelAgency.DTOs.PassengerDTOs;
+using TravelAgency.DTOs.PaymentDTOs;
 using TravelAgency.DTOs.PdfDTOs;
 using TravelAgency.Mappers;
 using TravelAgency.Services.Documents;
@@ -45,6 +46,36 @@ namespace TravelAgency.Services.Implementations
             Passenger passenger = dto.ToPassenger();
             passenger.ContractId = id;
             await _passengerRepository.InsertAsync(passenger);
+        }
+
+        public async Task AddPaymentFromAgency(NewContractPaymentDto dto, string userId)
+        {
+            PaymentEvent payment = new PaymentEvent
+            {
+                CreatedOn = DateTime.Now,
+                Note = dto.Note,
+                Amount = dto.Amount,
+                ContractId = dto.ContractId,
+                InvoiceId = dto.InvoiceId,
+                UserId = userId,
+                Type = PaymentEventType.FromOrganization
+            };
+            await _contractRepository.AddAgencyPaymentAsync(payment);
+        }
+
+        public async Task AddPaymentFromCustomer(NewContractPaymentDto dto, string userId)
+        {
+            PaymentEvent payment = new PaymentEvent
+            {
+                CreatedOn = DateTime.Now,
+                Note = dto.Note,
+                Amount = dto.Amount,
+                ContractId = dto.ContractId,
+                InvoiceId = dto.InvoiceId,
+                UserId = userId,
+                Type = PaymentEventType.FromCustomer
+            };
+            await _contractRepository.AddCustomerPaymentAsync(payment);
         }
 
         public async Task ArchiveContract(int id, string userId)

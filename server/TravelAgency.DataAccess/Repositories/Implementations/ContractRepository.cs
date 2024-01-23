@@ -13,6 +13,29 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
             _context = context;
         }
 
+        public async Task AddAgencyPaymentAsync(PaymentEvent payment)
+        {
+            Contract contract = await _context.Contracts.FindAsync(payment.ContractId);
+            if (contract == null) { return; }
+
+            await _context.PaymentEvents.AddAsync(payment);
+            contract.AmountPaidToVendor += payment.Amount;
+            _context.Contracts.Update(contract);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddCustomerPaymentAsync(PaymentEvent payment)
+        {
+            Contract contract = await _context.Contracts.FindAsync(payment.ContractId);
+            if (contract == null) { return; }
+
+            await _context.PaymentEvents.AddAsync(payment);
+            contract.AmmountPaid += payment.Amount;
+            contract.IsPaid = contract.TotalPrice == contract.AmmountPaid;
+            _context.Contracts.Update(contract);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<int> CountActiveAsync(int organizationId)
         {
             return await _context.Contracts.Where(x => x.OrganizationId == organizationId && x.IsArchived == false).CountAsync();

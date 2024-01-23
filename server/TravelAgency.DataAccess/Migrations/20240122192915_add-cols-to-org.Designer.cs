@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelAgency.DataAccess.Context;
 
@@ -11,9 +12,11 @@ using TravelAgency.DataAccess.Context;
 namespace TravelAgency.DataAccess.Migrations
 {
     [DbContext(typeof(TravelAppContext))]
-    partial class TravelAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240122192915_add-cols-to-org")]
+    partial class addcolstoorg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -408,7 +411,7 @@ namespace TravelAgency.DataAccess.Migrations
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime>("CratedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Note")

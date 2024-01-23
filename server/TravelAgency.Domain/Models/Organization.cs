@@ -28,6 +28,15 @@ namespace TravelAgency.Domain.Models
         [MaxLength(100)]
         public string? Website { get; set; }
 
+        [MaxLength(100)]
+        public string? UniqueTaxNumber { get; set; }
+
+        [MaxLength(100)]
+        public string? UniqueSubjectNumber { get; set; }
+
+        [MaxLength(100)]
+        public string? BankName { get; set; }
+
         [Required]
         [Range(1, int.MaxValue)]
         public int ContractIterator { get; set; }

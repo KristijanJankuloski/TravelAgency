@@ -156,12 +156,18 @@
             <div class="col-md">
                 <mat-form-field class="w-100">
                     <mat-label>Тип на соба</mat-label>
-                    <mat-select [formControl]="createForm.controls.roomType" required >
-                      <mat-option *ngFor="let room of roomTypes" [value]="room">
-                        {{ room }}
+                    <input type="text"
+                           placeholder="Одбери соба"
+                           aria-label="Тип на соба"
+                           matInput
+                           [formControl]="createForm.controls.roomType"
+                           [matAutocomplete]="roomAuto">
+                    <mat-autocomplete #roomAuto="matAutocomplete">
+                      <mat-option *ngFor="let option of filteredRoomOptions | async" [value]="option">
+                        {{ option }}
                       </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                    </mat-autocomplete>
+                  </mat-form-field>
             </div>
             <div class="col-md">
                 <mat-form-field class="w-100">

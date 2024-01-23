@@ -22,6 +22,9 @@ export class OrganizationEditComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       bankAccountNumber: new FormControl('', [Validators.required]),
+      uniqueTaxNumber: new FormControl(''),
+      uniqueSubjectNumber: new FormControl(''),
+      bankName: new FormControl(''),
       phoneNumber: new FormControl(''),
       address: new FormControl(''),
       location: new FormControl(''),
@@ -42,6 +45,9 @@ export class OrganizationEditComponent implements OnInit {
     this.editForm.controls['name'].setValue(data.name);
     this.editForm.controls['email'].setValue(data.email);
     this.editForm.controls['bankAccountNumber'].setValue(data.bankAccountNumber);
+    this.editForm.controls['uniqueTaxNumber'].setValue(data.uniqueTaxNumber);
+    this.editForm.controls['uniqueSubjectNumber'].setValue(data.uniqueSubjectNumber);
+    this.editForm.controls['bankName'].setValue(data.bankName);
     this.editForm.controls['phoneNumber'].setValue(data.phoneNumber);
     this.editForm.controls['address'].setValue(data.address);
     this.editForm.controls['location'].setValue(data.location);
@@ -69,7 +75,10 @@ export class OrganizationEditComponent implements OnInit {
       website: this.editForm.value.website,
       taxPercentage: this.editForm.value.taxPercentage,
       invoiceNote: this.editForm.value.invoiceNote,
-      defaultFooter: this.editForm.value.contractFooter
+      defaultFooter: this.editForm.value.contractFooter,
+      bankName: this.editForm.value.bankName,
+      uniqueTaxNumber: this.editForm.value.uniqueTaxNumber,
+      uniqueSubjectNumber: this.editForm.value.uniqueSubjectNumber
     }
 
     this.organizationService.updateDetails(req).subscribe({

@@ -8,6 +8,7 @@ namespace TravelAgency.Domain.Models
         [Required]
         [MaxLength(50)]
         public string Number { get; set; } = string.Empty;
+
         public int ContractId { get; set; }
 
         [ForeignKey(nameof(ContractId))]
@@ -20,7 +21,7 @@ namespace TravelAgency.Domain.Models
 
         public string? Note { get; set; }
 
-        public DateTime CratedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         public DateTime? PaidOn { get; set; }
 

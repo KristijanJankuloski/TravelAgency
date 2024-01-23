@@ -25,6 +25,7 @@ namespace TravelAgency.Mappers
         {
             return new PassengerDetailsDto
             {
+                Id = passenger.Id,
                 FirstName = passenger.FirstName,
                 LastName = passenger.LastName,
                 PassportNumber = passenger.PassportNumber,

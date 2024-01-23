@@ -3,6 +3,9 @@ export interface OrganizationModel {
     name: string;
     email: string;
     bankAccountNumber: string;
+    uniqueSubjectNumber?: string;
+    uniqueTaxNumber?: string;
+    bankName?: string;
     phoneNumber?: string;
     address?: string;
     website?: string;

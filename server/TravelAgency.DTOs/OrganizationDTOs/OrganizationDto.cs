@@ -30,6 +30,15 @@ namespace TravelAgency.DTOs.OrganizationDTOs
         [MaxLength(50)]
         public string? Location { get; set; }
 
+        [MaxLength(100)]
+        public string? UniqueTaxNumber { get; set; }
+
+        [MaxLength(100)]
+        public string? UniqueSubjectNumber { get; set; }
+
+        [MaxLength(100)]
+        public string? BankName { get; set; }
+
         public string? DefaultFooter { get; set; }
 
         public string? InvoiceNote { get; set; }

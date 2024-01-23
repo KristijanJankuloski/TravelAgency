@@ -1,4 +1,4 @@
-<form [formGroup]="editForm">
+<form [formGroup]="editForm" (ngSubmit)="submit()">
     <div class="card" [ngClass]="{'border-danger': markForDelete.value}">
         <div class="card-header">
             <h2 class="display-5" [ngClass]="{'text-danger' : markForDelete.value}">{{ markForDelete.value? 'Избриши патник' : 'Промени патник' }}</h2>
@@ -80,8 +80,8 @@
                 <mat-slide-toggle color="warn" [formControl]="markForDelete">
                     Избриши патник
                 </mat-slide-toggle>
-                <button *ngIf="!markForDelete.value" type="submit" mat-raised-button color="primary"><mat-icon>save</mat-icon> Зачувај</button>
-                <button *ngIf="markForDelete.value" mat-raised-button type="button" color="warn"><mat-icon>delete</mat-icon> Избриши</button>
+                <button *ngIf="!markForDelete.value" type="submit" mat-raised-button color="primary" [disabled]="editForm.invalid"><mat-icon>save</mat-icon> Зачувај</button>
+                <button *ngIf="markForDelete.value" mat-raised-button type="button" color="warn" (click)="deletePassenger()"><mat-icon>delete</mat-icon> Избриши</button>
             </div>
         </div>
     </div>

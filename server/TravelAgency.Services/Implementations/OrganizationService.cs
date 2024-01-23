@@ -35,6 +35,9 @@ namespace TravelAgency.Services.Implementations
             organization.Location = dto.Location;
             organization.TaxPercentage = dto.TaxPercentage;
             organization.BankAccountNumber = dto.BankAccountNumber;
+            organization.BankName = dto.BankName;
+            organization.UniqueTaxNumber = dto.UniqueTaxNumber;
+            organization.UniqueSubjectNumber = dto.UniqueSubjectNumber;
             organization.DefaultFooter = dto.DefaultFooter;
             organization.InvoiceNote = dto.InvoiceNote;
 

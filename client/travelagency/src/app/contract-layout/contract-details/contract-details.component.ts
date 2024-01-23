@@ -20,17 +20,20 @@ export class ContractDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number.parseInt(this.route.snapshot.paramMap.get('id')?? "0");
-
     if (id > 0 && !Number.isNaN(id)){
-      this.api.getContractDetails(id).subscribe({
-        next: data => {
-          this.contract = data;
-        },
-        error: err => {
-          this.notFound = true;
-        }
-      });
+      this.updateContractData(id);
     }
+  }
+  
+  updateContractData(id: number){
+    this.api.getContractDetails(id).subscribe({
+      next: data => {
+        this.contract = data;
+      },
+      error: err => {
+        this.notFound = true;
+      }
+    });
   }
 
   generateDocument(id: number){
@@ -44,5 +47,9 @@ export class ContractDetailsComponent implements OnInit {
 
   editPassenger(passenger: PassengerDetailsModel){
     const ref = this.dialog.open(EditPassengerDialogComponent, {data: passenger});
+    ref.afterClosed().subscribe(refresh => {
+      if (!refresh) return;
+      this.updateContractData(this.contract.id);
+    });
   }
 }

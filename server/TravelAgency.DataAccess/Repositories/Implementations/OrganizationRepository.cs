@@ -20,10 +20,21 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
 
         public async Task<int> IterateContractNumber(int organizationId)
         {
-            Organization org = await _context.Organizations.FindAsync(organizationId);
+            Organization? org = await _context.Organizations.FindAsync(organizationId);
             if (org == null) return 0;
 
             int currentIterator = org.ContractIterator++;
+            _context.Organizations.Update(org);
+            await _context.SaveChangesAsync();
+            return currentIterator;
+        }
+
+        public async Task<int> IterateInvoiceNumber(int organizationId)
+        {
+            Organization? org = await _context.Organizations.FindAsync(organizationId);
+            if (org == null) return 0;
+
+            int currentIterator = org.InvoiceIterator++;
             _context.Organizations.Update(org);
             await _context.SaveChangesAsync();
             return currentIterator;

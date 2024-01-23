@@ -8,6 +8,7 @@ namespace TravelAgency.DataAccess.Repositories.Interfaces
         Task<List<Contract>> GetActiveByRangeAsync(int userId, DateTime start, DateTime end);
         Task<List<Contract>> GetActivePaginatedAsync(int organizationId, int skip, int take);
         Task<int> CountActiveAsync(int organizationId);
-
+        Task AddCustomerPaymentAsync(PaymentEvent payment);
+        Task AddAgencyPaymentAsync(PaymentEvent payment);
     }
 }

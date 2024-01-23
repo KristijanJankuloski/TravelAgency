@@ -17,6 +17,7 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
   agenciesList: AgencyListModel[];
   paymentMethods = ["Кеш", "Картичка", "Фактура", "Друго"]
   roomTypes = ["Студио"];
+  filteredRoomOptions: Observable<string[]>;
   transportationTypes = ["Авионски", "Автобуски", "Сопствен", "Друго"];
   filteredTravelOptions: Observable<string[]>;
   serviceTypes = ["BB ноќевање со појадок", "HB полупансион / појадок и вечера", "FB полн пансион", "ALL", "UALL", "ULTIMATEALL"];
@@ -78,6 +79,9 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
     this.filteredTravelOptions = this.createForm.controls.transportationType.valueChanges.pipe(
       startWith(''), 
       map(value => this._trasportFilter(value || '')));
+    this.filteredRoomOptions = this.createForm.controls.roomType.valueChanges.pipe(
+      startWith(''),
+      map(value => this._roomFilter(value || '')));
     this.filteredServiceOptions = this.createForm.controls.serviceType.valueChanges.pipe(
       startWith(''),
       map(value => this._serviceFilter(value || '')));
@@ -121,6 +125,11 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
   _serviceFilter(value: string){
     const filterValue = value.toLowerCase();
     return this.serviceTypes.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  _roomFilter(value: string){
+    const filterValue = value.toLowerCase();
+    return this.roomTypes.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   _planFilter(value: string){

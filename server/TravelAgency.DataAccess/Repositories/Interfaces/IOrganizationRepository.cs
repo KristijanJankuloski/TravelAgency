@@ -6,5 +6,6 @@ namespace TravelAgency.DataAccess.Repositories.Interfaces
     {
         Task<Organization> GetByUserId(string userId);
         Task<int> IterateContractNumber(int organizationId);
+        Task<int> IterateInvoiceNumber(int organizationId);
     }
 }

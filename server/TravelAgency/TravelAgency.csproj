@@ -34,4 +34,8 @@
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Generated\Invoices\0001_2024.pdf" />
+  </ItemGroup>
+
 </Project>

@@ -3,6 +3,7 @@ using TravelAgency.DTOs.Common;
 using TravelAgency.DTOs.ContractDTOs;
 using TravelAgency.DTOs.OrganizationDTOs;
 using TravelAgency.DTOs.PassengerDTOs;
+using TravelAgency.DTOs.PaymentDTOs;
 using TravelAgency.DTOs.PdfDTOs;
 
 namespace TravelAgency.Services.Interfaces
@@ -22,5 +23,7 @@ namespace TravelAgency.Services.Interfaces
         Task UpdatePassengerInfo(int id, PassengerCreateDto dto);
         Task DeletePassenger(int id);
         Task CancelContract(int id);
+        Task AddPaymentFromCustomer(NewContractPaymentDto dto, string userId);
+        Task AddPaymentFromAgency(NewContractPaymentDto dto, string userId);
     }
 }

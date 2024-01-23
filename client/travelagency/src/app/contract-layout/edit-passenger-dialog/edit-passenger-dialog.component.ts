@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PassengerDetailsModel } from 'src/app/shared/models/passenger';
+import { tr } from 'date-fns/locale';
+import { PassengerCreateModel, PassengerDetailsModel } from 'src/app/shared/models/passenger';
 import { PassengerService } from 'src/app/shared/services/passenger.service';
 
 @Component({
@@ -20,8 +21,8 @@ export class EditPassengerDialogComponent implements OnInit {
       firstName: new FormControl(this.data.firstName, [Validators.required]),
       lastName: new FormControl(this.data.lastName, [Validators.required]),
       passportNumber: new FormControl(this.data.passportNumber, [Validators.required]),
-      birthDate: new FormControl(this.data.birthDate),
-      passportExpirationDate: new FormControl(this.data.passportExpirationDate),
+      birthDate: new FormControl<Date>(this.data.birthDate),
+      passportExpirationDate: new FormControl<Date>(this.data.passportExpirationDate),
       email: new FormControl(this.data.email?? ''),
       address: new FormControl(this.data.address?? ''),
       phoneNumber: new FormControl(this.data.phoneNumber?? ''),
@@ -30,10 +31,29 @@ export class EditPassengerDialogComponent implements OnInit {
   }
 
   cancel(){
-    this.ref.close(null);
+    this.ref.close(false);
   }
 
-  delete(){
-    this.service.deletePassenger(this.data.id);
+  deletePassenger(){
+    this.service.deletePassenger(this.data.id).subscribe({
+      next: _ => this.ref.close(true)
+    });
+  }
+
+  submit(){
+    const passenger: PassengerCreateModel = {
+      firstName: this.editForm.value.firstName,
+      lastName: this.editForm.value.lastName,
+      passportNumber: this.editForm.value.passportNumber,
+      birthDate: this.editForm.value.birthDate,
+      passportExpirationDate: this.editForm.value.passportExpirationDate,
+      address: this.editForm.value.address,
+      email: this.editForm.value.email,
+      phoneNumber: this.editForm.value.phoneNumber,
+      comment: this.editForm.value.comment
+    }
+    this.service.updatePassenger(this.data.id, passenger).subscribe({
+      next: _ => this.ref.close(true)
+    });
   }
 }

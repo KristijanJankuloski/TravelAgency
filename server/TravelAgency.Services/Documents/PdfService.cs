@@ -192,5 +192,159 @@ namespace TravelAgency.Services.Documents
             });
             return $"{folderPath}/{contract.Number.Replace('/', '_')}.pdf";
         }
+
+        public async Task<string> GenerateInvoicePdf(InvoicePdf invoice)
+        {
+            string folderPath = _folderPath + "/Invoices";
+            string fullPath = _environment.WebRootPath + folderPath;
+
+            if (!Directory.Exists(fullPath))
+                Directory.CreateDirectory(fullPath);
+
+            await Task.Run(() =>
+            {
+                int borderSize = 1;
+                int cellPadding = 2;
+                string headerColor = Colors.Grey.Lighten4;
+                string dateFormat = "{0:dd/MM/yyyy}";
+                string longDateFormat = "{0:dd/MM/yyyy - HH:mm}";
+                double tax = invoice.AmountToPayWithTax - invoice.AmountToPay;
+
+                Document.Create(container =>
+                {
+                    container.Page(page =>
+                    {
+                        page.Size(PageSizes.A4);
+                        page.PageColor(Colors.White);
+                        page.Margin(5, Unit.Millimetre);
+                        page.DefaultTextStyle(x => x.FontSize(10).FontFamily(Fonts.Arial));
+
+                        page
+                        .Header()
+                        .Row(row =>
+                        {
+                            row.ConstantItem(40, Unit.Millimetre).Image(_environment.WebRootPath + invoice.Company.ImagePath);
+                            row.RelativeItem().AlignRight().PaddingHorizontal(10, Unit.Millimetre).Column(x =>
+                            {
+                                x.Item().Text(invoice.Company.Name).FontSize(12).Bold();
+                                x.Item().Text(invoice.Company.Address);
+                                x.Item().Text(invoice.Company.Phone);
+                                x.Item().Text(text =>
+                                {
+                                    text.Span(invoice.Company.Email);
+                                    text.Span(" / ");
+                                    text.Span(invoice.Company.Website);
+                                });
+                                x.Item().Text(text =>
+                                {
+                                    text.Span("ЕМБС: ");
+                                    text.Span(invoice.Company.UniqueSubjectNumber);
+                                    text.Span(" / ЕДБ: ");
+                                    text.Span(invoice.Company.UniqueTaxNumber);
+                                });
+                                x.Item().Text(text =>
+                                {
+                                    text.Span(invoice.Company.BankName);
+                                    text.Span(" / ");
+                                    text.Span(invoice.Company.BankNumber);
+                                });
+                            });
+                        });
+
+                        page.Content()
+                        .PaddingVertical(5, Unit.Millimetre)
+                        .Column(x =>
+                        {
+                            x.Item().Row(row =>
+                            {
+                                row.RelativeItem(1).Column(c =>
+                                {
+                                    c.Item().Text("Клиент").Bold();
+                                    c.Item().BorderBottom(2).BorderTop(2).Padding(3, Unit.Millimetre).Text(invoice.ClientName);
+                                });
+                            });
+                            x.Item().PaddingTop(2, Unit.Millimetre).Text($"Фактура {invoice.Number}").FontSize(16).Bold();
+                            x.Item().Text(text =>
+                            {
+                                text.Span("Издавање: ").Bold();
+                                text.Span(invoice.CreatedOn.ToString("dd.MM.yyyy"));
+                            });
+                            x.Item().Table(table =>
+                            {
+                                table.ColumnsDefinition(cols =>
+                                {
+                                    cols.RelativeColumn(1);
+                                    cols.RelativeColumn(4);
+                                    cols.RelativeColumn(2);
+                                    cols.RelativeColumn(1);
+                                    cols.RelativeColumn(2);
+                                    cols.RelativeColumn(2);
+                                });
+
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("#").Bold();
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Артикл").Bold();
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Цена без ДДВ").Bold();
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("ДДВ %").Bold();
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Износ со ДДВ").Bold();
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Износ без ДДВ").Bold();
+
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text("1");
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.Note);
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPay.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.Tax.ToString());
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPayWithTax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPay.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+
+                                table.Cell().ColumnSpan(4);
+                                table.Cell().Background(headerColor).BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Вкупно");
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPay.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+
+                                table.Cell().ColumnSpan(4);
+                                table.Cell().Background(headerColor).BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text("ДДВ");
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(tax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                                
+                                table.Cell().ColumnSpan(4);
+                                table.Cell().Background(headerColor).BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text("За плаќање");
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPayWithTax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                            });
+
+                            x.Item().PaddingTop(2, Unit.Millimetre);
+
+                            x.Item().Table(table =>
+                            {
+                                table.ColumnsDefinition(cols =>
+                                {
+                                    cols.RelativeColumn(3);
+                                    cols.RelativeColumn(2);
+                                    cols.RelativeColumn(1);
+                                    cols.RelativeColumn(2);
+                                });
+
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Даночни стапки").Bold();
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Основа").Bold();
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("ДДВ").Bold();
+                                table.Cell().Background(headerColor).Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text("Износ").Bold();
+
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text($"{invoice.Tax}%");
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPay.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(tax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                                table.Cell().BorderBottom(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.AmountToPayWithTax.ToString("C2", CultureInfo.CreateSpecificCulture("mk-MK")));
+                            });
+
+                            x.Item().Padding(2);
+                            x.Item().Border(borderSize).Padding(cellPadding, Unit.Millimetre).Text(invoice.Footnote).FontSize(8);
+                        });
+
+                        page.Footer().PaddingBottom(5, Unit.Millimetre).Row(row =>
+                        {
+                            row.RelativeItem().AlignCenter().Text($"Овластено лице за потпис на фактура\n__________________________\n{invoice.CreatorName}");
+                            row.RelativeItem().AlignCenter().Text("Примил\n__________________________");
+                            row.RelativeItem().AlignCenter().Text($"Управител\n__________________________\n{invoice.Company.OwnerName}");
+                        });
+                    });
+                }).GeneratePdf($"{fullPath}/{invoice.Number.Replace('/', '_')}.pdf");
+            });
+            return $"{folderPath}/{invoice.Number.Replace('/', '_')}.pdf";
+        }
     }
 }
