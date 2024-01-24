@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { anonymousGuard } from './shared/anonymous.guard';
 import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 import { OrganizationEditComponent } from './organizations/organization-edit/organization-edit.component';
+import { EditAgencyDialogComponent } from './agencies/edit-agency-dialog/edit-agency-dialog.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate:[anonymousGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate:[authGuard] },
   { path: 'agencies', component: AgenciesComponent, canActivate:[authGuard] },
+  { path: 'agencies/:id', component: EditAgencyDialogComponent, canActivate:[authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate:[authGuard] },
   { path: 'organization', component: OrganizationEditComponent, canActivate:[authGuard] },
   { path: 'contract',

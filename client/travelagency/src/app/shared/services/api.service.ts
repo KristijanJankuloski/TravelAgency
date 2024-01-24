@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
-import { AgencyCreateModel, AgencyListModel } from '../models/agency';
+import { AgencyCreateModel, AgencyDetailsModel, AgencyListModel } from '../models/agency';
 import { ContractCreateModel, ContractDetailsModel, ContractListModel, ContractSetupInfo, ContractStatsModel } from '../models/contract';
 import { PlanListModel } from '../models/plan';
 import { PaginatedResponse } from '../models/common';
@@ -25,6 +25,10 @@ export class ApiService {
 
   public getAgenciesList() : Observable<AgencyListModel[]> {
     return this.http.get<AgencyListModel[]>(`${environment.apiBaseUrl}/agencies`);
+  }
+
+  public getAgencyDetails(agencyId: number) : Observable<AgencyDetailsModel> {
+    return this.http.get<AgencyDetailsModel>(`${environment.apiBaseUrl}/agencies/${agencyId}`);
   }
 
   public addAgency(agency: AgencyCreateModel){

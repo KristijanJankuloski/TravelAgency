@@ -23,7 +23,7 @@
                         <td>{{agency.email}}</td>
                         <td>{{agency.accountNumber}}</td>
                         <td>
-                            <button mat-mini-fab color="primary" matTooltip="Промени" class="me-2" (click)="deleteAgency(agency.id)"><mat-icon>edit</mat-icon></button>
+                            <button mat-mini-fab color="primary" matTooltip="Промени" class="me-2" [routerLink]="['/agencies', agency.id]"><mat-icon>edit</mat-icon></button>
                             <button mat-mini-fab color="warn" matTooltip="Избриши" class="bg-danger" (click)="deleteAgency(agency.id)"><mat-icon>delete_sweep</mat-icon></button>
                         </td>
                     </tr>

@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { ContractLayoutRoutingModule } from './contract-layout-routing.module';
 import { ContractDetailsComponent } from './contract-details/contract-details.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -56,7 +57,8 @@ import { AddPaymentDialogComponent } from './add-payment-dialog/add-payment-dial
     MatSelectModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSidenavModule
   ],
   bootstrap: [ContractLayoutComponent]
 })

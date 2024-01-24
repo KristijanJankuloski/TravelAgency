@@ -1,1 +1,75 @@
-<p>edit-agency-dialog works!</p>
+<div class="container pt-5">
+    <div class="card">
+        <div class="card-header d-relative">
+            <h2 class="display-4">Промена на агенција</h2>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="editAgencyFrom" (ngSubmit)="submitForm()">
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label for="name">Име</mat-label>
+                            <input id="name" type="text" matInput required formControlName="name" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label for="address">Адреса</mat-label>
+                            <input id="address" type="text" matInput required formControlName="address" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label for="phoneNumber">Телефон</mat-label>
+                            <input id="phoneNumber" type="text" matInput required formControlName="phoneNumber" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label for="email">Е-маил</mat-label>
+                            <input id="email" type="email" matInput formControlName="email" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="w-100">
+                            <mat-label for="accountNumber">Број на сметка</mat-label>
+                            <input id="accountNumber" type="text" matInput formControlName="accountNumber" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                        <button type="submit" mat-raised-button color="primary" class="w-100">Додади агенција</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3 class="display-6">Аранжмани</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Хотел</th>
+                        <th>Локација</th>
+                        <th>Држава</th>
+                        <th>...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let plan of agency?.plans">
+                        <td>{{ plan.hotelName }}</td>
+                        <td>{{ plan.location }}</td>
+                        <td>{{ plan.country }}</td>
+                        <td><button type="button" mat-icon-button color="primary"><mat-icon>more</mat-icon></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
