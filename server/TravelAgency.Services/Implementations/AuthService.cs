@@ -125,5 +125,21 @@ namespace TravelAgency.Services.Implementations
             user.TokenExpireDate = DateTime.Now.AddDays(int.Parse(_configuration["Jwt:RefreshExpireTime"]));
             await _userManager.UpdateAsync(user);
         }
+
+        public async Task RegisterPartner(UserPartnerRegisterDto dto, string userId)
+        {
+            Organization organization = await _organizationRepository.GetByUserId(userId);
+            TravelUser user = new TravelUser
+            {
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Email = dto.Email,
+                UserName = dto.Username,
+                OrganizationId = organization.Id,
+                RegisterDate = DateTime.Now
+            };
+
+            await _userManager.CreateAsync(user, dto.Password);
+        }
     }
 }
