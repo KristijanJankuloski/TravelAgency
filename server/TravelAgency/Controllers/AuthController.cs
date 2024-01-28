@@ -55,7 +55,7 @@ namespace TravelAgency.Controllers
         {
             try
             {
-                if(!ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
@@ -79,19 +79,35 @@ namespace TravelAgency.Controllers
             }
         }
 
+        [HttpPost("add")]
+        [Authorize]
+        public async Task<IActionResult> RegisterPartner(UserPartnerRegisterDto dto)
+        {
+            try
+            {
+                UserTokenDto user = JwtHelper.GetCurrentUser(User);
+                await _authService.RegisterPartner(dto, user.Id);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPost("refresh-token")]
         [AllowAnonymous]
         public async Task<ActionResult<UserLoginResponseDto>> RefreshToken(UserRefreshDto dto)
         {
             try
             {
-                if(!ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
                 string newRefreshToken = JwtHelper.GenerateRefreshToken();
                 UserTokenDto user = await _authService.CheckLastToken(dto.Username, dto.RefreshToken, newRefreshToken);
-                if(user == null)
+                if (user == null)
                 {
                     return Unauthorized();
                 }
