@@ -23,6 +23,24 @@ export interface ContractCreateModel {
     passengers: PassengerCreateModel[];
 }
 
+export interface ContractUpdateInfoModel {
+    email: string;
+    phoneNumber: string;
+    contractLocation: string;
+    startDate: string;
+    endDate: string;
+    departureTime: string;
+    totalPrice: number;
+    totalToAgency: number;
+    note: string;
+    insurance: string;
+    footer: string;
+    paymentMethod: number;
+    roomType: string;
+    serviceType: string;
+    transportationType: string;
+}
+
 export interface ContractListModel {
     id: number;
     holderName: string;

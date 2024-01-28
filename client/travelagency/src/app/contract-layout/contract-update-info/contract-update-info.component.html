@@ -1,0 +1,126 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <div class="card custom-card">
+        <div class="card-header">
+            <h1 class="display-5">Промена на договор</h1>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Емаил</mat-label>
+                        <input type="email" matInput formControlName="email" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Телефонски број</mat-label>
+                        <input type="text" matInput formControlName="phoneNumber" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Град</mat-label>
+                        <input type="text" matInput formControlName="contractLocation" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <mat-form-field class="w-100">
+                        <mat-label>Цена кон клиент</mat-label>
+                        <input type="number" matInput formControlName="totalPrice" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <mat-form-field class="w-100">
+                        <mat-label>Цена кон агенција</mat-label>
+                        <input type="number" matInput formControlName="totalToAgency" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <mat-form-field class="w-100">
+                        <mat-label>Начин на плаќање</mat-label>
+                        <mat-select formControlName="paymentMethod">
+                            <mat-option *ngFor="let method of paymentMethods index as i" [value]="i">
+                                {{ method }}
+                              </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Дата на поаѓање и враќање</mat-label>
+                        <mat-date-range-input [rangePicker]="tripDates">
+                            <input matStartDate formControlName="startDate" required placeholder="Start date">
+                            <input matEndDate formControlName="endDate" required placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-hint class="small">DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="tripDates"></mat-datepicker-toggle>
+                        <mat-date-range-picker #tripDates></mat-date-range-picker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Дата и време на поаѓање</mat-label>
+                        <input type="datetime-local" matInput formControlName="departureTime">
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Осигуривање</mat-label>
+                        <input type="text" matInput formControlName="insurance">
+                    </mat-form-field>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Тип на соба</mat-label>
+                        <input type="text" matInput formControlName="roomType" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Тип на сервис</mat-label>
+                        <input type="text" matInput formControlName="serviceType" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Тип на превоз</mat-label>
+                        <input type="text" matInput formControlName="transportationType" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <hr>
+            <h2 class="display-6">Напомени</h2>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Напомена</mat-label>
+                        <textarea matInput formControlName="note" rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Услови</mat-label>
+                        <textarea matInput formControlName="footer" rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <button type="button" mat-raised-button (click)="cancel()"><mat-icon>close</mat-icon> Одкажи</button>
+                <button type="submit" mat-raised-button color="primary"><mat-icon>save</mat-icon> Зачувај</button>
+            </div>
+        </div>
+    </div>
+</form>

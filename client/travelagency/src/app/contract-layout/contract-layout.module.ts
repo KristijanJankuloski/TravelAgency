@@ -26,6 +26,7 @@ import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { InvoiceCreateComponent } from './invoice-create/invoice-create.component';
 import { WarningDialogComponent } from './warning-dialog/warning-dialog.component';
 import { AddPaymentDialogComponent } from './add-payment-dialog/add-payment-dialog.component';
+import { ContractUpdateInfoComponent } from './contract-update-info/contract-update-info.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AddPaymentDialogComponent } from './add-payment-dialog/add-payment-dial
     InvoiceListComponent,
     InvoiceCreateComponent,
     WarningDialogComponent,
-    AddPaymentDialogComponent
+    AddPaymentDialogComponent,
+    ContractUpdateInfoComponent
   ],
   imports: [
     CommonModule,

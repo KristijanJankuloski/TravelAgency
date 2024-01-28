@@ -1,23 +1,24 @@
 <div class="container py-5">
-    <div class="d-flex">
-        <ul class="pagination">
-            <li class="page-item">
-              <button class="page-link display-6" mwlCalendarPreviousView [view]="view" [(viewDate)]="today" (viewDateChange)="closeOpenMonthViewDay()"><h4 class="display-6">&laquo;</h4></button>
-            </li>
-            <li class="page-item"><a class="page-link"><h4 class="display-6">{{ today | date : 'MMMM' }}</h4></a></li>
-            <li class="page-item">
-              <button class="page-link" mwlCalendarNextView [view]="view" [(viewDate)]="today" (viewDateChange)="closeOpenMonthViewDay()"><h4 class="display-6">&raquo;</h4></button>
-            </li>
-          </ul>
-    </div>
-    <div>
-        <mwl-calendar-month-view 
-            [events]="events" 
-            [viewDate]="today" 
-            [activeDayIsOpen]="true" 
-            [activeDay]="selectedDay"
-            (dayClicked)="daySelected($event.day)"
-            (eventClicked)="eventSelected($event.event)">
-        </mwl-calendar-month-view>
-    </div>
+  <div class="d-flex justify-content-between">
+    <h2 class="display-4">Календар</h2>
+    <ul class="pagination">
+      <li class="page-item">
+        <button class="page-link display-6" mwlCalendarPreviousView [view]="view" [(viewDate)]="today" (viewDateChange)="closeOpenMonthViewDay()"><h4 class="display-6">&laquo;</h4></button>
+      </li>
+      <li class="page-item"><a class="page-link"><h4 class="display-6">{{ today | date : 'MMMM' }}</h4></a></li>
+      <li class="page-item">
+        <button class="page-link" mwlCalendarNextView [view]="view" [(viewDate)]="today" (viewDateChange)="closeOpenMonthViewDay()"><h4 class="display-6">&raquo;</h4></button>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <mwl-calendar-month-view 
+      [events]="events" 
+      [viewDate]="today" 
+      [activeDayIsOpen]="true" 
+      [activeDay]="selectedDay"
+      (dayClicked)="daySelected($event.day)"
+      (eventClicked)="eventSelected($event.event)">
+    </mwl-calendar-month-view>
+  </div>
 </div>

@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
 import { AgencyCreateModel, AgencyDetailsModel, AgencyListModel } from '../models/agency';
-import { ContractCreateModel, ContractDetailsModel, ContractListModel, ContractSetupInfo, ContractStatsModel } from '../models/contract';
+import { ContractCreateModel, ContractDetailsModel, ContractListModel, ContractSetupInfo, ContractStatsModel, ContractUpdateInfoModel } from '../models/contract';
 import { PlanListModel } from '../models/plan';
 import { PaginatedResponse } from '../models/common';
 
@@ -69,6 +69,10 @@ export class ApiService {
 
   public archiveContract(id: number){
     return this.http.get(`${environment.apiBaseUrl}/contracts/archive/${id}`);
+  }
+
+  public editContract(id: number, contract: ContractUpdateInfoModel){
+    return this.http.patch(`${environment.apiBaseUrl}/contracts/${id}`, contract);
   }
 
   public generateContractPdf(id: number){

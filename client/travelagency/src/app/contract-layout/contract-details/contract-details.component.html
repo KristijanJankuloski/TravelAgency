@@ -44,7 +44,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end ps-4 pe-4">
-                        <button type="button" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
+                        <button type="button" mat-mini-fab color="primary" (click)="editContract()"><mat-icon>edit</mat-icon></button>
                     </div>
                 </div>
             </div>
@@ -121,6 +121,8 @@
                     <button type="button" class="m-1 w-100" mat-raised-button color="primary" [routerLink]="['/contract/invoices', contract.id]"><mat-icon>insert_drive_file</mat-icon> Фактури</button>
                     <br>
                     <button type="button" class="m-1 w-100" mat-raised-button color="primary"><mat-icon>message</mat-icon> Известувања</button>
+                    <br>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Одкажи</button>
                 </div>
             </div>
             <br>

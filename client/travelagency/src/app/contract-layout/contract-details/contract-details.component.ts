@@ -7,6 +7,7 @@ import { PassengerDetailsModel } from 'src/app/shared/models/passenger';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { EditPassengerDialogComponent } from '../edit-passenger-dialog/edit-passenger-dialog.component';
 import { AddPaymentDialogComponent } from '../add-payment-dialog/add-payment-dialog.component';
+import { ContractUpdateInfoComponent } from '../contract-update-info/contract-update-info.component';
 
 @Component({
   selector: 'app-contract-details',
@@ -43,6 +44,14 @@ export class ContractDetailsComponent implements OnInit {
       next: data => {
         window.open(data.url, "_blank");
       }
+    });
+  }
+
+  editContract(){
+    const ref = this.dialog.open(ContractUpdateInfoComponent, {data: this.contract});
+    ref.afterClosed().subscribe(isUpdated => {
+      if (!isUpdated) return;
+      this.updateContractData(this.contract.id);
     });
   }
 
