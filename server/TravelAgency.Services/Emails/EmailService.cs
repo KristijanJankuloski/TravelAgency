@@ -75,7 +75,7 @@ namespace TravelAgency.Services.Emails
         {
             MimeMessage message = new MimeMessage();
             message.To.Add(new MailboxAddress(dto.SendTo, dto.SendTo));
-            message.Sender = new MailboxAddress(_emailUsername, _emailUsername);
+            message.Sender = new MailboxAddress(dto.From, _emailUsername);
             message.ReplyTo.Add(new MailboxAddress(dto.ReplyTo, dto.ReplyTo));
             message.Subject = dto.Subject;
             return message;
