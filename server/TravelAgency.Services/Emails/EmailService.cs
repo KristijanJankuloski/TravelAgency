@@ -32,9 +32,10 @@ namespace TravelAgency.Services.Emails
 
             using StreamReader streamReader = new StreamReader(_configTemplatePath);
             string template = await streamReader.ReadToEndAsync();
-            template = template.Replace("__EmailSubject__", dto.Title);
+            template = template.Replace("__EmailTitle__", dto.Title);
             template = template.Replace("__EmailBody__", dto.Body);
-            template = template.Replace("__EmailSender__", dto.From);
+            template = template.Replace("__EmailCompany__", dto.From);
+            template = template.Replace("__EmailSender__", dto.ReplyTo);
 
             BodyBuilder bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = template;
@@ -49,9 +50,10 @@ namespace TravelAgency.Services.Emails
 
             using StreamReader streamReader = new StreamReader(_configTemplatePath);
             string template = await streamReader.ReadToEndAsync();
-            template = template.Replace("__EmailSubject__", dto.Title);
+            template = template.Replace("__EmailTitle__", dto.Title);
             template = template.Replace("__EmailBody__", dto.Body);
-            template = template.Replace("__EmailSender__", dto.From);
+            template = template.Replace("__EmailCompany__", dto.From);
+            template = template.Replace("__EmailSender__", dto.ReplyTo);
 
             BodyBuilder bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = template;
@@ -74,9 +76,10 @@ namespace TravelAgency.Services.Emails
         private MimeMessage CreateMessage(BasicEmailDto dto)
         {
             MimeMessage message = new MimeMessage();
-            message.To.Add(new MailboxAddress(dto.SendTo, dto.SendTo));
             message.Sender = new MailboxAddress(dto.From, _emailUsername);
-            message.ReplyTo.Add(new MailboxAddress(dto.ReplyTo, dto.ReplyTo));
+            message.To.Add(new MailboxAddress(dto.SendTo, dto.SendTo));
+            message.From.Add(new MailboxAddress(dto.From, dto.ReplyTo));
+            message.ReplyTo.Add(new MailboxAddress(dto.From, dto.ReplyTo));
             message.Subject = dto.Subject;
             return message;
         }

@@ -43,6 +43,8 @@ namespace TravelAgency.Controllers
             try
             {
                 UserTokenDto user = JwtHelper.GetCurrentUser(User);
+                if (contractId <= 0)
+                    return BadRequest("Contract id cannot be negative");
                 await _notificationService.SendContractNotification(user.Id, contractId, sendRequest);
                 return Ok();
             }
@@ -70,6 +72,10 @@ namespace TravelAgency.Controllers
         {
             try
             {
+                UserTokenDto user = JwtHelper.GetCurrentUser(User);
+                if (contractId <= 0)
+                    return BadRequest("Contract id cannot be negative");
+                await _notificationService.SendPaymentNotification(user.Id, contractId, sendRequest);
                 return Ok();
             }
             catch (Exception ex)
@@ -83,6 +89,10 @@ namespace TravelAgency.Controllers
         {
             try
             {
+                UserTokenDto user = JwtHelper.GetCurrentUser(User);
+                if (contractId <= 0)
+                    return BadRequest("Contract id cannot be negative");
+                await _notificationService.SendTripNotification(user.Id, contractId, sendRequest);
                 return Ok();
             }
             catch (Exception ex)

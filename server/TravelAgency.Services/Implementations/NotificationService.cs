@@ -58,5 +58,62 @@ namespace TravelAgency.Services.Implementations
             });
             await _mailService.SendWithAttachment(dto, contract.FilePath);
         }
+
+        public async Task SendPaymentNotification(string userId, int contractId, EmailSendRequest request)
+        {
+            Contract contract = await _contractRepository.GetByIdAsync(contractId);
+            double tax = contract.TotalPrice * (double)contract.TaxPercentage / 100;
+            string generatedMessage = $"Имате преостанат долг за патувањето во {contract.Plan.HotelName}, {contract.Plan.Location}.\nВо износ од {contract.TotalPrice + tax - contract.AmmountPaid}";
+
+            BasicEmailDto dto = new BasicEmailDto
+            {
+                From = contract.Organization.Name,
+                ReplyTo = contract.Organization.Email,
+                SendTo = contract.Email,
+                Subject = $"Потсетување за преостанат долг",
+                Title = $"Потсетување за преостанат долг за патување",
+                Body = string.IsNullOrWhiteSpace(request.Message) ? generatedMessage : request.Message
+            };
+
+            await _contractEventsRepository.InsertAsync(new ContractEmailEvent
+            {
+                CreatedOn = DateTime.Now,
+                Body = dto.Body,
+                ContractId = contractId,
+                CreatedById = userId,
+                Email = dto.SendTo,
+                EventType = EmailEventType.PaymentReminder,
+                Subject = dto.Subject
+            });
+            await _mailService.SendBasicEmail(dto);
+        }
+
+        public async Task SendTripNotification(string userId, int contractId, EmailSendRequest request)
+        {
+            Contract contract = await _contractRepository.GetByIdAsync(contractId);
+            string generatedMessage = $"Почитувани,\n оваа порака ви е потсетник за патувањето во {contract.Plan.HotelName}, {contract.Plan.Location}.\nКое ви започнува на {contract.DepartureTime ?? contract.StartDate}";
+
+            BasicEmailDto dto = new BasicEmailDto
+            {
+                From = contract.Organization.Name,
+                ReplyTo = contract.Organization.Email,
+                SendTo = contract.Email,
+                Subject = $"Потсетување за патување",
+                Title = $"Потсетување за патување",
+                Body = string.IsNullOrWhiteSpace(request.Message) ? generatedMessage : request.Message
+            };
+
+            await _contractEventsRepository.InsertAsync(new ContractEmailEvent
+            {
+                CreatedOn = DateTime.Now,
+                Body = dto.Body,
+                ContractId = contractId,
+                CreatedById = userId,
+                Email = dto.SendTo,
+                EventType = EmailEventType.TripReminder,
+                Subject = dto.Subject
+            });
+            await _mailService.SendBasicEmail(dto);
+        }
     }
 }

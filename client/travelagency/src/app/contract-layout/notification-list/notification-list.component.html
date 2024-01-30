@@ -1,7 +1,11 @@
 <div class="container pt-5 pb-5">
     <div class="d-flex justify-content-between pb-3">
         <h1 class="display-4">Испратени пораки</h1>
-        <button mat-raised-button color="primary"><mat-icon>add</mat-icon> Нова порака</button>
+        <div>
+            <button mat-raised-button color="primary" class="mb-2" (click)="sendTripNotificationDialog()"><mat-icon>flight</mat-icon> Извести за патување</button>
+            <br>
+            <button mat-raised-button color="primary" class="w-100" (click)="sendPaymentNotificationDialog()"><mat-icon>money</mat-icon> Извести за наплата</button>
+        </div>
     </div>
     <table class="table table-striped">
         <thead>
@@ -16,9 +20,9 @@
             <tr *ngFor="let item of notifications">
                 <td>{{ item.email }}</td>
                 <td>{{ item.type | messageType }}</td>
-                <td>{{ item.sentOn | date : 'dd.MM.YYYY - hh:mm' }}</td>
+                <td>{{ item.sentOn | date : 'dd.MM.YYYY - HH:mm' }}</td>
                 <!-- (item.message.length > 30)? (item.message | slice:0:30)+'...':(item.message) -->
-                <td *ngIf="item.message">{{ item.message }}</td>
+                <td *ngIf="item.message" class="w-50">{{ item.message }}</td>
                 <td *ngIf="!item.message">/</td>
             </tr>
         </tbody>

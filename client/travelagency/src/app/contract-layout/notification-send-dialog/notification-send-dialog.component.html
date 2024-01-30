@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-header">
+        <h1 class="display-6">{{ isPaymentNotification ? 'Порака за потсетување за наплата' : 'Порака за потсетување за патување' }}</h1>
+    </div>
+    <div class="card-body">
+        <mat-form-field class="w-100">
+            <mat-label>Порака</mat-label>
+            <textarea rows="5" matInput [formControl]="messageControl"></textarea>
+        </mat-form-field>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-between">
+            <button mat-raised-button (click)="cancel()"><mat-icon>close</mat-icon> Одкажи</button>
+            <button mat-raised-button color="primary" (click)="submit()"><mat-icon>send</mat-icon> Испрати</button>
+        </div>
+    </div>
+</div>
