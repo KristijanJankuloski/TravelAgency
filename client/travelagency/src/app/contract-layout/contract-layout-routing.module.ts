@@ -6,6 +6,7 @@ import { ArchivedContractsComponent } from "./archived-contracts/archived-contra
 import { ContractLayoutComponent } from "./contract-layout.component";
 import { ContractDetailsComponent } from "./contract-details/contract-details.component";
 import { InvoiceListComponent } from "./invoice-list/invoice-list.component";
+import { NotificationListComponent } from "./notification-list/notification-list.component";
 
 const routes: Routes = [
   { path: '', component: ContractLayoutComponent, 
@@ -14,7 +15,8 @@ const routes: Routes = [
     { path: 'active', component: ActiveContractsComponent },
     { path: 'archive', component: ArchivedContractsComponent },
     { path: 'details/:id', component: ContractDetailsComponent },
-    { path: 'invoices/:id', component: InvoiceListComponent }
+    { path: 'invoices/:id', component: InvoiceListComponent },
+    { path: 'notifications/:id', component: NotificationListComponent }
   ]}
 ]
 

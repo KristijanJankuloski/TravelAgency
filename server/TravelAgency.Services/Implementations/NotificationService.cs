@@ -2,6 +2,8 @@
 using TravelAgency.Domain.Enums;
 using TravelAgency.Domain.Models;
 using TravelAgency.DTOs.EmailDTOs;
+using TravelAgency.DTOs.NotificationDTOs;
+using TravelAgency.Mappers;
 using TravelAgency.Services.Emails;
 using TravelAgency.Services.Interfaces;
 
@@ -19,6 +21,12 @@ namespace TravelAgency.Services.Implementations
             _contractRepository = contractRepository;
             _contractEventsRepository = contractEventsRepository;
 
+        }
+
+        public async Task<List<NotificationListDto>> GetAllByContractId(int contractId)
+        {
+            List<ContractEmailEvent> emailEvents = await _contractEventsRepository.GetByContractId(contractId);
+            return emailEvents.Select(x => x.ToListDto()).ToList();
         }
 
         public async Task SendContractNotification(string userId, int contractId, EmailSendRequest request)

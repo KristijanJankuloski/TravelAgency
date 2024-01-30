@@ -28,6 +28,8 @@ import { WarningDialogComponent } from './warning-dialog/warning-dialog.componen
 import { AddPaymentDialogComponent } from './add-payment-dialog/add-payment-dialog.component';
 import { ContractUpdateInfoComponent } from './contract-update-info/contract-update-info.component';
 import { SendContractDialogComponent } from './send-contract-dialog/send-contract-dialog.component';
+import { NotificationListComponent } from './notification-list/notification-list.component';
+import { MessageTypePipe } from './pipes/message-type.pipe';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { SendContractDialogComponent } from './send-contract-dialog/send-contrac
     WarningDialogComponent,
     AddPaymentDialogComponent,
     ContractUpdateInfoComponent,
-    SendContractDialogComponent
+    SendContractDialogComponent,
+    NotificationListComponent,
+    MessageTypePipe
   ],
   imports: [
     CommonModule,

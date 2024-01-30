@@ -1,0 +1,26 @@
+<div class="container pt-5 pb-5">
+    <div class="d-flex justify-content-between pb-3">
+        <h1 class="display-4">Испратени пораки</h1>
+        <button mat-raised-button color="primary"><mat-icon>add</mat-icon> Нова порака</button>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Адреса</th>
+                <th>Тип на порака</th>
+                <th>Дата</th>
+                <th>Порака</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of notifications">
+                <td>{{ item.email }}</td>
+                <td>{{ item.type | messageType }}</td>
+                <td>{{ item.sentOn | date : 'dd.MM.YYYY - hh:mm' }}</td>
+                <!-- (item.message.length > 30)? (item.message | slice:0:30)+'...':(item.message) -->
+                <td *ngIf="item.message">{{ item.message }}</td>
+                <td *ngIf="!item.message">/</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
