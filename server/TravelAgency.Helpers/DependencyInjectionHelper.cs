@@ -25,6 +25,7 @@ namespace TravelAgency.Helpers
             services.AddScoped<IPlanRepository,  PlanRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<IContractEventsRepository, ContractEventsRepository>();
         }
 
         public static void InjectServices(this IServiceCollection services)
@@ -38,6 +39,7 @@ namespace TravelAgency.Helpers
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<INotificationService, NotificationService>();
         }
     }
 }

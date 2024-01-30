@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { EditPassengerDialogComponent } from '../edit-passenger-dialog/edit-passenger-dialog.component';
 import { AddPaymentDialogComponent } from '../add-payment-dialog/add-payment-dialog.component';
 import { ContractUpdateInfoComponent } from '../contract-update-info/contract-update-info.component';
+import { SendContractDialogComponent } from '../send-contract-dialog/send-contract-dialog.component';
 
 @Component({
   selector: 'app-contract-details',
@@ -77,5 +78,9 @@ export class ContractDetailsComponent implements OnInit {
       if (!res) return;
       this.updateContractData(this.contract.id);
     });
+  }
+
+  sendContractEmail(){
+    const ref = this.dialog.open(SendContractDialogComponent, {data: {id: this.contract.id}});
   }
 }

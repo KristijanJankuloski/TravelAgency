@@ -69,6 +69,7 @@ export interface ContractDetailsModel {
     contractDate: Date;
     contractLocation: string;
     paymentMethod: number;
+    isArchived: boolean;
     insurance?: string;
     footer?: string;
     note?: string;

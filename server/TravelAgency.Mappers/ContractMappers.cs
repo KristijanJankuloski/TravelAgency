@@ -79,6 +79,7 @@ namespace TravelAgency.Mappers
                 ContractDate = contract.ContractDate,
                 ContractLocation = contract.ContractLocation,
                 PaymentMethod = (int)contract.PaymentMethod,
+                IsArchived = contract.IsArchived,
                 StartDate = contract.StartDate,
                 EndDate = contract.EndDate,
                 DepartureTime = contract.DepartureTime,

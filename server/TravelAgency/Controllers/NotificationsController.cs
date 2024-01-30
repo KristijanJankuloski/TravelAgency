@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAgency.DTOs.EmailDTOs;
+using TravelAgency.DTOs.UserDTOs;
+using TravelAgency.Helpers;
+using TravelAgency.Services.Interfaces;
 
 namespace TravelAgency.Controllers
 {
@@ -10,6 +13,13 @@ namespace TravelAgency.Controllers
     [Authorize]
     public class NotificationsController : ControllerBase
     {
+        private readonly INotificationService _notificationService;
+
+        public NotificationsController(INotificationService notificationService)
+        {
+            _notificationService = notificationService;
+        }
+
         [HttpGet("{contractId}")]
         public async Task<IActionResult> GetAll(int contractId)
         {
@@ -28,11 +38,13 @@ namespace TravelAgency.Controllers
         {
             try
             {
+                UserTokenDto user = JwtHelper.GetCurrentUser(User);
+                await _notificationService.SendContractNotification(user.Id, contractId, sendRequest);
                 return Ok();
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(400, ex.Message);
             }
         }
 

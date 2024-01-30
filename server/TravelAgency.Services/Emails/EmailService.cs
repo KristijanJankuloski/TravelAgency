@@ -34,7 +34,7 @@ namespace TravelAgency.Services.Emails
             string template = await streamReader.ReadToEndAsync();
             template = template.Replace("__EmailSubject__", dto.Title);
             template = template.Replace("__EmailBody__", dto.Body);
-            template = template.Replace("__EmailSender__", dto.ReplyTo);
+            template = template.Replace("__EmailSender__", dto.From);
 
             BodyBuilder bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = template;
@@ -51,15 +51,15 @@ namespace TravelAgency.Services.Emails
             string template = await streamReader.ReadToEndAsync();
             template = template.Replace("__EmailSubject__", dto.Title);
             template = template.Replace("__EmailBody__", dto.Body);
-            template = template.Replace("__EmailSender__", dto.ReplyTo);
+            template = template.Replace("__EmailSender__", dto.From);
 
             BodyBuilder bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = template;
             
-            if (File.Exists(_environment + filePath))
+            if (File.Exists(_environment.WebRootPath + filePath))
             {
                 byte[] data;
-                using FileStream fileStream = new FileStream(_environment + filePath, FileMode.Open, FileAccess.Read);
+                using FileStream fileStream = new FileStream(_environment.WebRootPath + filePath, FileMode.Open, FileAccess.Read);
                 using MemoryStream ms = new MemoryStream();
                 await fileStream.CopyToAsync(ms);
                 data = ms.ToArray();
