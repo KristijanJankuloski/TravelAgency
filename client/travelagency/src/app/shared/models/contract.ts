@@ -107,3 +107,11 @@ export interface ContractPaymentCreate {
     amount: number;
     invoiceId?: number | null;
 }
+
+export interface PaymentListModel {
+    id: number;
+    note: string | null;
+    createdOn: Date;
+    amount: number;
+    eventType: number;
+}

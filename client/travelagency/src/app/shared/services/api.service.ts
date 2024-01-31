@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { AvailabilityResponseModel, UserDetailsModel, UserUpdateModel } from '../models/user';
 import { AgencyCreateModel, AgencyDetailsModel, AgencyListModel } from '../models/agency';
-import { ContractCreateModel, ContractDetailsModel, ContractListModel, ContractSetupInfo, ContractStatsModel, ContractUpdateInfoModel } from '../models/contract';
+import { ContractCreateModel, ContractDetailsModel, ContractListModel, ContractSetupInfo, ContractStatsModel, ContractUpdateInfoModel, PaymentListModel } from '../models/contract';
 import { PlanListModel } from '../models/plan';
 import { PaginatedResponse } from '../models/common';
 
@@ -85,5 +85,9 @@ export class ApiService {
 
   public updateUserInfo(request: UserUpdateModel){
     return this.http.patch(`${environment.apiBaseUrl}/users`, request);
+  }
+
+  public getPaymentsByContract(id: number){
+    return this.http.get<PaymentListModel[]>(`${environment.apiBaseUrl}/payments?contract=${id}`);
   }
 }

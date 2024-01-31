@@ -26,5 +26,6 @@ namespace TravelAgency.Services.Interfaces
         Task CancelContract(int id);
         Task AddPaymentFromCustomer(NewContractPaymentDto dto, string userId);
         Task AddPaymentFromAgency(NewContractPaymentDto dto, string userId);
+        Task<List<PaymentListDto>> GetPaymentEvents(int contractId);
     }
 }

@@ -265,6 +265,12 @@ namespace TravelAgency.Services.Implementations
             return dto;
         }
 
+        public async Task<List<PaymentListDto>> GetPaymentEvents(int contractId)
+        {
+            List<PaymentEvent> payments = await _contractRepository.GetPaymentEventsAsync(contractId);
+            return payments.Select(x => x.ToListDto()).ToList();
+        }
+
         public async Task<OrganizationContractSetupDto> GetSetupInfo(int organizationId)
         {
             Organization organization = await _organizationRepository.GetByIdAsync(organizationId);

@@ -31,6 +31,7 @@ import { SendContractDialogComponent } from './send-contract-dialog/send-contrac
 import { NotificationListComponent } from './notification-list/notification-list.component';
 import { MessageTypePipe } from './pipes/message-type.pipe';
 import { NotificationSendDialogComponent } from './notification-send-dialog/notification-send-dialog.component';
+import { PaymentListDialogComponent } from './payment-list-dialog/payment-list-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { NotificationSendDialogComponent } from './notification-send-dialog/noti
     SendContractDialogComponent,
     NotificationListComponent,
     MessageTypePipe,
-    NotificationSendDialogComponent
+    NotificationSendDialogComponent,
+    PaymentListDialogComponent
   ],
   imports: [
     CommonModule,

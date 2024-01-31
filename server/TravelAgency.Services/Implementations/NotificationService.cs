@@ -63,7 +63,8 @@ namespace TravelAgency.Services.Implementations
         {
             Contract contract = await _contractRepository.GetByIdAsync(contractId);
             double tax = contract.TotalPrice * (double)contract.TaxPercentage / 100;
-            string generatedMessage = $"Имате преостанат долг за патувањето во {contract.Plan.HotelName}, {contract.Plan.Location}.\nВо износ од {contract.TotalPrice + tax - contract.AmmountPaid}";
+            string total = string.Format("{0:C}", contract.TotalPrice + tax);
+            string generatedMessage = $"Имате преостанат долг за патувањето во {contract.Plan.HotelName}, {contract.Plan.Location}.\nВо износ од {total}";
 
             BasicEmailDto dto = new BasicEmailDto
             {
@@ -91,7 +92,7 @@ namespace TravelAgency.Services.Implementations
         public async Task SendTripNotification(string userId, int contractId, EmailSendRequest request)
         {
             Contract contract = await _contractRepository.GetByIdAsync(contractId);
-            string generatedMessage = $"Почитувани,\n оваа порака ви е потсетник за патувањето во {contract.Plan.HotelName}, {contract.Plan.Location}.\nКое ви започнува на {contract.DepartureTime ?? contract.StartDate}";
+            string generatedMessage = $"Почитувани,\nоваа порака ви е потсетник за патувањето во {contract.Plan.HotelName}, {contract.Plan.Location}.\nКое ви започнува на {contract.DepartureTime ?? contract.StartDate}";
 
             BasicEmailDto dto = new BasicEmailDto
             {

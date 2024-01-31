@@ -9,6 +9,7 @@ import { EditPassengerDialogComponent } from '../edit-passenger-dialog/edit-pass
 import { AddPaymentDialogComponent } from '../add-payment-dialog/add-payment-dialog.component';
 import { ContractUpdateInfoComponent } from '../contract-update-info/contract-update-info.component';
 import { SendContractDialogComponent } from '../send-contract-dialog/send-contract-dialog.component';
+import { PaymentListDialogComponent } from '../payment-list-dialog/payment-list-dialog.component';
 
 @Component({
   selector: 'app-contract-details',
@@ -82,5 +83,9 @@ export class ContractDetailsComponent implements OnInit {
 
   sendContractEmail(){
     const ref = this.dialog.open(SendContractDialogComponent, {data: {id: this.contract.id}});
+  }
+
+  openPaymentsDialog(){
+    this.dialog.open(PaymentListDialogComponent, {data: {id: this.contract.id}});
   }
 }

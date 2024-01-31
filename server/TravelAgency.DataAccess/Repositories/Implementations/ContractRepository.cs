@@ -92,5 +92,10 @@ namespace TravelAgency.DataAccess.Repositories.Implementations
                 .ThenInclude(x => x.Agency)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<List<PaymentEvent>> GetPaymentEventsAsync(int contractId)
+        {
+            return await _context.PaymentEvents.Where(x => x.ContractId == contractId).ToListAsync();
+        }
     }
 }

@@ -1,0 +1,29 @@
+<div class="card custom">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h1 class="display-6">Плаќања</h1>
+            <button type="button" mat-icon-button color="warn" (click)="close()"><mat-icon>close</mat-icon></button>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Тип</th>
+                    <th>Дата</th>
+                    <th>Забелешка</th>
+                    <th>Количина</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let payment of payments">
+                    <td *ngIf="payment.eventType === 0"><mat-icon color="primary">person</mat-icon> Патник</td>
+                    <td *ngIf="payment.eventType === 1"><mat-icon color="warn">domain</mat-icon> Агенција</td>
+                    <td>{{ payment.createdOn | date : 'dd.MM.YYYY' }}</td>
+                    <td>{{ payment.note ?? '/' }}</td>
+                    <td>{{ payment.amount | currency : ' ' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
