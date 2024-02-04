@@ -28,6 +28,8 @@ export class ArchivedContractsComponent {
       for(let i = 0; i < this.contracts.length; i++){
         this.contracts[i].startDate = new Date(this.contracts[i].startDate);
         this.contracts[i].endDate = new Date(this.contracts[i].endDate);
+        if (this.contracts[i].canceledOn != null)
+          this.contracts[i].canceledOn = new Date(this.contracts[i].canceledOn!);
       }
     });
   }

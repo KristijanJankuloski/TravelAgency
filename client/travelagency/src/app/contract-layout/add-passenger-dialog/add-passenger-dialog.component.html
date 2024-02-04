@@ -1,0 +1,83 @@
+<form [formGroup]="passengerForm" (ngSubmit)="onSubmit()">
+    <div class="card custom-card">
+        <div class="card-header">
+            <h1 class="display-6">Додавање на патник</h1>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Име</mat-label>
+                        <input type="text" matInput required formControlName="firstName" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Презиме</mat-label>
+                        <input type="text" matInput required formControlName="lastName" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Број на пасош</mat-label>
+                        <input type="text" matInput required formControlName="passportNumber" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100" #expireDate>
+                        <mat-label>Дата на истекување на пасош</mat-label>
+                        <input matInput [matDatepicker]="expirePicker" required formControlName="passportExpirationDate">
+                        <mat-hint class="small">DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="expirePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #expirePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Дата на раѓање</mat-label>
+                        <input matInput [matDatepicker]="birthDatePicker" required formControlName="birthDate">
+                        <mat-hint class="small">YYYY-MM-DD</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #birthDatePicker startView="multi-year"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Адреса</mat-label>
+                        <input type="text" matInput formControlName="address" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Телефон</mat-label>
+                        <input type="text" matInput formControlName="phoneNumber" />
+                    </mat-form-field>
+                </div>
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>E-mail</mat-label>
+                        <input type="email" matInput formControlName="email" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <mat-form-field class="w-100">
+                        <mat-label>Забелешка</mat-label>
+                        <input type="text" matInput formControlName="comment" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <button type="button" mat-raised-button (click)="cancel()"><mat-icon>close</mat-icon> Одкажи</button>
+                <button type="submit" mat-raised-button color="primary" [disabled]="passengerForm.invalid"><mat-icon>save</mat-icon> Додади</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatBadgeModule } from '@angular/material/badge';
 import { ContractLayoutRoutingModule } from './contract-layout-routing.module';
 import { ContractDetailsComponent } from './contract-details/contract-details.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -32,6 +33,7 @@ import { NotificationListComponent } from './notification-list/notification-list
 import { MessageTypePipe } from './pipes/message-type.pipe';
 import { NotificationSendDialogComponent } from './notification-send-dialog/notification-send-dialog.component';
 import { PaymentListDialogComponent } from './payment-list-dialog/payment-list-dialog.component';
+import { AddPassengerDialogComponent } from './add-passenger-dialog/add-passenger-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { PaymentListDialogComponent } from './payment-list-dialog/payment-list-d
     NotificationListComponent,
     MessageTypePipe,
     NotificationSendDialogComponent,
-    PaymentListDialogComponent
+    PaymentListDialogComponent,
+    AddPassengerDialogComponent
   ],
   imports: [
     CommonModule,
@@ -70,7 +73,8 @@ import { PaymentListDialogComponent } from './payment-list-dialog/payment-list-d
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatBadgeModule
   ],
   bootstrap: [ContractLayoutComponent]
 })

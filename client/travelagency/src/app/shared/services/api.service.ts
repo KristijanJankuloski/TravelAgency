@@ -90,4 +90,8 @@ export class ApiService {
   public getPaymentsByContract(id: number){
     return this.http.get<PaymentListModel[]>(`${environment.apiBaseUrl}/payments?contract=${id}`);
   }
+
+  public cancelContract(id: number){
+    return this.http.delete(`${environment.apiBaseUrl}/contracts/${id}`);
+  }
 }

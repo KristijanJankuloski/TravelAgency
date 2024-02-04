@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContractDetailsModel } from 'src/app/shared/models/contract';
 import { PassengerDetailsModel } from 'src/app/shared/models/passenger';
 import { ApiService } from 'src/app/shared/services/api.service';
@@ -10,6 +10,8 @@ import { AddPaymentDialogComponent } from '../add-payment-dialog/add-payment-dia
 import { ContractUpdateInfoComponent } from '../contract-update-info/contract-update-info.component';
 import { SendContractDialogComponent } from '../send-contract-dialog/send-contract-dialog.component';
 import { PaymentListDialogComponent } from '../payment-list-dialog/payment-list-dialog.component';
+import { WarningDialogComponent } from '../warning-dialog/warning-dialog.component';
+import { AddPassengerDialogComponent } from '../add-passenger-dialog/add-passenger-dialog.component';
 
 @Component({
   selector: 'app-contract-details',
@@ -20,7 +22,12 @@ export class ContractDetailsComponent implements OnInit {
   contract: ContractDetailsModel;
   notFound = false;
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private _snackBar: MatSnackBar, private dialog: MatDialog){}
+  constructor(
+    private route: ActivatedRoute, 
+    private api: ApiService, 
+    private _snackBar: MatSnackBar, 
+    private dialog: MatDialog,
+    private router: Router){}
 
   ngOnInit(): void {
     const id = Number.parseInt(this.route.snapshot.paramMap.get('id')?? "0");
@@ -87,5 +94,26 @@ export class ContractDetailsComponent implements OnInit {
 
   openPaymentsDialog(){
     this.dialog.open(PaymentListDialogComponent, {data: {id: this.contract.id}});
+  }
+
+  cancelContractClick(){
+    const ref = this.dialog.open(WarningDialogComponent, {data: {message: `Договорот број ${this.contract.contractNumber} ќе биде одкажан.`}});
+    ref.afterClosed().subscribe(res => {
+      if (!res) return;
+      this.api.cancelContract(this.contract.id).subscribe({
+        next: _ => {
+          this._snackBar.open("Договорот е одкажан", "Затвори", {duration: 5000});
+          this.router.navigate(['contract', 'active']);
+        }
+      });
+    });
+  }
+
+  addPassenger(){
+    const ref = this.dialog.open(AddPassengerDialogComponent, {data: this.contract.id});
+    ref.afterClosed().subscribe(isAdded => {
+      if (!isAdded) return;
+      this.updateContractData(this.contract.id);
+    });
   }
 }

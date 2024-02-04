@@ -65,7 +65,8 @@ export class ActiveContractsComponent implements OnInit, OnDestroy {
     ref.afterClosed().subscribe(res => {
       if (!res) return;
       this.api.archiveContract(id).subscribe(data => {
-        this._snackBar.open("Contract archived", "The contract has been archived", {duration: 5000});
+        this._snackBar.open("Contract archived", "Затвори", {duration: 5000});
+        this.contracts = this.contracts.filter(x => x.id != id);
       });
     });
   }

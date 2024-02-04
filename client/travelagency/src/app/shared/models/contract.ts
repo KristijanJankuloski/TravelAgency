@@ -53,6 +53,7 @@ export interface ContractListModel {
     contractCreatedDate: Date;
     amountPaid: number;
     totalPrice: number;
+    canceledOn: Date | null;
 }
 
 export interface ContractDetailsModel {

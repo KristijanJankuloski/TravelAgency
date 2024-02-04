@@ -64,7 +64,8 @@ namespace TravelAgency.Mappers
                 EndDate = contract.EndDate,
                 AmountPaid = contract.AmmountPaid,
                 TotalPrice = contract.TotalPrice,
-                ContractCreatedDate = contract.ContractDate
+                ContractCreatedDate = contract.ContractDate,
+                CanceledOn = contract.CanceledOn
             };
         }
 

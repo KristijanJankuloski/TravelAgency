@@ -10,6 +10,7 @@
         public string Location { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime? CanceledOn { get; set; }
         public DateTime ContractCreatedDate { get; set; }
         public double AmountPaid { get; set; }
         public double TotalPrice { get; set; }

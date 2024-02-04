@@ -17,4 +17,8 @@ export class PassengerService {
   public updatePassenger(id: number, passenger: PassengerCreateModel){
     return this.http.patch(`${environment.apiBaseUrl}/contracts/${0}/passenger/${id}`, passenger);
   }
+
+  public addPassenger(id: number, passenger: PassengerCreateModel){
+    return this.http.post(`${environment.apiBaseUrl}/contracts/${id}/passenger`, passenger);
+  }
 }
