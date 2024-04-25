@@ -24,7 +24,7 @@
                         <td *ngIf="item.paidOn === null">/</td>
                         <td style="max-width: 50px;">
                             <button type="button" mat-icon-button color="primary"><mat-icon>more</mat-icon></button>
-                            <button type="button" mat-icon-button (click)="generateDocument(item.id)"><mat-icon>insert_drive_file</mat-icon></button>
+                            <button type="button" mat-icon-button  (click)="generateDocument(item)"><mat-icon>insert_drive_file</mat-icon></button>
                         </td>
                     </tr>
                 </tbody>

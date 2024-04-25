@@ -111,11 +111,9 @@
         <div class="col-md-3 col-lg-2">
             <div class="card">
                 <div class="card-body">
-                    <a type="button" class="m-1 w-100" mat-raised-button color="primary" [href]="contract.pdfLink" target="_blank" [disabled]="!contract.pdfLink"><mat-icon>folder</mat-icon> ПДФ докумнет</a>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary" (click)="generateDocument(contract)" [disabled]="contract.isArchived"><mat-icon>cloud</mat-icon> Генерирај PDF документ</button>
                     <br>
-                    <button type="button" class="m-1 w-100" mat-raised-button color="primary" (click)="generateDocument(contract.id)" [disabled]="contract.isArchived"><mat-icon>cloud</mat-icon> Генерирај нов документ</button>
-                    <br>
-                    <button type="button" class="m-1 w-100" mat-raised-button color="primary" [disabled]="!contract.pdfLink || contract.isArchived" (click)="sendContractEmail()"><mat-icon>mail</mat-icon><mat-icon>arrow_forward</mat-icon> Испрати договор</button>
+                    <button type="button" class="m-1 w-100" mat-raised-button color="primary" [disabled]="contract.isArchived" (click)="sendContractEmail()"><mat-icon>mail</mat-icon><mat-icon>arrow_forward</mat-icon> Испрати договор</button>
                     <br>
                     <button type="button" class="m-1 w-100" mat-raised-button color="primary" [routerLink]="['/contract/invoices', contract.id]"><mat-icon>insert_drive_file</mat-icon> Фактури</button>
                     <br>

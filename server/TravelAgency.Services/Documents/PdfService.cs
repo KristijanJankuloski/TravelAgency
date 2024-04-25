@@ -22,7 +22,7 @@ namespace TravelAgency.Services.Documents
                 Directory.CreateDirectory(_environment.WebRootPath + _folderPath);
         }
 
-        public async Task<string> GenerateContractPdf(ContractPdf contract)
+        public async Task<byte[]> GenerateContractPdf(ContractPdf contract)
         {
             string folderPath = _folderPath + "/Contracts";
             string fullPath = _environment.WebRootPath + folderPath;
@@ -30,7 +30,7 @@ namespace TravelAgency.Services.Documents
             if (!Directory.Exists(fullPath))
                 Directory.CreateDirectory(fullPath);
 
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 int borderSize = 1;
                 int cellPadding = 2;
@@ -38,7 +38,7 @@ namespace TravelAgency.Services.Documents
                 string dateFormat = "{0:dd/MM/yyyy}";
                 string longDateFormat = "{0:dd/MM/yyyy - HH:mm}";
 
-                Document.Create(container =>
+                return Document.Create(container =>
                 {
                     container.Page(page =>
                     {
@@ -189,12 +189,11 @@ namespace TravelAgency.Services.Documents
                             row.RelativeItem().AlignRight().Text("Потпис на вработен _______________________");
                         });
                     });
-                }).GeneratePdf($"{fullPath}/{contract.Number.Replace('/', '_')}.pdf");
+                }).GeneratePdf();
             });
-            return $"{folderPath}/{contract.Number.Replace('/', '_')}.pdf";
         }
 
-        public async Task<string> GenerateInvoicePdf(InvoicePdf invoice)
+        public async Task<byte[]> GenerateInvoicePdf(InvoicePdf invoice)
         {
             string folderPath = _folderPath + "/Invoices";
             string fullPath = _environment.WebRootPath + folderPath;
@@ -202,7 +201,7 @@ namespace TravelAgency.Services.Documents
             if (!Directory.Exists(fullPath))
                 Directory.CreateDirectory(fullPath);
 
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 int borderSize = 1;
                 int cellPadding = 2;
@@ -211,7 +210,7 @@ namespace TravelAgency.Services.Documents
                 string longDateFormat = "{0:dd/MM/yyyy - HH:mm}";
                 double tax = invoice.AmountToPayWithTax - invoice.AmountToPay;
 
-                Document.Create(container =>
+                return Document.Create(container =>
                 {
                     container.Page(page =>
                     {
@@ -344,9 +343,8 @@ namespace TravelAgency.Services.Documents
                             row.RelativeItem().AlignCenter().Text($"Управител\n__________________________\n{invoice.Company.OwnerName}");
                         });
                     });
-                }).GeneratePdf($"{fullPath}/{invoice.Number.Replace('/', '_')}.pdf");
+                }).GeneratePdf();
             });
-            return $"{folderPath}/{invoice.Number.Replace('/', '_')}.pdf";
         }
     }
 }

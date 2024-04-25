@@ -17,7 +17,7 @@ namespace TravelAgency.Services.Interfaces
         Task ArchiveContract(int id, string userId);
         Task<ContractDetailsDto> GetDetails(int contractId, string userId);
         Task<ContractStatsDto> GetStats(string userId, int? month);
-        Task<GenerateResponse> GeneratePdf(int id, HttpRequest request);
+        Task<GenerateResponse> GeneratePdf(int id);
         Task<OrganizationContractSetupDto> GetSetupInfo(int organizationId);
         Task UpdateContractBaseInfo(int id, ContractUpdateBaseInfoDto dto);
         Task AddPassenger(int id, PassengerCreateDto dto);

@@ -156,7 +156,7 @@ namespace TravelAgency.Services.Implementations
             await _passengerRepository.DeleteByIdAsync(id);
         }
 
-        public async Task<GenerateResponse> GeneratePdf(int id, HttpRequest request)
+        public async Task<GenerateResponse> GeneratePdf(int id)
         {
             Contract contract = await _contractRepository.GetByIdAsync(id);
             if (contract == null) throw new Exception("No contract found");
@@ -218,11 +218,9 @@ namespace TravelAgency.Services.Implementations
                 });
             }
 
-            string pdfFilePath = await _pdfService.GenerateContractPdf(pdf);
-            contract.FilePath = pdfFilePath;
-            await _contractRepository.UpdateAsync(contract);
+            byte[] pdfFile = await _pdfService.GenerateContractPdf(pdf);
 
-            return new GenerateResponse { Url = $"{request.Scheme}://{request.Host}{pdfFilePath}" };
+            return new GenerateResponse { File = pdfFile, FileName = $"{pdf.Number.Replace('/', '_')}.pdf" };
         }
 
         public async Task<PaginatedResponse<ContractListDto>> GetActiveContracts(string userId, int pageIndex)

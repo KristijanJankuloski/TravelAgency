@@ -55,8 +55,7 @@ namespace TravelAgency.Controllers
             try
             {
                 var res = await _invoiceService.GenerateInvoicePdf(id);
-                res.Url = $"{Request.Scheme}://{Request.Host}{res.Url}";
-                return Ok(res);
+                return File(res.File, "application/pdf", res.FileName);
             }
             catch (ArgumentException ex)
             {

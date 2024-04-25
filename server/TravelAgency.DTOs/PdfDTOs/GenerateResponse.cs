@@ -2,6 +2,8 @@
 {
     public class GenerateResponse
     {
-        public string Url { get; set; }
+        public byte[] File { get; set; }
+
+        public string FileName { get; set; } = string.Empty;
     }
 }

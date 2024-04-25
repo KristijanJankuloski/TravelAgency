@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using TravelAgency.DTOs.EmailDTOs;
+using TravelAgency.DTOs.PdfDTOs;
 
 namespace TravelAgency.Services.Emails
 {
@@ -44,7 +45,7 @@ namespace TravelAgency.Services.Emails
             await SendMessage(message);
         }
 
-        public async Task SendWithAttachment(BasicEmailDto dto, string filePath)
+        public async Task SendWithAttachment(BasicEmailDto dto, GenerateResponse file)
         {
             MimeMessage message = CreateMessage(dto);
 
@@ -57,19 +58,11 @@ namespace TravelAgency.Services.Emails
 
             BodyBuilder bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = template;
-            
-            if (File.Exists(_environment.WebRootPath + filePath))
-            {
-                byte[] data;
-                using FileStream fileStream = new FileStream(_environment.WebRootPath + filePath, FileMode.Open, FileAccess.Read);
-                using MemoryStream ms = new MemoryStream();
-                await fileStream.CopyToAsync(ms);
-                data = ms.ToArray();
-                bodyBuilder.Attachments.Add(fileStream.Name, data);
-            }
+
+            bodyBuilder.Attachments.Add(file.FileName, file.File);
 
             message.Body = bodyBuilder.ToMessageBody();
-            
+
             await SendMessage(message);
         }
 

@@ -12,6 +12,7 @@ import { SendContractDialogComponent } from '../send-contract-dialog/send-contra
 import { PaymentListDialogComponent } from '../payment-list-dialog/payment-list-dialog.component';
 import { WarningDialogComponent } from '../warning-dialog/warning-dialog.component';
 import { AddPassengerDialogComponent } from '../add-passenger-dialog/add-passenger-dialog.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-contract-details',
@@ -21,6 +22,7 @@ import { AddPassengerDialogComponent } from '../add-passenger-dialog/add-passeng
 export class ContractDetailsComponent implements OnInit {
   contract: ContractDetailsModel;
   notFound = false;
+  urlBase = environment.apiBaseUrl;
 
   constructor(
     private route: ActivatedRoute, 
@@ -47,11 +49,19 @@ export class ContractDetailsComponent implements OnInit {
     });
   }
 
-  generateDocument(id: number){
+  generateDocument(contract: ContractDetailsModel){
     this._snackBar.open("Креирање документ во позадина", "Затвори", {duration: 3000});
-    this.api.generateContractPdf(id).subscribe({
+    this.api.generateContractPdf(contract.id).subscribe({
       next: data => {
-        window.open(data.url, "_blank");
+        const blob = new Blob([data], {type: 'application/pdf'});
+        const url = window.URL.createObjectURL(blob);
+        let link = document.createElement('a');
+        link.href = url;
+        link.download = `${contract.contractNumber.replaceAll('/', '_')}.pdf`;
+        link.click();
+        
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
       }
     });
   }

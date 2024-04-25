@@ -84,8 +84,8 @@ namespace TravelAgency.Services.Implementations
             dto.Note = $"Престој во {invoice.Contract.Plan.HotelName}\n{startDate} - {endDate}";
             dto.Company.OwnerName = $"{owner.FirstName} {owner.LastName}";
 
-            string filePath = await _pdfService.GenerateInvoicePdf(dto);
-            return new GenerateResponse { Url = filePath };
+            byte[] file = await _pdfService.GenerateInvoicePdf(dto);
+            return new GenerateResponse { File = file, FileName = $"{dto.Number.Replace('/', '_')}.pdf" };
         }
 
         public async Task<List<InvoiceListDto>> GetInvoicesByContract(int contractId)

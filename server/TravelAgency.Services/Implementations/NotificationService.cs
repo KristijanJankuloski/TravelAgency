@@ -13,12 +13,18 @@ namespace TravelAgency.Services.Implementations
     {
         private readonly IEmailService _mailService;
         private readonly IContractRepository _contractRepository;
+        private readonly IContractService contractService;
         private readonly IContractEventsRepository _contractEventsRepository;
 
-        public NotificationService(IEmailService mailService, IContractRepository contractRepository, IContractService contractService, IContractEventsRepository contractEventsRepository)
+        public NotificationService(
+            IEmailService mailService,
+            IContractRepository contractRepository,
+            IContractService contractService,
+            IContractEventsRepository contractEventsRepository)
         {
             _mailService = mailService;
             _contractRepository = contractRepository;
+            this.contractService = contractService;
             _contractEventsRepository = contractEventsRepository;
 
         }
@@ -43,9 +49,6 @@ namespace TravelAgency.Services.Implementations
                 Body = request.Message
             };
 
-            if (contract.FilePath == null)
-                throw new Exception("Contract file has not been generated yet");
-
             await _contractEventsRepository.InsertAsync(new ContractEmailEvent
             {
                 CreatedOn = DateTime.Now,
@@ -56,7 +59,7 @@ namespace TravelAgency.Services.Implementations
                 EventType = EmailEventType.SendContract,
                 Subject = dto.Subject
             });
-            await _mailService.SendWithAttachment(dto, contract.FilePath);
+            await _mailService.SendWithAttachment(dto, await contractService.GeneratePdf(contractId));
         }
 
         public async Task SendPaymentNotification(string userId, int contractId, EmailSendRequest request)

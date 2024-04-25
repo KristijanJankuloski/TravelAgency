@@ -13,7 +13,7 @@ import { InvoiceService } from 'src/app/shared/services/invoice.service';
 export class AddPaymentDialogComponent implements OnInit {
   invoices: InvoiceListModel[] = [];
   fromAgency = this.data.fromAgency;
-  amountControl = new FormControl(this.data.total - this.data.paid, [Validators.required, Validators.max(this.data.total - this.data.paid)]);
+  amountControl = new FormControl(this.data.total - this.data.paid, [Validators.required, Validators.min(0)]);
   noteControl = new FormControl('');
   invoiceControl = new FormControl();
   constructor(private ref: MatDialogRef<AddPaymentDialogComponent>, private invoiceService: InvoiceService, @Inject(MAT_DIALOG_DATA) public data: {id: number, total: number, paid: number, fromAgency: boolean}){}

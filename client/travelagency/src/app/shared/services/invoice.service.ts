@@ -22,7 +22,7 @@ export class InvoiceService {
   }
 
   public generateDocument(id: number){
-    return this.http.get(`${environment.apiBaseUrl}/invoices/${id}/generate`).pipe(map(data => data as UrlResponse));
+    return this.http.get(`${environment.apiBaseUrl}/invoices/${id}/generate`, { responseType: 'blob' });
   }
 
   public addPassengerPayment(payment: ContractPaymentCreate){

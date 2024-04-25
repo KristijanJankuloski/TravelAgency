@@ -100,14 +100,13 @@ namespace TravelAgency.Controllers
         }
 
         [HttpGet("{id}/generate")]
-        [Authorize]
-        public async Task<ActionResult<GenerateResponse>> GenerateDocument(int id)
+        [AllowAnonymous]
+        public async Task<IActionResult> GenerateDocument(int id)
         {
             try
             {
-                UserTokenDto dto = JwtHelper.GetCurrentUser(User);
-                var result = await _contractService.GeneratePdf(id, Request);
-                return Ok(result);
+                var result = await _contractService.GeneratePdf(id);
+                return File(result.File, "application/pdf", result.FileName);
             }
             catch (Exception ex)
             {

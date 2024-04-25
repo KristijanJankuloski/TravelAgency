@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { InvoiceListModel } from 'src/app/shared/models/invoice';
 import { InvoiceService } from 'src/app/shared/services/invoice.service';
 import { InvoiceCreateComponent } from '../invoice-create/invoice-create.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-invoice-list',
@@ -14,6 +15,7 @@ import { InvoiceCreateComponent } from '../invoice-create/invoice-create.compone
 export class InvoiceListComponent implements OnInit {
   invoices: InvoiceListModel[] = [];
   contractId: number;
+  baseUrl = environment.apiBaseUrl;
 
   constructor(private route: ActivatedRoute, private invoiceService: InvoiceService, private dialog: MatDialog){}
 
@@ -31,10 +33,18 @@ export class InvoiceListComponent implements OnInit {
     });
   }
 
-  generateDocument(id: number){
-    this.invoiceService.generateDocument(id).subscribe({
+  generateDocument(invoice: InvoiceListModel){
+    this.invoiceService.generateDocument(invoice.id).subscribe({
       next: data => {
-        window.open(data.url, '_blank');
+        const blob = new Blob([data], {type: 'application/pdf'});
+        const url = window.URL.createObjectURL(blob);
+        let link = document.createElement('a');
+        link.href = url;
+        link.download = `${invoice.number.replaceAll('/', '_')}.pdf`;
+        link.click();
+        
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
       }
     });
   }

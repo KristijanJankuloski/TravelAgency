@@ -76,7 +76,7 @@ export class ApiService {
   }
 
   public generateContractPdf(id: number){
-    return this.http.get<{url: string}>(`${environment.apiBaseUrl}/contracts/${id}/generate`);
+    return this.http.get(`${environment.apiBaseUrl}/contracts/${id}/generate`, { responseType: 'blob' });
   }
 
   public updateUserImage(payload: FormData) {
