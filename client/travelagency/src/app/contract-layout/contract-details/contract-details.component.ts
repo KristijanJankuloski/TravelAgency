@@ -57,7 +57,7 @@ export class ContractDetailsComponent implements OnInit {
         const url = window.URL.createObjectURL(blob);
         let link = document.createElement('a');
         link.href = url;
-        link.download = `${contract.contractNumber.replaceAll('/', '_')}.pdf`;
+        link.download = `contract_${contract.contractNumber.replaceAll('/', '_')}.pdf`;
         link.click();
         
         window.URL.revokeObjectURL(url);

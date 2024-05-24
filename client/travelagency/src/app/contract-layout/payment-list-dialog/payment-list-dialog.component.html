@@ -19,7 +19,7 @@
                 <tr *ngFor="let payment of payments">
                     <td *ngIf="payment.eventType === 0"><mat-icon color="primary">person</mat-icon> Патник</td>
                     <td *ngIf="payment.eventType === 1"><mat-icon color="warn">domain</mat-icon> Агенција</td>
-                    <td>{{ payment.createdOn | date : 'dd.MM.YYYY' }}</td>
+                    <td>{{ payment.createdOn | date : 'HH:mm - dd.MM.YYYY' }}</td>
                     <td>{{ payment.note ?? '/' }}</td>
                     <td>{{ payment.amount | currency : ' ' }}</td>
                 </tr>

@@ -40,7 +40,7 @@ export class InvoiceListComponent implements OnInit {
         const url = window.URL.createObjectURL(blob);
         let link = document.createElement('a');
         link.href = url;
-        link.download = `${invoice.number.replaceAll('/', '_')}.pdf`;
+        link.download = `invoice_${invoice.number.replaceAll('/', '_')}.pdf`;
         link.click();
         
         window.URL.revokeObjectURL(url);
